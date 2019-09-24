@@ -1,0 +1,5 @@
+- [x] criar banco de dados de notas
+- [ ] criar tela onde notas irão aparecendo conforme bipadas
+- [ ] verificar possibilidade de extrair informações da chave e mostrar também
+- [ ] automatizar postagem no site da NFP
+- [ ] alterar status indicando notas postadas
