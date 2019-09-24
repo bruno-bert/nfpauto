@@ -62,6 +62,8 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
+gitpush.bat
+git.bat
 # Translations
 *.mo
 *.pot
