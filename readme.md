@@ -1,5 +1,9 @@
 - [x] criar banco de dados de notas
-- [ ] criar tela onde notas irão aparecendo conforme bipadas
+- [x] criar tela onde notas irão aparecendo conforme bipadas
+  - [x] ler notas do db e mostrar na lista
+  - [x] cursor no campo de chave no load do form
+  - [x] ao digitar no campo de texto, quando chegar no tamanho da chave (N chars), joga pra lista e salva na base, e limpa o campo de texto
+  - [ ] ao pressionar enter faz o mesmo
 - [ ] verificar possibilidade de extrair informações da chave e mostrar também
 - [ ] automatizar postagem no site da NFP
 - [ ] alterar status indicando notas postadas

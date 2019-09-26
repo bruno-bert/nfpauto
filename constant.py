@@ -1,0 +1,4 @@
+NUM_CHAVE=44
+QUERY_SAVE="INSERT INTO notas (chave, status)  VALUES (?,?)"
+DEFAULT_STATUS=1
+EMPTY_STR=""

@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>775</width>
-    <height>563</height>
+    <height>571</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="lbTitulo">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -41,7 +41,7 @@
       <x>10</x>
       <y>60</y>
       <width>751</width>
-      <height>471</height>
+      <height>381</height>
      </rect>
     </property>
     <property name="font">
@@ -49,6 +49,9 @@
       <family>Segoe MDL2 Assets</family>
       <pointsize>14</pointsize>
      </font>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::NoSelection</enum>
     </property>
     <property name="rowCount">
      <number>0</number>
@@ -77,6 +80,67 @@
     <attribute name="verticalHeaderShowSortIndicator" stdset="0">
      <bool>false</bool>
     </attribute>
+   </widget>
+   <widget class="QTextEdit" name="txtChave">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>450</y>
+      <width>581</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Reference Sans Serif</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="tabChangesFocus">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblChave">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>450</y>
+      <width>171</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tahoma</family>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Chave de Acesso</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblDigitos">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>501</y>
+      <width>311</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tahoma</family>
+      <pointsize>10</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
