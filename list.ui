@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>775</width>
-    <height>571</height>
+    <width>1633</width>
+    <height>748</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,7 +40,7 @@
      <rect>
       <x>10</x>
       <y>60</y>
-      <width>751</width>
+      <width>1601</width>
       <height>381</height>
      </rect>
     </property>
@@ -85,7 +85,7 @@
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>450</y>
+      <y>520</y>
       <width>581</width>
       <height>41</height>
      </rect>
@@ -104,7 +104,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>450</y>
+      <y>520</y>
       <width>171</width>
       <height>41</height>
      </rect>
@@ -125,7 +125,7 @@
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>501</y>
+      <y>570</y>
       <width>311</width>
       <height>20</height>
      </rect>
@@ -142,13 +142,34 @@
      <string/>
     </property>
    </widget>
+   <widget class="QLabel" name="lbl_message">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>460</y>
+      <width>821</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tahoma</family>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>775</width>
+     <width>1633</width>
      <height>21</height>
     </rect>
    </property>
