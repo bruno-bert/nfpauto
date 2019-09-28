@@ -1,6 +1,20 @@
-from datetime import date, datetime
+from calendar import monthrange
+from datetime import date, datetime, timedelta
 
 DIA_EXPIRA = 20
+
+def monthdelta(d1, d2):
+    delta = 0
+    while True:
+        mdays = monthrange(d1.year, d1.month)[1]
+        d1 += timedelta(days=mdays)
+        if d1 <= d2:
+            delta += 1
+        else:
+            break
+    return delta
+
+
 
 def test_data1(data): 
  today = date.today() 
@@ -19,7 +33,8 @@ def test_data1(data):
  data_nota = date(year = int(sub_ano + ano), month = int(mes), day = dia)
  data_nota = data_nota.strftime("%d/%m/%Y")
  print("data_nota = {}".format(data_nota))
-
+ delta = monthdelta(datetime.strptime(data_nota,"%d/%m/%Y"), datetime.strptime(data_hoje,"%d/%m/%Y"))
+ print("Delta is {}".format(delta))
  
 if __name__ == "__main__":
-    test_data1("1909") 
+    test_data1("1908") 
