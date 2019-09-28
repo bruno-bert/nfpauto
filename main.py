@@ -1,15 +1,20 @@
+#external libs
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QTableWidgetItem
-from initdb import init_db, limpa_notas_db
-import re
 from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
 
-import constant
+#native libs
 import sqlite3
+import re
+from datetime import date
+
+#internal modules
+from initdb import init_db, limpa_notas_db
+import constant
 from nota import Nota
 from messages import Messages
- 
 
+#ui - internal modules
 import ui_list
 
 def busca_chaves_banco():
@@ -162,7 +167,6 @@ def chave_ja_existe(chave):
  return chave in lista_notas
 
 def verifica_data_expirada(data):
- print (data)
  return False
 
 def sequencia_adiciona_nota(chave):
