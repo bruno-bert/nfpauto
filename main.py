@@ -1,12 +1,15 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QTableWidgetItem
+from initdb import init_db
+import re
+from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
 
 import constant
 import sqlite3
 from nota import Nota
 from messages import Messages
  
-#ui
+
 import ui_list
 
 def carrega_chaves_banco():
@@ -23,7 +26,7 @@ def carrega_chaves_banco():
  for row_num, row_data in enumerate(rows):
     row = dict(row_data)
     ui.tableWidget.insertRow(row_num)
-    ui.tableWidget.setItem(row_num, 0, QTableWidgetItem(row['id'])) 
+    ui.tableWidget.setItem(row_num, 0, QTableWidgetItem(str(row['id']))) 
     ui.tableWidget.setItem(row_num, 1, QTableWidgetItem(row['chave']))
     ui.tableWidget.setItem(row_num, 2, QTableWidgetItem(row['cnpj']))
     ui.tableWidget.setItem(row_num, 3, QTableWidgetItem(row['data']))
@@ -78,10 +81,11 @@ def separa_campos_pela_chave(chave):
 def adiciona_chave_na_lista(new_nota):
 
     ui.tableWidget.insertRow(0)
+    ui.tableWidget.setItem(0, 0, QTableWidgetItem("new") )
     ui.tableWidget.setItem(0, 1, QTableWidgetItem(new_nota.chave) )
     ui.tableWidget.setItem(0, 2, QTableWidgetItem(new_nota.cnpj) )
     ui.tableWidget.setItem(0, 3, QTableWidgetItem(new_nota.data) )
-    ui.tableWidget.setItem(0, 4, QTableWidgetItem(constant.DEFAULT_STATUS) )
+    ui.tableWidget.setItem(0, 4, QTableWidgetItem(str(constant.DEFAULT_STATUS)) )
     ui.tableWidget.setItem(0, 5, QTableWidgetItem(new_nota.uf) )
     ui.tableWidget.setItem(0, 6, QTableWidgetItem(new_nota.numero) )
     ui.tableWidget.setItem(0, 7, QTableWidgetItem(new_nota.codigo) )
@@ -90,7 +94,12 @@ def adiciona_chave_na_lista(new_nota):
     ui.tableWidget.setItem(0, 10, QTableWidgetItem(new_nota.tipo_emissao) )
 
 def valida_chave_pelo_digito(chave):
-    return True
+  has_chars = re.search('[a-zA-Z]', chave)
+  if (has_chars):
+    return False
+  else:     
+    return ValidadorChaveAcessoNFe.validar(chave)          
+
 
 def valida_chave(chave): 
     if (len(get_chave()) == constant.NUM_CHAVE):
@@ -120,8 +129,12 @@ def salva_chave_banco(new_nota):
                      constant.DEFAULT_STATUS) )
     conn.commit()
     conn.close()
+
+
 def mostra_mensagem(text):
     ui.lbl_message.setText(text)
+def limpa_mensagem():
+    ui.lbl_message.setText("")
 
 def atualiza_contagem_digitos(text):
     ui.lblDigitos.setText("{num_digitos} dígitos".format(num_digitos=len(text)))
@@ -136,6 +149,7 @@ def on_campo_chave_alterado():
          nota_separada = separa_campos_pela_chave(text)     
          salva_chave_banco(nota_separada)
          adiciona_chave_na_lista(nota_separada)
+         limpa_mensagem()
        else:
          mostra_mensagem(m.chave_invalida)
              
@@ -169,6 +183,10 @@ if __name__ == "__main__":
     ui.txtChave.keyPressEvent = keyPressEvent
 
     m = Messages()
+
+    if constant.INICIA_DB_INICIO:
+        init_db()
+
 
     cria_tabela()    
     sys.exit(app.exec_())    
