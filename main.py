@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QTableWidgetItem
-from initdb import init_db, limpa_notas
+from initdb import init_db, limpa_notas_db
 import re
 from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
 
@@ -43,7 +43,8 @@ def carrega_lista_chaves(rows):
         ui.tableWidget.setItem(row_num, 9, QTableWidgetItem(row['serie']))
         ui.tableWidget.setItem(row_num, 10, QTableWidgetItem(row['tipo_emissao']))
         ui.tableWidget.setItem(row_num, 11, QTableWidgetItem(row['message']))
-   
+        lista_notas.append(row['chave'])
+
  
 
 
@@ -102,6 +103,8 @@ def adiciona_chave_na_lista(new_nota):
     ui.tableWidget.setItem(0, 10, QTableWidgetItem(new_nota.tipo_emissao) )
     ui.tableWidget.setItem(0, 11, QTableWidgetItem(m.aguardando_postagem) )
 
+    lista_notas.append(new_nota.chave)
+
 def valida_chave_pelo_digito(chave):
   has_chars = re.search('[a-zA-Z]', chave)
   if (has_chars):
@@ -151,9 +154,30 @@ def atualiza_contagem_digitos(text):
     ui.lblDigitos.setText("{num_digitos} dígitos".format(num_digitos=len(text)))
 
 def on_limpa_banco_clickado():
-    limpa_notas()
+    limpa_notas_db()
+    lista_notas.clear()
     carrega_lista_chaves(None)
 
+def chave_ja_existe(chave):
+ return chave in lista_notas
+
+def data_expirada(nota_separada):
+ if (constant.SALVA_NOTA_EXPIRADA):
+   return False 
+ else:
+   pass  
+
+def sequencia_adiciona_nota(chave):
+  if (not chave_ja_existe(chave)):
+   if (not data_expirada(chave)):   
+    nota_separada = separa_campos_pela_chave(chave)     
+    salva_chave_banco(nota_separada)
+    adiciona_chave_na_lista(nota_separada)
+    limpa_mensagem()
+   else:
+    mostra_mensagem(m.data_expirada)      
+  else:
+   mostra_mensagem(m.chave_existe)     
 
 def on_campo_chave_alterado():
     text = get_chave()
@@ -162,10 +186,7 @@ def on_campo_chave_alterado():
     if (len(text) >= constant.NUM_CHAVE ):
        chave_ok = valida_chave(get_chave())    
        if (chave_ok): 
-         nota_separada = separa_campos_pela_chave(text)     
-         salva_chave_banco(nota_separada)
-         adiciona_chave_na_lista(nota_separada)
-         limpa_mensagem()
+         sequencia_adiciona_nota(text)
        else:
          mostra_mensagem(m.chave_invalida)
 
@@ -174,17 +195,13 @@ def on_campo_chave_alterado():
         
 
 
-
 def keyPressEvent(e):
    if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
        text = get_chave()
        chave_ok = valida_chave(text)    
 
        if (chave_ok): 
-          nota_separada = separa_campos_pela_chave(text)     
-          salva_chave_banco(nota_separada)
-          adiciona_chave_na_lista(nota_separada)
-          limpa_mensagem()
+          sequencia_adiciona_nota(text) 
        else:
           mostra_mensagem(m.chave_invalida)
 
@@ -212,6 +229,10 @@ if __name__ == "__main__":
     ui.btn_limpa_banco.clicked.connect(on_limpa_banco_clickado)    
 
     m = Messages()
+
+    lista_notas = []
+    
+    
 
     if constant.INICIA_DB_INICIO:
         init_db()

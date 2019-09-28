@@ -8,7 +8,7 @@ def init_db():
  conn.commit()
  conn.close()
 
-def limpa_notas():
+def limpa_notas_db():
  conn = sqlite3.connect('notas.db')
  cursor = conn.cursor()
  cursor.execute("delete from notas")

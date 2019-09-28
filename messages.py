@@ -5,4 +5,4 @@ class Messages:
    self.aguardando_postagem = "Aguardando postagem no site"
    self.data_expirada = "Data da nota expirou"
    self.erro_separacao = "Erro ao tentar separar dados da nota pela chave de acesso"
-   #self.aguardando_postagem = "Aguardando postagem no site"
+   self.chave_existe = "Chave já existe na lista"
