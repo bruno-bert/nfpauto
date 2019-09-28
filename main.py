@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QTableWidgetItem
-from initdb import init_db
+from initdb import init_db, limpa_notas
 import re
 from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
 
@@ -12,37 +12,43 @@ from messages import Messages
 
 import ui_list
 
-def carrega_chaves_banco():
+def busca_chaves_banco():
  conn = sqlite3.connect('notas.db')
  query = "select * from notas"
  conn.row_factory = sqlite3.Row
  cur = conn.cursor()
  cur.execute(query)
-
  rows = cur.fetchall()
- 
+ conn.close()
+ return rows
+
+
+def carrega_lista_chaves(rows):
+
  ui.tableWidget.setRowCount(0) 
 
- for row_num, row_data in enumerate(rows):
-    row = dict(row_data)
-    ui.tableWidget.insertRow(row_num)
-    ui.tableWidget.setItem(row_num, 0, QTableWidgetItem(str(row['id']))) 
-    ui.tableWidget.setItem(row_num, 1, QTableWidgetItem(row['chave']))
-    ui.tableWidget.setItem(row_num, 2, QTableWidgetItem(row['cnpj']))
-    ui.tableWidget.setItem(row_num, 3, QTableWidgetItem(row['data']))
-    ui.tableWidget.setItem(row_num, 4, QTableWidgetItem(row['status']))
-    ui.tableWidget.setItem(row_num, 5, QTableWidgetItem(row['uf']))
-    ui.tableWidget.setItem(row_num, 6, QTableWidgetItem(row['numero']))
-    ui.tableWidget.setItem(row_num, 7, QTableWidgetItem(row['codigo']))
-    ui.tableWidget.setItem(row_num, 8, QTableWidgetItem(row['modelo']))
-    ui.tableWidget.setItem(row_num, 9, QTableWidgetItem(row['serie']))
-    ui.tableWidget.setItem(row_num, 10, QTableWidgetItem(row['tipo_emissao']))
+ if (rows):
+    for row_num, row_data in enumerate(rows):
+        row = dict(row_data)
+        ui.tableWidget.insertRow(row_num)
+        ui.tableWidget.setItem(row_num, 0, QTableWidgetItem(str(row['id']))) 
+        ui.tableWidget.setItem(row_num, 1, QTableWidgetItem(row['chave']))
+        ui.tableWidget.setItem(row_num, 2, QTableWidgetItem(row['cnpj']))
+        ui.tableWidget.setItem(row_num, 3, QTableWidgetItem(row['data']))
+        ui.tableWidget.setItem(row_num, 4, QTableWidgetItem(row['status']))
+        ui.tableWidget.setItem(row_num, 5, QTableWidgetItem(row['uf']))
+        ui.tableWidget.setItem(row_num, 6, QTableWidgetItem(row['numero']))
+        ui.tableWidget.setItem(row_num, 7, QTableWidgetItem(row['codigo']))
+        ui.tableWidget.setItem(row_num, 8, QTableWidgetItem(row['modelo']))
+        ui.tableWidget.setItem(row_num, 9, QTableWidgetItem(row['serie']))
+        ui.tableWidget.setItem(row_num, 10, QTableWidgetItem(row['tipo_emissao']))
+        ui.tableWidget.setItem(row_num, 11, QTableWidgetItem(row['message']))
    
- conn.close()
+ 
 
 
 def cria_tabela():
-    ui.tableWidget.setColumnCount(11)
+    ui.tableWidget.setColumnCount(12)
     ui.tableWidget.setRowCount(1)
  
     ui.tableWidget.setHorizontalHeaderLabels(
@@ -51,10 +57,12 @@ def cria_tabela():
                                        'Data', 'Status', 
                                        'UF', 'Numero', 
                                        'Codigo', 'Modelo', 
-                                       'Serie', 'Tipo Emissao'])
+                                       'Serie', 'Tipo Emissao', 'Mensagem'])
 
 
-    carrega_chaves_banco()
+    rows = busca_chaves_banco()
+    carrega_lista_chaves(rows)
+
 
 def limpa_campo_chave():
     ui.txtChave.setPlainText(constant.EMPTY_STR)   
@@ -74,7 +82,7 @@ def separa_campos_pela_chave(chave):
       new_nota.codigo = chave[35:43]
       new_nota.digito = chave[43:44]
     except:
-      print("Erro ao tentar separar dados da nota pela chave de acesso")
+      print(m.erro_separacao)
   
     return new_nota
 
@@ -92,6 +100,7 @@ def adiciona_chave_na_lista(new_nota):
     ui.tableWidget.setItem(0, 8, QTableWidgetItem(new_nota.modelo) )
     ui.tableWidget.setItem(0, 9, QTableWidgetItem(new_nota.serie) )
     ui.tableWidget.setItem(0, 10, QTableWidgetItem(new_nota.tipo_emissao) )
+    ui.tableWidget.setItem(0, 11, QTableWidgetItem(m.aguardando_postagem) )
 
 def valida_chave_pelo_digito(chave):
   has_chars = re.search('[a-zA-Z]', chave)
@@ -110,6 +119,7 @@ def valida_chave(chave):
     else:
         return False    
 
+
 def get_chave():
     return ui.txtChave.toPlainText()
 
@@ -126,7 +136,8 @@ def salva_chave_banco(new_nota):
                      new_nota.modelo, 
                      new_nota.serie, 
                      new_nota.tipo_emissao, 
-                     constant.DEFAULT_STATUS) )
+                     constant.DEFAULT_STATUS, 
+                     m.aguardando_postagem) )
     conn.commit()
     conn.close()
 
@@ -138,6 +149,11 @@ def limpa_mensagem():
 
 def atualiza_contagem_digitos(text):
     ui.lblDigitos.setText("{num_digitos} dígitos".format(num_digitos=len(text)))
+
+def on_limpa_banco_clickado():
+    limpa_notas()
+    carrega_lista_chaves(None)
+
 
 def on_campo_chave_alterado():
     text = get_chave()
@@ -152,7 +168,8 @@ def on_campo_chave_alterado():
          limpa_mensagem()
        else:
          mostra_mensagem(m.chave_invalida)
-             
+
+
        limpa_campo_chave()
         
 
@@ -160,11 +177,20 @@ def on_campo_chave_alterado():
 
 def keyPressEvent(e):
    if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
-        chave_ok = valida_chave(get_chave())     
-        if (chave_ok):
-            print('chave ok')
-        else:
-            print('chave nao ok')
+       text = get_chave()
+       chave_ok = valida_chave(text)    
+
+       if (chave_ok): 
+          nota_separada = separa_campos_pela_chave(text)     
+          salva_chave_banco(nota_separada)
+          adiciona_chave_na_lista(nota_separada)
+          limpa_mensagem()
+       else:
+          mostra_mensagem(m.chave_invalida)
+
+       if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
+         limpa_campo_chave()
+
    else: 
        return QtWidgets.QTextEdit.keyPressEvent(ui.txtChave, e)
 
@@ -179,8 +205,11 @@ if __name__ == "__main__":
     MainWindow.show()
     
     ui.txtChave.setFocus()
+    
+    #connect events
     ui.txtChave.textChanged.connect(on_campo_chave_alterado)    
     ui.txtChave.keyPressEvent = keyPressEvent
+    ui.btn_limpa_banco.clicked.connect(on_limpa_banco_clickado)    
 
     m = Messages()
 
