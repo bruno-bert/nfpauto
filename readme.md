@@ -7,7 +7,7 @@
 - [x] verificar possibilidade de extrair informações da chave e mostrar também
 - [ ] validacoes
   - [x] validar chave de acesso pelo modulo 11
-  - [ ] checar se nota ja existe
+  - [x] checar se nota ja existe
   - [ ] checar data da nota e não inserir se ja passou do prazo (apenas mes e ano)
 - [ ] automatizar postagem no site da NFP
 - [ ] alterar status indicando notas postadas

@@ -87,7 +87,7 @@ def separa_campos_pela_chave(chave):
   
     return new_nota
 
-def adiciona_chave_na_lista(new_nota):
+def adiciona_chave_na_lista(new_nota, expirada):
 
     ui.tableWidget.insertRow(0)
     ui.tableWidget.setItem(0, 0, QTableWidgetItem("new") )
@@ -101,7 +101,7 @@ def adiciona_chave_na_lista(new_nota):
     ui.tableWidget.setItem(0, 8, QTableWidgetItem(new_nota.modelo) )
     ui.tableWidget.setItem(0, 9, QTableWidgetItem(new_nota.serie) )
     ui.tableWidget.setItem(0, 10, QTableWidgetItem(new_nota.tipo_emissao) )
-    ui.tableWidget.setItem(0, 11, QTableWidgetItem(m.aguardando_postagem) )
+    ui.tableWidget.setItem(0, 11, QTableWidgetItem(m.aguardando_postagem if not expirada else m.data_expirada_doacao ) )
 
     lista_notas.append(new_nota.chave)
 
@@ -161,21 +161,23 @@ def on_limpa_banco_clickado():
 def chave_ja_existe(chave):
  return chave in lista_notas
 
-def data_expirada(nota_separada):
- if (constant.SALVA_NOTA_EXPIRADA):
-   return False 
- else:
-   pass  
+def verifica_data_expirada(data):
+ print (data)
+ return False
 
 def sequencia_adiciona_nota(chave):
   if (not chave_ja_existe(chave)):
-   if (not data_expirada(chave)):   
+
     nota_separada = separa_campos_pela_chave(chave)     
-    salva_chave_banco(nota_separada)
-    adiciona_chave_na_lista(nota_separada)
-    limpa_mensagem()
-   else:
-    mostra_mensagem(m.data_expirada)      
+    nota_expirou = verifica_data_expirada(nota_separada.data)   
+
+    if ( (not nota_expirou) | (constant.SALVA_NOTA_EXPIRADA) ):   
+     salva_chave_banco(nota_separada)
+     adiciona_chave_na_lista(nota_separada, nota_expirou)
+     limpa_mensagem()
+    else:
+     mostra_mensagem(m.data_expirada)      
+
   else:
    mostra_mensagem(m.chave_existe)     
 
