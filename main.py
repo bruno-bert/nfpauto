@@ -6,7 +6,7 @@ from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe
 #native libs
 import sqlite3
 import re
-from datetime import date
+from datetime import date, datetime
 
 #internal modules
 from initdb import init_db, limpa_notas_db
@@ -167,7 +167,13 @@ def chave_ja_existe(chave):
  return chave in lista_notas
 
 def verifica_data_expirada(data):
- return False
+ 
+ today = date.today() 
+ print("today =", today) 
+ dt_string = today.strftime("%d/%m/%Y")
+ print("dt_string =", dt_string) 
+
+ return True
 
 def sequencia_adiciona_nota(chave):
   if (not chave_ja_existe(chave)):
