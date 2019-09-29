@@ -275,7 +275,6 @@ if __name__ == "__main__":
     MainWindow.show()
     
     ui.txtChave.setFocus()
-    ui.txtChave.setMaximumSize(constant.NUM_CHAVE)
     
     #connect events
     ui.txtChave.textChanged.connect(on_campo_chave_alterado)    
