@@ -27,6 +27,16 @@ def busca_chaves_banco():
  conn.close()
  return rows
 
+def busca_cnpj_banco():
+ conn = sqlite3.connect('notas.db')
+ query = "select * from cnpj"
+ conn.row_factory = sqlite3.Row
+ cur = conn.cursor()
+ cur.execute(query)
+ rows = cur.fetchall()
+ conn.close()
+ return rows 
+
 
 def carrega_lista_chaves(rows):
 
@@ -149,6 +159,18 @@ def salva_chave_banco(new_nota):
     conn.commit()
     conn.close()
 
+def salva_cnpj_banco(new_nota):
+    conn = sqlite3.connect('notas.db')
+    cursor = conn.cursor()
+    cursor.execute(constant.QUERY_SAVE_CNPJ,  
+                    (
+                     new_nota.cnpj, 
+                     new_nota.uf, 
+                     new_nota.modelo, 
+                     new_nota.serie) )
+    conn.commit()
+    conn.close()
+
 
 def mostra_mensagem(text):
     ui.lbl_message.setText(text)
@@ -165,6 +187,9 @@ def on_limpa_banco_clickado():
 
 def chave_ja_existe(chave):
  return chave in lista_notas
+
+def cnpj_ja_existe(cnpj):
+ return cnpj in lista_cnpj
 
 from calendar import monthrange
 from datetime import date, datetime, timedelta
@@ -227,6 +252,13 @@ def sequencia_adiciona_nota(chave):
      salva_chave_banco(nota_separada)
      adiciona_chave_na_lista(nota_separada, nota_expirou)
      limpa_mensagem()
+
+     #salva cnpj na base   
+     if (constant.SALVA_CNPJ):
+        if (not cnpj_ja_existe(nota_separada.cnpj)):
+            salva_cnpj_banco(nota_separada)
+            lista_cnpj.append(nota_separada.cnpj)
+
     else:
      mostra_mensagem(m.data_expirada)      
 
@@ -284,6 +316,16 @@ if __name__ == "__main__":
     m = Messages()
 
     lista_notas = []
+    lista_cnpj = []
+
+    #carrega cnpjs na memoria
+    rows = busca_cnpj_banco()
+    if (rows):
+     for row_num, row_data in enumerate(rows):
+      row = dict(row_data)
+      lista_cnpj.append(row['cnpj'])
+
+    
     
     
 
