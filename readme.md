@@ -5,9 +5,12 @@
   - [x] ao digitar no campo de texto, quando chegar no tamanho da chave (N chars), joga pra lista e salva na base, e limpa o campo de texto
   - [x] ao pressionar enter faz o mesmo
 - [x] verificar possibilidade de extrair informações da chave e mostrar também
-- [ ] validacoes
+- [x] validacoes
   - [x] validar chave de acesso pelo modulo 11
   - [x] checar se nota ja existe
-  - [ ] checar data da nota e não inserir se ja passou do prazo (apenas mes e ano)
+  - [x] checar data da nota e não inserir se ja passou do prazo (apenas mes e ano)
+- [ ] carga manual pelo cnpj
+  - [x] salva cnpjs
+  - [ ] tela da carga manual
 - [ ] automatizar postagem no site da NFP
 - [ ] alterar status indicando notas postadas
