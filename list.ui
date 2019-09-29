@@ -81,25 +81,6 @@
      <bool>false</bool>
     </attribute>
    </widget>
-   <widget class="QTextEdit" name="txtChave">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>520</y>
-      <width>581</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>MS Reference Sans Serif</family>
-      <pointsize>14</pointsize>
-     </font>
-    </property>
-    <property name="tabChangesFocus">
-     <bool>false</bool>
-    </property>
-   </widget>
    <widget class="QLabel" name="lblChave">
     <property name="geometry">
      <rect>
@@ -174,6 +155,39 @@
     </property>
     <property name="text">
      <string>Limpar Banco de Dados</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="txtChave">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>520</y>
+      <width>541</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="toolTip">
+     <string>Digite a Chave de Acesso Aqui</string>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="plainText">
+     <string/>
+    </property>
+    <property name="backgroundVisible">
+     <bool>false</bool>
+    </property>
+    <property name="centerOnScroll">
+     <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string/>
     </property>
    </widget>
   </widget>

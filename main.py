@@ -166,15 +166,57 @@ def on_limpa_banco_clickado():
 def chave_ja_existe(chave):
  return chave in lista_notas
 
-def verifica_data_expirada(data):
- 
+from calendar import monthrange
+from datetime import date, datetime, timedelta
+
+DIA_EXPIRA = 20
+
+def monthdelta(d1, d2):
+    delta = 0
+    while True:
+        mdays = monthrange(d1.year, d1.month)[1]
+        d1 += timedelta(days=mdays)
+        if d1 <= d2:
+            delta += 1
+        else:
+            break
+    return delta
+
+
+
+def verifica_data_expirada(data): 
  today = date.today() 
- print("today =", today) 
- dt_string = today.strftime("%d/%m/%Y")
- print("dt_string =", dt_string) 
+ #print("today =", today) 
+ data_hoje = today.strftime("%d/%m/%Y")
+ #print("data_hoje =", data_hoje)
 
- return True
+ sub_ano = str(today.year)[0:2]
+ #print("sub_ano = {}".format(sub_ano))
 
+ ano = data[0:2]
+ mes = data[2:4]
+ dia = 1
+ #print("ano = {}".format(sub_ano + ano))
+ #print("mes = {}".format(mes))
+ data_nota = date(year = int(sub_ano + ano), month = int(mes), day = dia)
+ data_nota = data_nota.strftime("%d/%m/%Y")
+ #print("data_nota = {}".format(data_nota))
+ delta = monthdelta(datetime.strptime(data_nota,"%d/%m/%Y"), datetime.strptime(data_hoje,"%d/%m/%Y"))
+ #print("Delta is {}".format(delta))
+ 
+ if (delta <= 1):
+    if (delta == 0):
+        return False
+    else:
+        #delta = 1
+        if (today.day<=DIA_EXPIRA):
+            return False
+        else:
+            return True          
+ else:
+    return True   
+
+ 
 def sequencia_adiciona_nota(chave):
   if (not chave_ja_existe(chave)):
 
@@ -199,11 +241,11 @@ def on_campo_chave_alterado():
        chave_ok = valida_chave(get_chave())    
        if (chave_ok): 
          sequencia_adiciona_nota(text)
+         limpa_campo_chave() 
        else:
          mostra_mensagem(m.chave_invalida)
-
-
-       limpa_campo_chave()
+         if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
+           limpa_campo_chave() 
         
 
 
@@ -216,12 +258,11 @@ def keyPressEvent(e):
           sequencia_adiciona_nota(text) 
        else:
           mostra_mensagem(m.chave_invalida)
-
-       if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
-         limpa_campo_chave()
+          if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
+            limpa_campo_chave()
 
    else: 
-       return QtWidgets.QTextEdit.keyPressEvent(ui.txtChave, e)
+       return QtWidgets.QPlainTextEdit.keyPressEvent(ui.txtChave, e)
 
 
 if __name__ == "__main__":
@@ -234,6 +275,7 @@ if __name__ == "__main__":
     MainWindow.show()
     
     ui.txtChave.setFocus()
+    ui.txtChave.setMaximumSize(constant.NUM_CHAVE)
     
     #connect events
     ui.txtChave.textChanged.connect(on_campo_chave_alterado)    

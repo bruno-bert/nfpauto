@@ -16,7 +16,7 @@ def monthdelta(d1, d2):
 
 
 
-def test_data1(data): 
+def verifica_data_expirada(data): 
  today = date.today() 
  print("today =", today) 
  data_hoje = today.strftime("%d/%m/%Y")
@@ -36,5 +36,20 @@ def test_data1(data):
  delta = monthdelta(datetime.strptime(data_nota,"%d/%m/%Y"), datetime.strptime(data_hoje,"%d/%m/%Y"))
  print("Delta is {}".format(delta))
  
+ if (delta <= 1):
+    if (delta == 0):
+        return False
+    else:
+        #delta = 1
+        if (today.day<=DIA_EXPIRA):
+            return False
+        else:
+            return True          
+ else:
+    return True     
+
+
 if __name__ == "__main__":
-    test_data1("1908") 
+    result = verifica_data_expirada("1908") 
+    print("result: {}".format(result))
+    print("Expirada" if result else "OK")
