@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1633</width>
-    <height>748</height>
+    <height>692</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -81,53 +81,11 @@
      <bool>false</bool>
     </attribute>
    </widget>
-   <widget class="QLabel" name="lblChave">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>520</y>
-      <width>171</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Tahoma</family>
-      <pointsize>16</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Chave de Acesso</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblDigitos">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>570</y>
-      <width>311</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Tahoma</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="lbl_message">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>460</y>
+      <x>40</x>
+      <y>450</y>
       <width>821</width>
       <height>41</height>
      </rect>
@@ -139,6 +97,12 @@
       <weight>50</weight>
       <bold>false</bold>
      </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 127);</string>
     </property>
     <property name="text">
      <string/>
@@ -157,38 +121,93 @@
      <string>Limpar Banco de Dados</string>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="txtChave">
+   <widget class="QGroupBox" name="grupo_chave_completa">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>30</x>
       <y>520</y>
-      <width>541</width>
-      <height>41</height>
+      <width>1151</width>
+      <height>121</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <pointsize>14</pointsize>
-     </font>
+    <property name="title">
+     <string>Carga Pela Chave Completa</string>
     </property>
-    <property name="toolTip">
-     <string>Digite a Chave de Acesso Aqui</string>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <property name="plainText">
-     <string/>
-    </property>
-    <property name="backgroundVisible">
-     <bool>false</bool>
-    </property>
-    <property name="centerOnScroll">
-     <bool>false</bool>
-    </property>
-    <property name="placeholderText">
-     <string/>
-    </property>
+    <widget class="QPlainTextEdit" name="txtChave">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>30</y>
+       <width>541</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Digite a Chave de Acesso Aqui</string>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="plainText">
+      <string/>
+     </property>
+     <property name="backgroundVisible">
+      <bool>false</bool>
+     </property>
+     <property name="centerOnScroll">
+      <bool>false</bool>
+     </property>
+     <property name="placeholderText">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblChave">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>30</y>
+       <width>171</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Tahoma</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Chave de Acesso</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblDigitos">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>70</y>
+       <width>311</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Tahoma</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
