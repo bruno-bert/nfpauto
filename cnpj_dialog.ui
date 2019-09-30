@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>806</width>
-    <height>287</height>
+    <width>801</width>
+    <height>466</height>
    </rect>
   </property>
   <property name="font">
@@ -24,7 +24,7 @@
      <x>700</x>
      <y>10</y>
      <width>81</width>
-     <height>241</height>
+     <height>61</height>
     </rect>
    </property>
    <property name="orientation">
@@ -42,7 +42,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>661</width>
+     <width>671</width>
      <height>271</height>
     </rect>
    </property>
@@ -55,11 +55,87 @@
     <set>QAbstractItemView::NoEditTriggers</set>
    </property>
    <property name="selectionMode">
-    <enum>QAbstractItemView::SingleSelection</enum>
+    <enum>QAbstractItemView::ExtendedSelection</enum>
    </property>
    <property name="selectionBehavior">
     <enum>QAbstractItemView::SelectRows</enum>
    </property>
+  </widget>
+  <widget class="QGroupBox" name="grupo_atalhos">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>290</y>
+     <width>371</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Teclas de Atalhos</string>
+   </property>
+   <widget class="QLabel" name="lbl_atalho1">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>100</y>
+      <width>211</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tahoma</family>
+      <pointsize>10</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>ESC - Sair</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_atalho1_3">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>60</y>
+      <width>221</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tahoma</family>
+      <pointsize>10</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>ENTER - Confirmar estabelecimento</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_atalho1_4">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>20</y>
+      <width>321</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tahoma</family>
+      <pointsize>10</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Setas para Cima / Baixo - selecionar estabelecimento</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

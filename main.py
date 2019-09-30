@@ -54,7 +54,9 @@ def carrega_lista_empresas(rows):
         dialog.lista_empresas.setItem(row_num, 4, QTableWidgetItem(row['modelo']))
         dialog.lista_empresas.setItem(row_num, 5, QTableWidgetItem(row['serie']))  
         lista_cnpj.append(row['cnpj'])
- dialog.lista_empresas.selectRow(0)
+    dialog.lista_empresas.setFocus()
+    dialog.lista_empresas.selectRow(0)
+
 
 
 def carrega_lista_chaves(rows):
@@ -347,6 +349,31 @@ def txtChave_3_keyPressEvent(e):
    else: 
        return QtWidgets.QPlainTextEdit.keyPressEvent(ui.txtChave_3, e)     
 
+
+def atualiza_campo_parcial_nota(row):
+    
+    cnpj = (dialog.lista_empresas.item(row, 2).text())
+    uf = (dialog.lista_empresas.item(row, 3).text())
+    modelo = (dialog.lista_empresas.item(row, 4).text())
+    serie = (dialog.lista_empresas.item(row, 5).text())
+    data = "1909"    
+    ui.txtChave_2.setText(uf+data+cnpj+modelo+serie)
+    ui.txtChave_3.setText(constant.EMPTY_STR)                 
+
+
+def lista_empresas_keyPressEvent(e):
+    
+     if (e.key() == QtCore.Qt.Key_Escape ):
+       Dialog.reject()
+     else:   
+       if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
+            if dialog.lista_empresas.selectionModel().hasSelection():
+             row = dialog.lista_empresas.currentRow()
+             atualiza_campo_parcial_nota(row)
+             Dialog.accept()
+       else: 
+         return QtWidgets.QTableWidget.keyPressEvent(dialog.lista_empresas, e)
+
 def txtChave_keyPressEvent(e):
    if (e.key() == QtCore.Qt.Key_Escape ):
        limpa_campo_chave()
@@ -413,7 +440,7 @@ if __name__ == "__main__":
     cria_tabela_notas()  
     cria_tabela_empresas()      
    
-
+    dialog.lista_empresas.keyPressEvent = lista_empresas_keyPressEvent
 
     #carrega lista de notas do banco
     rows = busca_chaves_banco()
