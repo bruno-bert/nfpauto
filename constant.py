@@ -10,6 +10,10 @@ MESES_EXPIRACAO=1
 DIA_EXPIRA=20
 SALVA_CNPJ=True
 
+MESES=('Janeiro','Fevereiro','Mar','Abril','Maio','Junho',
+           'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro')
+
+
 #dev constants
 INICIA_DB_INICIO=False
 

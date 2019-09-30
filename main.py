@@ -7,6 +7,7 @@ from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe
 import sqlite3
 import re
 from datetime import date, datetime
+import dateutil.relativedelta
 
 #internal modules
 from initdb import init_db, limpa_notas_db
@@ -322,11 +323,29 @@ def on_campo_chave_alterado():
          if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
            limpa_campo_chave() 
         
+def define_mes_padrao_int():
+    mes_atual = date.today().month
+    return mes_atual - 1
+
+def define_mes_padrao():
+    return date.today().strftime("%y%m")
+
+def define_mes_anterior_int():
+    d2 = date.today() - dateutil.relativedelta.relativedelta(months=1)
+    return d2.month
+
+def define_mes_anterior():
+    print('inicio')
+    d2 =  date.today() - dateutil.relativedelta.relativedelta(months=1)
+    print('fim')
+    return datetime.strftime(d2, "%y%m")
+
 
 def modo_digitacao():
     ui.tab_opcao.setCurrentIndex (1)
     ui.txtChave_3.setFocus()
     Dialog.show()
+    mostra_data_nota()
     rows = busca_cnpj_banco()
     carrega_lista_empresas(rows)
 
@@ -349,6 +368,10 @@ def txtChave_3_keyPressEvent(e):
    else: 
        return QtWidgets.QPlainTextEdit.keyPressEvent(ui.txtChave_3, e)     
 
+def mostra_data_nota():          
+   mes_view = mes_sel #datetime.strftime(mes_sel, constant.MESES[mes_sel_int]  + " de %Y")
+   dialog.lbl_mes.setText(mes_view)    
+   
 
 def atualiza_campo_parcial_nota(row):
     
@@ -356,13 +379,37 @@ def atualiza_campo_parcial_nota(row):
     uf = (dialog.lista_empresas.item(row, 3).text())
     modelo = (dialog.lista_empresas.item(row, 4).text())
     serie = (dialog.lista_empresas.item(row, 5).text())
-    data = "1909"    
-    ui.txtChave_2.setText(uf+data+cnpj+modelo+serie)
-    ui.txtChave_3.setText(constant.EMPTY_STR)                 
+    
+    mostra_data_nota()   
+    data = mes_sel
+    
+    nota_parcial = uf+data+cnpj+modelo+serie
+   
+    ui.txtChave_2.setPlainText(nota_parcial)
+    ui.txtChave_3.setPlainText(constant.EMPTY_STR)                 
+    ui.txtChave_3.setFocus()
 
+def toggle_mes():
+    global mes_tipo
+    global mes_sel
+    global mes_sel_int
+
+    if (mes_tipo == 1):
+        mes_tipo = 2
+        mes_sel = define_mes_anterior()
+        mes_sel_int = define_mes_anterior_int()
+    else:
+        mes_tipo = 1
+        mes_sel = define_mes_padrao()
+        mes_sel_int = define_mes_padrao_int()
+    
+    
 
 def lista_empresas_keyPressEvent(e):
-    
+     if (e.key() == QtCore.Qt.Key_Space ):
+        toggle_mes()
+        mostra_data_nota()
+
      if (e.key() == QtCore.Qt.Key_Escape ):
        Dialog.reject()
      else:   
@@ -429,8 +476,11 @@ if __name__ == "__main__":
 
     lista_notas = []
     lista_cnpj = []
-
-   
+    
+    mes_tipo = 1 #mes atual
+    mes_sel = define_mes_padrao()
+    mes_sel_int = define_mes_padrao_int()
+    
    
 
     if constant.INICIA_DB_INICIO:

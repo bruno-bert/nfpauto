@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>801</width>
+    <width>821</width>
     <height>466</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
   <widget class="QDialogButtonBox" name="dialog_buttons">
    <property name="geometry">
     <rect>
-     <x>700</x>
+     <x>720</x>
      <y>10</y>
      <width>81</width>
      <height>61</height>
@@ -42,7 +42,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>671</width>
+     <width>691</width>
      <height>271</height>
     </rect>
    </property>
@@ -66,7 +66,7 @@
     <rect>
      <x>20</x>
      <y>290</y>
-     <width>371</width>
+     <width>361</width>
      <height>151</height>
     </rect>
    </property>
@@ -134,6 +134,73 @@
     </property>
     <property name="text">
      <string>Setas para Cima / Baixo - selecionar estabelecimento</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="grupo_atalhos_2">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>290</y>
+     <width>301</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Qual mês e ano da nota?</string>
+   </property>
+   <widget class="QLabel" name="lbl_mes_atual">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>271</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tahoma</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Pressione a tecla ESPAÇO no teclado para trocar o mês da nota</string>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_mes">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>271</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Tahoma</family>
+      <pointsize>14</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Mes Nota</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>
