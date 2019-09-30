@@ -1,6 +1,6 @@
 #external libs
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5.QtWidgets import QTableWidgetItem, QListWidgetItem
 from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
 
 #native libs
@@ -16,6 +16,7 @@ from messages import Messages
 
 #ui - internal modules
 import ui_list
+import ui_cnpj_dialog
 
 def busca_chaves_banco():
  conn = sqlite3.connect('notas.db')
@@ -36,6 +37,24 @@ def busca_cnpj_banco():
  rows = cur.fetchall()
  conn.close()
  return rows 
+
+
+def carrega_lista_empresas(rows):
+
+ dialog.lista_empresas.setRowCount(0) 
+ 
+ if (rows):
+    for row_num, row_data in enumerate(rows):
+        row = dict(row_data)
+        dialog.lista_empresas.insertRow(row_num)
+        dialog.lista_empresas.setItem(row_num, 0, QTableWidgetItem(str(row['id']))) 
+        dialog.lista_empresas.setItem(row_num, 1, QTableWidgetItem(row['empresa']))
+        dialog.lista_empresas.setItem(row_num, 2, QTableWidgetItem(row['cnpj']))
+        dialog.lista_empresas.setItem(row_num, 3, QTableWidgetItem(row['uf']))
+        dialog.lista_empresas.setItem(row_num, 4, QTableWidgetItem(row['modelo']))
+        dialog.lista_empresas.setItem(row_num, 5, QTableWidgetItem(row['serie']))  
+        lista_cnpj.append(row['cnpj'])
+ dialog.lista_empresas.selectRow(0)
 
 
 def carrega_lista_chaves(rows):
@@ -63,7 +82,7 @@ def carrega_lista_chaves(rows):
  
 
 
-def cria_tabela():
+def cria_tabela_notas():
     ui.tableWidget.setColumnCount(12)
     ui.tableWidget.setRowCount(1)
  
@@ -75,13 +94,23 @@ def cria_tabela():
                                        'Codigo', 'Modelo', 
                                        'Serie', 'Tipo Emissao', 'Mensagem'])
 
+def cria_tabela_empresas():
+    dialog.lista_empresas.setColumnCount(6)
+    dialog.lista_empresas.setRowCount(1)
+ 
+    dialog.lista_empresas.setHorizontalHeaderLabels(
+                                      ['ID', 
+                                       'Empresa', 
+                                       'CNPJ',
+                                       'UF', 'Modelo', 
+                                       'Serie'])
 
-    rows = busca_chaves_banco()
-    carrega_lista_chaves(rows)
+    
 
 
 def limpa_campo_chave():
     ui.txtChave.setPlainText(constant.EMPTY_STR)   
+    ui.txtChave_3.setPlainText(constant.EMPTY_STR)   
 
 def separa_campos_pela_chave(chave):
     new_nota = Nota()
@@ -101,6 +130,18 @@ def separa_campos_pela_chave(chave):
       print(m.erro_separacao)
   
     return new_nota
+
+
+def adiciona_empresas_na_lista(new_nota):
+
+    dialog.lista_empresas.insertRow(0)
+    dialog.lista_empresas.setItem(0, 0, QTableWidgetItem("new") )
+    dialog.lista_empresas.setItem(0, 1, QTableWidgetItem("") )
+    dialog.lista_empresas.setItem(0, 2, QTableWidgetItem(new_nota.cnpj) )    
+    dialog.lista_empresas.setItem(0, 3, QTableWidgetItem(new_nota.uf) )
+    dialog.lista_empresas.setItem(0, 4, QTableWidgetItem(new_nota.modelo) )
+    dialog.lista_empresas.setItem(0, 5, QTableWidgetItem(new_nota.serie) )
+    lista_cnpj.append(new_nota.cnpj)
 
 def adiciona_chave_na_lista(new_nota, expirada):
 
@@ -256,7 +297,7 @@ def sequencia_adiciona_nota(chave):
      #salva cnpj na base   
      if (constant.SALVA_CNPJ):
         if (not cnpj_ja_existe(nota_separada.cnpj)):
-            salva_cnpj_banco(nota_separada)
+            salva_cnpj_banco(nota_separada)            
             lista_cnpj.append(nota_separada.cnpj)
 
     else:
@@ -280,8 +321,44 @@ def on_campo_chave_alterado():
            limpa_campo_chave() 
         
 
+def modo_digitacao():
+    ui.tab_opcao.setCurrentIndex (1)
+    ui.txtChave_3.setFocus()
+    Dialog.show()
+    rows = busca_cnpj_banco()
+    carrega_lista_empresas(rows)
 
-def keyPressEvent(e):
+def modo_leitor():
+    ui.tab_opcao.setCurrentIndex (0)
+    ui.txtChave.setFocus()
+
+
+def txtChave_3_keyPressEvent(e):
+   if (e.key() == QtCore.Qt.Key_Escape ):
+       limpa_campo_chave()
+   
+   if (e.key() == QtCore.Qt.Key_L ):
+       modo_leitor()
+       return 
+
+   if (e.key() == QtCore.Qt.Key_D ):
+       modo_digitacao()   
+       return 
+   else: 
+       return QtWidgets.QPlainTextEdit.keyPressEvent(ui.txtChave_3, e)     
+
+def txtChave_keyPressEvent(e):
+   if (e.key() == QtCore.Qt.Key_Escape ):
+       limpa_campo_chave()
+
+   if (e.key() == QtCore.Qt.Key_L ):
+       modo_leitor()
+       return 
+
+   if (e.key() == QtCore.Qt.Key_D ):
+       modo_digitacao()   
+       return   
+       
    if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
        text = get_chave()
        chave_ok = valida_chave(text)    
@@ -297,6 +374,7 @@ def keyPressEvent(e):
        return QtWidgets.QPlainTextEdit.keyPressEvent(ui.txtChave, e)
 
 
+
 if __name__ == "__main__":
     import sys    
     
@@ -305,12 +383,19 @@ if __name__ == "__main__":
     ui = ui_list.Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
-    
     ui.txtChave.setFocus()
+
+    Dialog = QtWidgets.QDialog()
+    dialog = ui_cnpj_dialog.Ui_Dialog()
+    dialog.setupUi(Dialog)
+    Dialog.setModal(True)
     
+    
+
     #connect events
     ui.txtChave.textChanged.connect(on_campo_chave_alterado)    
-    ui.txtChave.keyPressEvent = keyPressEvent
+    ui.txtChave.keyPressEvent = txtChave_keyPressEvent
+    ui.txtChave_3.keyPressEvent = txtChave_3_keyPressEvent
     ui.btn_limpa_banco.clicked.connect(on_limpa_banco_clickado)    
 
     m = Messages()
@@ -318,22 +403,28 @@ if __name__ == "__main__":
     lista_notas = []
     lista_cnpj = []
 
-    #carrega cnpjs na memoria
-    rows = busca_cnpj_banco()
-    if (rows):
-     for row_num, row_data in enumerate(rows):
-      row = dict(row_data)
-      lista_cnpj.append(row['cnpj'])
-
-    
-    
-    
+   
+   
 
     if constant.INICIA_DB_INICIO:
         init_db()
 
+    #cria lista (notas e empresas)
+    cria_tabela_notas()  
+    cria_tabela_empresas()      
+   
 
-    cria_tabela()    
+
+    #carrega lista de notas do banco
+    rows = busca_chaves_banco()
+    carrega_lista_chaves(rows)
+
+
+     #carrega cnpjs na memoria
+    rows = busca_cnpj_banco()
+    carrega_lista_empresas(rows)
+
+
     sys.exit(app.exec_())    
     
     

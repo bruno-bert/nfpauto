@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1633</width>
-    <height>692</height>
+    <width>1737</width>
+    <height>794</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -112,7 +112,7 @@
     <property name="geometry">
      <rect>
       <x>1460</x>
-      <y>450</y>
+      <y>20</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -121,57 +121,24 @@
      <string>Limpar Banco de Dados</string>
     </property>
    </widget>
-   <widget class="QGroupBox" name="grupo_chave_completa">
+   <widget class="QGroupBox" name="grupo_atalhos">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>520</y>
-      <width>1151</width>
-      <height>121</height>
+      <x>980</x>
+      <y>460</y>
+      <width>631</width>
+      <height>151</height>
      </rect>
     </property>
     <property name="title">
-     <string>Carga Pela Chave Completa</string>
+     <string>Teclas de Atalhos</string>
     </property>
-    <widget class="QPlainTextEdit" name="txtChave">
+    <widget class="QLabel" name="lbl_atalho1">
      <property name="geometry">
       <rect>
-       <x>200</x>
+       <x>20</x>
        <y>30</y>
-       <width>541</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Digite a Chave de Acesso Aqui</string>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="plainText">
-      <string/>
-     </property>
-     <property name="backgroundVisible">
-      <bool>false</bool>
-     </property>
-     <property name="centerOnScroll">
-      <bool>false</bool>
-     </property>
-     <property name="placeholderText">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lblChave">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>30</y>
-       <width>171</width>
+       <width>291</width>
        <height>41</height>
       </rect>
      </property>
@@ -184,30 +151,298 @@
       </font>
      </property>
      <property name="text">
-      <string>Chave de Acesso</string>
+      <string>ESC - limpa campo de chave</string>
      </property>
     </widget>
-    <widget class="QLabel" name="lblDigitos">
+    <widget class="QLabel" name="lbl_atalho1_2">
      <property name="geometry">
       <rect>
-       <x>200</x>
+       <x>20</x>
        <y>70</y>
-       <width>311</width>
-       <height>20</height>
+       <width>411</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="font">
       <font>
        <family>Tahoma</family>
-       <pointsize>10</pointsize>
+       <pointsize>16</pointsize>
        <weight>50</weight>
        <bold>false</bold>
       </font>
      </property>
      <property name="text">
-      <string/>
+      <string>L - Captura por Leitor de Código de Barras</string>
      </property>
     </widget>
+    <widget class="QLabel" name="lbl_atalho1_3">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>110</y>
+       <width>591</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Tahoma</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>D - Captura por Digitação da Chave (5 últimos grupos)</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QTabWidget" name="tab_opcao">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>510</y>
+      <width>911</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>&amp;Leitor de código de Barras</string>
+     </attribute>
+     <widget class="QGroupBox" name="grupo_chave_completa">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>30</y>
+        <width>821</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Carga Pela Chave Completa</string>
+      </property>
+      <widget class="QPlainTextEdit" name="txtChave">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>30</y>
+         <width>591</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Digite a Chave de Acesso Aqui</string>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="plainText">
+        <string/>
+       </property>
+       <property name="backgroundVisible">
+        <bool>false</bool>
+       </property>
+       <property name="centerOnScroll">
+        <bool>false</bool>
+       </property>
+       <property name="placeholderText">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblChave">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>30</y>
+         <width>171</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Tahoma</family>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Chave de Acesso</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblDigitos">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>70</y>
+         <width>311</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Tahoma</family>
+         <pointsize>10</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>&amp;Digitar </string>
+     </attribute>
+     <widget class="QGroupBox" name="grupo_chave_completa_2">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>30</y>
+        <width>851</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Digitar 5 ultimos subgrupos</string>
+      </property>
+      <widget class="QPlainTextEdit" name="txtChave_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>30</y>
+         <width>321</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Digite a Chave de Acesso Aqui</string>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="plainText">
+        <string/>
+       </property>
+       <property name="backgroundVisible">
+        <bool>false</bool>
+       </property>
+       <property name="centerOnScroll">
+        <bool>false</bool>
+       </property>
+       <property name="placeholderText">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblChave_2">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>30</y>
+         <width>241</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Tahoma</family>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Chave de Acesso (parcial)</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblDigitos_2">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>70</y>
+         <width>311</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Tahoma</family>
+         <pointsize>10</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="txtChave_3">
+       <property name="geometry">
+        <rect>
+         <x>620</x>
+         <y>30</y>
+         <width>211</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Digite os ultimos 5 subgrupos da chave aqui</string>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="plainText">
+        <string/>
+       </property>
+       <property name="backgroundVisible">
+        <bool>false</bool>
+       </property>
+       <property name="centerOnScroll">
+        <bool>false</bool>
+       </property>
+       <property name="placeholderText">
+        <string/>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>1070</x>
+      <y>640</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <widget class="QWidget" name="page"/>
+    <widget class="QWidget" name="page_2"/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -215,7 +450,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1633</width>
+     <width>1737</width>
      <height>21</height>
     </rect>
    </property>
