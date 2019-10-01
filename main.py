@@ -6,8 +6,10 @@ from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe
 #native libs
 import sqlite3
 import re
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
+from calendar import monthrange
 import dateutil.relativedelta
+
 
 #internal modules
 from initdb import init_db, limpa_notas_db
@@ -239,10 +241,30 @@ def chave_ja_existe(chave):
 def cnpj_ja_existe(cnpj):
  return cnpj in lista_cnpj
 
-from calendar import monthrange
-from datetime import date, datetime, timedelta
 
-DIA_EXPIRA = 20
+
+def on_buscar_arquivo():
+  dlg = QtWidgets.QFileDialog()
+  dlg.setFileMode(QtWidgets.QFileDialog.AnyFile)
+  #dlg.setFilter(QtCore.QDir.Filters("Text files (*.txt)"))
+  dlg.setNameFilters(["Text files (*.txt)"])
+  dlg.selectNameFilter("Text files (*.txt)")
+  filenames = [] #QStringList()
+
+  if dlg.exec_():
+      filenames = dlg.selectedFiles()
+
+ 
+  if (filenames.count>0):  
+    f = open(filenames[0], 'r')
+    with f:
+        data = f.read()
+        ui.txt_arquivo.setPlainText(data)
+
+   
+
+def on_baixar_portal():
+  print('baixa')
 
 def monthdelta(d1, d2):
     delta = 0
@@ -282,7 +304,7 @@ def verifica_data_expirada(data):
         return False
     else:
         #delta = 1
-        if (today.day<=DIA_EXPIRA):
+        if (today.day<=constant.DIA_EXPIRA):
             return False
         else:
             return True          
@@ -373,18 +395,33 @@ def modo_leitor():
     ui.tab_opcao.setCurrentIndex (0)
     ui.txtChave.setFocus()
 
+def modoarquivo():
+    ui.tab_opcao.setCurrentIndex (2)
+    ui.btn_arquivo.setFocus()
+
+def modoportal():
+    ui.tab_opcao.setCurrentIndex (3)
+    ui.btn_portal.setFocus()
 
 def txtChave_3_keyPressEvent(e):
      if (e.key() == QtCore.Qt.Key_Escape ):
        limpa_campo_chave()
    
-     if (e.key() == QtCore.Qt.Key_L ):
+     if (e.key() == QtCore.Qt.Key_A ):
        modo_leitor()
        return 
 
-     if (e.key() == QtCore.Qt.Key_D ):
+     if (e.key() == QtCore.Qt.Key_B ):
        modo_digitacao()   
        return
+
+     if (e.key() == QtCore.Qt.Key_C ):
+       modoarquivo()   
+       return 
+
+     if (e.key() == QtCore.Qt.Key_D ):
+       modoportal()   
+       return    
 
      if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
        text = get_chave_parcial()
@@ -463,13 +500,21 @@ def txtChave_keyPressEvent(e):
    if (e.key() == QtCore.Qt.Key_Escape ):
        limpa_campo_chave()
 
-   if (e.key() == QtCore.Qt.Key_L ):
+   if (e.key() == QtCore.Qt.Key_A ):
        modo_leitor()
        return 
 
-   if (e.key() == QtCore.Qt.Key_D ):
+   if (e.key() == QtCore.Qt.Key_B ):
        modo_digitacao()   
        return   
+
+   if (e.key() == QtCore.Qt.Key_C ):
+       modoarquivo()   
+       return 
+
+   if (e.key() == QtCore.Qt.Key_D ):
+       modoportal()   
+       return      
        
    if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
        text = get_chave()
@@ -502,7 +547,7 @@ if __name__ == "__main__":
     dialog.setupUi(Dialog)
     Dialog.setModal(True)
     
-    
+
 
     #connect events
     ui.txtChave.textChanged.connect(on_campo_chave_alterado)    
@@ -512,6 +557,9 @@ if __name__ == "__main__":
     ui.txtChave.keyPressEvent = txtChave_keyPressEvent
     ui.txtChave_3.keyPressEvent = txtChave_3_keyPressEvent
     ui.btn_limpa_banco.clicked.connect(on_limpa_banco_clickado)    
+
+    ui.btn_arquivo.clicked.connect(on_buscar_arquivo)    
+    ui.btn_portal.clicked.connect(on_baixar_portal)    
 
     m = Messages()
 
@@ -542,6 +590,7 @@ if __name__ == "__main__":
     rows = busca_cnpj_banco()
     carrega_lista_empresas(rows)
 
+    modo_leitor()
 
     sys.exit(app.exec_())    
     

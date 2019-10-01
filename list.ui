@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1737</width>
-    <height>794</height>
+    <height>751</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -84,7 +84,7 @@
    <widget class="QLabel" name="lbl_message">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>20</x>
       <y>450</y>
       <width>821</width>
       <height>41</height>
@@ -102,7 +102,7 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 127);</string>
+     <string notr="true">background-color: rgb(253, 255, 226);</string>
     </property>
     <property name="text">
      <string/>
@@ -127,7 +127,7 @@
       <x>980</x>
       <y>460</y>
       <width>631</width>
-      <height>151</height>
+      <height>261</height>
      </rect>
     </property>
     <property name="title">
@@ -172,7 +172,7 @@
       </font>
      </property>
      <property name="text">
-      <string>L - Captura por Leitor de Código de Barras</string>
+      <string>A - Captura por Leitor de Código de Barras</string>
      </property>
     </widget>
     <widget class="QLabel" name="lbl_atalho1_3">
@@ -193,7 +193,49 @@
       </font>
      </property>
      <property name="text">
-      <string>D - Captura por Digitação da Chave (5 últimos grupos)</string>
+      <string>B - Captura por Digitação da Chave (5 últimos grupos)</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_atalho1_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>150</y>
+       <width>591</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Tahoma</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>C - Importar Arquivo</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_atalho1_5">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>190</y>
+       <width>591</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Tahoma</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>D - Buscar do Portal Nota do Bem</string>
      </property>
     </widget>
    </widget>
@@ -207,7 +249,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -431,18 +473,146 @@
       </widget>
      </widget>
     </widget>
-   </widget>
-   <widget class="QStackedWidget" name="stackedWidget">
-    <property name="geometry">
-     <rect>
-      <x>1070</x>
-      <y>640</y>
-      <width>120</width>
-      <height>80</height>
-     </rect>
-    </property>
-    <widget class="QWidget" name="page"/>
-    <widget class="QWidget" name="page_2"/>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Importar Arquivo</string>
+     </attribute>
+     <widget class="QGroupBox" name="grupo_chave_completa_3">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>821</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Buscar Arquivo</string>
+      </property>
+      <widget class="QPlainTextEdit" name="txt_arquivo">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>591</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Digite a Chave de Acesso Aqui</string>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="plainText">
+        <string/>
+       </property>
+       <property name="backgroundVisible">
+        <bool>false</bool>
+       </property>
+       <property name="centerOnScroll">
+        <bool>false</bool>
+       </property>
+       <property name="placeholderText">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblDigitos_3">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>70</y>
+         <width>311</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Tahoma</family>
+         <pointsize>10</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btn_arquivo">
+       <property name="geometry">
+        <rect>
+         <x>620</x>
+         <y>30</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Buscar Arquivo</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="title">
+      <string>Baixar notas do Portal</string>
+     </attribute>
+     <widget class="QGroupBox" name="grupo_chave_completa_4">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>821</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Clique no botão abaixo para buscar chaves de acesso disponíveis no portal do Bem</string>
+      </property>
+      <widget class="QLabel" name="lblDigitos_4">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>70</y>
+         <width>311</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Tahoma</family>
+         <pointsize>10</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btn_portal">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>30</y>
+         <width>731</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Baixar Chaves de Acesso</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
