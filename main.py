@@ -251,18 +251,18 @@ def on_importar_arquivo():
          f = open(file_path, 'r')
          with f:
           
-          data = f.readline()   
-          cnt = 1
+          data = f.readline().rstrip()            
+          conta_linha = 1
 
           while data:
            
            if valida_chave(data):
              sequencia_adiciona_nota(data)         
            else:
-             print("Linha {linha} - Chave {chave} inválida: ".format(linha=cnt, chave=data))
+             print("Linha {linha} - Chave {chave} inválida".format(linha=conta_linha, chave=data))
 
-           data = f.readline() 
-           cnt+=1
+           data = f.readline().rstrip()            
+           conta_linha+=1
 
          f.close() 
 
@@ -358,7 +358,7 @@ def sequencia_adiciona_nota(chave):
 
   else:
    mostra_mensagem(m.chave_existe)
-   print("Chave {} já existe: ".format(chave))     
+   print("Chave {} já existe".format(chave))     
 
 def on_campo_chave_alterado():
     text = get_chave()
