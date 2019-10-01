@@ -9,6 +9,7 @@ LIMPA_CAMPO_QUANDO_INVALIDA=False
 MESES_EXPIRACAO=1
 DIA_EXPIRA=20
 SALVA_CNPJ=True
+TITULO_DIALOG_ARQUIVO="Selecionar arquivo"
 
 MESES=('Janeiro','Fevereiro','Mar','Abril','Maio','Junho',
            'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro')

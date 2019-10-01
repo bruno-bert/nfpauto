@@ -195,7 +195,7 @@ class Ui_MainWindow(object):
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
         self.grupo_chave_completa_3 = QtWidgets.QGroupBox(self.tab_3)
-        self.grupo_chave_completa_3.setGeometry(QtCore.QRect(20, 20, 821, 121))
+        self.grupo_chave_completa_3.setGeometry(QtCore.QRect(20, 20, 821, 141))
         self.grupo_chave_completa_3.setObjectName("grupo_chave_completa_3")
         self.txt_arquivo = QtWidgets.QPlainTextEdit(self.grupo_chave_completa_3)
         self.txt_arquivo.setEnabled(False)
@@ -222,6 +222,9 @@ class Ui_MainWindow(object):
         self.btn_arquivo = QtWidgets.QPushButton(self.grupo_chave_completa_3)
         self.btn_arquivo.setGeometry(QtCore.QRect(620, 30, 131, 41))
         self.btn_arquivo.setObjectName("btn_arquivo")
+        self.btn_importar = QtWidgets.QPushButton(self.grupo_chave_completa_3)
+        self.btn_importar.setGeometry(QtCore.QRect(10, 80, 741, 41))
+        self.btn_importar.setObjectName("btn_importar")
         self.tab_opcao.addTab(self.tab_3, "")
         self.tab_4 = QtWidgets.QWidget()
         self.tab_4.setObjectName("tab_4")
@@ -252,7 +255,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tab_opcao.setCurrentIndex(3)
+        self.tab_opcao.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -278,6 +281,7 @@ class Ui_MainWindow(object):
         self.grupo_chave_completa_3.setTitle(_translate("MainWindow", "Buscar Arquivo"))
         self.txt_arquivo.setToolTip(_translate("MainWindow", "Digite a Chave de Acesso Aqui"))
         self.btn_arquivo.setText(_translate("MainWindow", "Buscar Arquivo"))
+        self.btn_importar.setText(_translate("MainWindow", "Importar"))
         self.tab_opcao.setTabText(self.tab_opcao.indexOf(self.tab_3), _translate("MainWindow", "Importar Arquivo"))
         self.grupo_chave_completa_4.setTitle(_translate("MainWindow", "Clique no botão abaixo para buscar chaves de acesso disponíveis no portal do Bem"))
         self.btn_portal.setText(_translate("MainWindow", "Baixar Chaves de Acesso"))

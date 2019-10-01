@@ -249,7 +249,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -483,7 +483,7 @@
         <x>20</x>
         <y>20</y>
         <width>821</width>
-        <height>121</height>
+        <height>141</height>
        </rect>
       </property>
       <property name="title">
@@ -557,6 +557,19 @@
        </property>
        <property name="text">
         <string>Buscar Arquivo</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btn_importar">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>741</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Importar</string>
        </property>
       </widget>
      </widget>

@@ -9,6 +9,7 @@ import re
 from datetime import date, datetime, timedelta
 from calendar import monthrange
 import dateutil.relativedelta
+import os.path
 
 
 #internal modules
@@ -175,7 +176,7 @@ def valida_chave_pelo_digito(chave):
     return ValidadorChaveAcessoNFe.validar(chave)          
 
 
-def valida_chave(chave): 
+def valida_chave(chave):
     if (len(chave) == constant.NUM_CHAVE):
         if (constant.VALIDA_CHAVE_PELO_DIGITO):
           return valida_chave_pelo_digito(chave)   
@@ -242,25 +243,48 @@ def cnpj_ja_existe(cnpj):
  return cnpj in lista_cnpj
 
 
+def on_importar_arquivo():
+    file_path = ui.txt_arquivo.toPlainText()
+    if (os.path.exists(file_path)):
+
+        try:
+         f = open(file_path, 'r')
+         with f:
+          
+          data = f.readline()   
+          cnt = 1
+
+          while data:
+           
+           if valida_chave(data):
+             sequencia_adiciona_nota(data)         
+           else:
+             print("Linha {linha} - Chave {chave} inválida: ".format(linha=cnt, chave=data))
+
+           data = f.readline() 
+           cnt+=1
+
+         f.close() 
+
+        except ValueError as strerr:
+            print(strerr)
+        finally:
+         try:
+           f.close()     
+         except ValueError as strerr1:
+           print(strerr1) 
+   
 
 def on_buscar_arquivo():
-  dlg = QtWidgets.QFileDialog()
-  dlg.setFileMode(QtWidgets.QFileDialog.AnyFile)
-  #dlg.setFilter(QtCore.QDir.Filters("Text files (*.txt)"))
-  dlg.setNameFilters(["Text files (*.txt)"])
-  dlg.selectNameFilter("Text files (*.txt)")
-  filenames = [] #QStringList()
-
-  if dlg.exec_():
-      filenames = dlg.selectedFiles()
-
  
-  if (filenames.count>0):  
-    f = open(filenames[0], 'r')
-    with f:
-        data = f.read()
-        ui.txt_arquivo.setPlainText(data)
-
+  try:
+      filename = QtWidgets.QFileDialog.getOpenFileName(ui.centralwidget, constant.TITULO_DIALOG_ARQUIVO, None, "Text files (*.txt)")  
+      print("filename: {}".format(filename))
+      if filename: 
+        ui.txt_arquivo.setPlainText(filename[0])  
+      
+  except ValueError as strerror:
+      print(strerror)
    
 
 def on_baixar_portal():
@@ -333,7 +357,8 @@ def sequencia_adiciona_nota(chave):
      mostra_mensagem(m.data_expirada)      
 
   else:
-   mostra_mensagem(m.chave_existe)     
+   mostra_mensagem(m.chave_existe)
+   print("Chave {} já existe: ".format(chave))     
 
 def on_campo_chave_alterado():
     text = get_chave()
@@ -559,6 +584,7 @@ if __name__ == "__main__":
     ui.btn_limpa_banco.clicked.connect(on_limpa_banco_clickado)    
 
     ui.btn_arquivo.clicked.connect(on_buscar_arquivo)    
+    ui.btn_importar.clicked.connect(on_importar_arquivo)    
     ui.btn_portal.clicked.connect(on_baixar_portal)    
 
     m = Messages()
