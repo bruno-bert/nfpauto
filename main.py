@@ -112,7 +112,8 @@ def cria_tabela_empresas():
 
 
 def limpa_campo_chave():
-    ui.txtChave.setPlainText(constant.EMPTY_STR)   
+    ui.txtChave.setPlainText(constant.EMPTY_STR)  
+    ui.txtChave_2.setPlainText(constant.EMPTY_STR)   
     ui.txtChave_3.setPlainText(constant.EMPTY_STR)   
 
 def separa_campos_pela_chave(chave):
@@ -173,7 +174,7 @@ def valida_chave_pelo_digito(chave):
 
 
 def valida_chave(chave): 
-    if (len(get_chave()) == constant.NUM_CHAVE):
+    if (len(chave) == constant.NUM_CHAVE):
         if (constant.VALIDA_CHAVE_PELO_DIGITO):
           return valida_chave_pelo_digito(chave)   
         else: 
@@ -184,6 +185,9 @@ def valida_chave(chave):
 
 def get_chave():
     return ui.txtChave.toPlainText()
+
+def get_chave_parcial():
+    return ui.txtChave_2.toPlainText() + ui.txtChave_3.toPlainText()
 
 def salva_chave_banco(new_nota):
     conn = sqlite3.connect('notas.db')
@@ -322,6 +326,21 @@ def on_campo_chave_alterado():
          mostra_mensagem(m.chave_invalida)
          if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
            limpa_campo_chave() 
+
+def on_campo_chave_alterado_2():
+    text = get_chave_parcial()
+    print(text)
+   
+    if (len(text) >= constant.NUM_CHAVE ):
+       chave_ok = valida_chave(text)    
+       if (chave_ok): 
+         sequencia_adiciona_nota(text)
+         limpa_campo_chave() 
+       else:
+         mostra_mensagem(m.chave_invalida)
+         if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
+           limpa_campo_chave() 
+
         
 def define_mes_padrao_int():
     mes_atual = date.today().month
@@ -332,12 +351,11 @@ def define_mes_padrao():
 
 def define_mes_anterior_int():
     d2 = date.today() - dateutil.relativedelta.relativedelta(months=1)
-    return d2.month
+    #print("d2={}".format(d2))
+    return d2.month - 1
 
 def define_mes_anterior():
-    print('inicio')
     d2 =  date.today() - dateutil.relativedelta.relativedelta(months=1)
-    print('fim')
     return datetime.strftime(d2, "%y%m")
 
 
@@ -345,6 +363,8 @@ def modo_digitacao():
     ui.tab_opcao.setCurrentIndex (1)
     ui.txtChave_3.setFocus()
     Dialog.show()
+    ui.txtChave_2.setPlainText(constant.EMPTY_STR)
+    ui.txtChave_3.setPlainText(constant.EMPTY_STR)
     mostra_data_nota()
     rows = busca_cnpj_banco()
     carrega_lista_empresas(rows)
@@ -355,24 +375,41 @@ def modo_leitor():
 
 
 def txtChave_3_keyPressEvent(e):
-   if (e.key() == QtCore.Qt.Key_Escape ):
+     if (e.key() == QtCore.Qt.Key_Escape ):
        limpa_campo_chave()
    
-   if (e.key() == QtCore.Qt.Key_L ):
+     if (e.key() == QtCore.Qt.Key_L ):
        modo_leitor()
        return 
 
-   if (e.key() == QtCore.Qt.Key_D ):
+     if (e.key() == QtCore.Qt.Key_D ):
        modo_digitacao()   
-       return 
-   else: 
+       return
+
+     if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
+       text = get_chave_parcial()
+       chave_ok = valida_chave(text)    
+
+       if (chave_ok): 
+          sequencia_adiciona_nota(text) 
+       else:
+          mostra_mensagem(m.chave_invalida)
+          if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
+            limpa_campo_chave()
+     else: 
        return QtWidgets.QPlainTextEdit.keyPressEvent(ui.txtChave_3, e)     
 
-def mostra_data_nota():          
-   mes_view = mes_sel #datetime.strftime(mes_sel, constant.MESES[mes_sel_int]  + " de %Y")
-   dialog.lbl_mes.setText(mes_view)    
+def mostra_data_nota():  
+   global mes_sel_int       
+   ano = mes_sel[0:2]
+   print(constant.MESES[mes_sel_int])
+   try:
+      mes_view = constant.MESES[mes_sel_int] + " de " + ano
+      dialog.lbl_mes.setText( mes_view)    
+   except ValueError as strerror:
+      print(strerror)
    
-
+ 
 def atualiza_campo_parcial_nota(row):
     
     cnpj = (dialog.lista_empresas.item(row, 2).text())
@@ -385,7 +422,7 @@ def atualiza_campo_parcial_nota(row):
     
     nota_parcial = uf+data+cnpj+modelo+serie
    
-    ui.txtChave_2.setPlainText(nota_parcial)
+    ui.txtChave_2.setPlainText(nota_parcial[:-1])
     ui.txtChave_3.setPlainText(constant.EMPTY_STR)                 
     ui.txtChave_3.setFocus()
 
@@ -398,11 +435,12 @@ def toggle_mes():
         mes_tipo = 2
         mes_sel = define_mes_anterior()
         mes_sel_int = define_mes_anterior_int()
+        print(mes_sel_int)
     else:
         mes_tipo = 1
         mes_sel = define_mes_padrao()
         mes_sel_int = define_mes_padrao_int()
-    
+        print(mes_sel_int)
     
 
 def lista_empresas_keyPressEvent(e):
@@ -468,6 +506,9 @@ if __name__ == "__main__":
 
     #connect events
     ui.txtChave.textChanged.connect(on_campo_chave_alterado)    
+    ui.txtChave_2.textChanged.connect(on_campo_chave_alterado_2)    
+    ui.txtChave_3.textChanged.connect(on_campo_chave_alterado_2)   
+    
     ui.txtChave.keyPressEvent = txtChave_keyPressEvent
     ui.txtChave_3.keyPressEvent = txtChave_3_keyPressEvent
     ui.btn_limpa_banco.clicked.connect(on_limpa_banco_clickado)    
