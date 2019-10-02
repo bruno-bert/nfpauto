@@ -1,8 +1,13 @@
 NUM_CHAVE=44
 DEFAULT_STATUS="1"
 EMPTY_STR=""
+
 QUERY_SAVE="INSERT INTO notas (chave, cnpj, data, uf, numero, codigo, modelo, serie, tipo_emissao, status, message)  VALUES (?,?,?,?,?,?,?,?,?,?,?)"
 QUERY_SAVE_CNPJ="INSERT INTO cnpj (cnpj, uf, modelo, serie)  VALUES (?,?,?,?)"
+QUERY_INSERT_CNPJ_PADRAO="INSERT INTO cnpj_padrao (cnpj)  VALUES (?)"
+QUERY_UPDATE_CNPJ_PADRAO="UPDATE cnpj_padrao set cnpj=?"
+QUERY_SELECT_CNPJ_PADRAO="select cnpj from cnpj_padrao"
+
 VALIDA_CHAVE_PELO_DIGITO=True
 SALVA_NOTA_EXPIRADA=True
 LIMPA_CAMPO_QUANDO_INVALIDA=False
@@ -14,6 +19,10 @@ TITULO_DIALOG_ARQUIVO="Selecionar arquivo"
 MESES=('Janeiro','Fevereiro','Mar','Abril','Maio','Junho',
            'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro')
 
+
+
+#FEATURE_FLAGS
+VALIDA_CNPJ=True
 
 #dev constants
 INICIA_DB_INICIO=False

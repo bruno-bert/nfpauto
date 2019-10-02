@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1737</width>
+    <width>1630</width>
     <height>751</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <widget class="QLabel" name="lbTitulo">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>570</x>
       <y>10</y>
       <width>281</width>
       <height>41</height>
@@ -249,7 +249,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -588,7 +588,7 @@
        </rect>
       </property>
       <property name="title">
-       <string>Clique no botão abaixo para buscar chaves de acesso disponíveis no portal do Bem</string>
+       <string>Clique no botão abaixo para buscar chaves de acesso disponíveis no Portal do Bem</string>
       </property>
       <widget class="QLabel" name="lblDigitos_4">
        <property name="geometry">
@@ -624,6 +624,25 @@
         <string>Baixar Chaves de Acesso</string>
        </property>
       </widget>
+      <widget class="QProgressBar" name="barra_progresso_portal">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>80</y>
+         <width>761</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+       <property name="textVisible">
+        <bool>true</bool>
+       </property>
+       <property name="invertedAppearance">
+        <bool>false</bool>
+       </property>
+      </widget>
      </widget>
     </widget>
    </widget>
@@ -633,7 +652,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1737</width>
+     <width>1630</width>
      <height>21</height>
     </rect>
    </property>

@@ -12,6 +12,11 @@ def init_db():
  cursor.execute("DROP TABLE IF EXISTS cnpj")
  cursor.execute("CREATE TABLE IF NOT EXISTS cnpj (id INTEGER PRIMARY KEY, cnpj TEXT, empresa TEXT, uf TEXT, modelo TEXT, serie TEXT ) ")
 
+ #tabela de cnpj padrao
+ cursor.execute("DROP TABLE IF EXISTS cnpj_padrao")
+ cursor.execute("CREATE TABLE IF NOT EXISTS cnpj_padrao (cnpj TEXT PRIMARY KEY ) ")
+
+
  conn.commit()
  conn.close()
 

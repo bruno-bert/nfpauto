@@ -2,6 +2,7 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QTableWidgetItem, QListWidgetItem
 from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
+from bradocs4py.cnpj import  ValidadorCnpj 
 
 #native libs
 import sqlite3
@@ -21,6 +22,42 @@ from messages import Messages
 #ui - internal modules
 import ui_list
 import ui_cnpj_dialog
+import ui_cnpj_padrao_dialog
+
+def busca_cnpj_padrao_valor():
+ rows = busca_cnpj_padrao()
+ if (rows):
+  for row_data in rows:
+   row = dict(row_data)  
+   cnpj = row['cnpj']   
+  return cnpj
+ else:
+  return constant.EMPTY_STR
+
+def busca_cnpj_padrao():
+ conn = sqlite3.connect('notas.db')
+ query = constant.QUERY_SELECT_CNPJ_PADRAO
+ conn.row_factory = sqlite3.Row
+ cur = conn.cursor()
+ cur.execute(query)
+ rows = cur.fetchone()
+ conn.close()
+ return rows
+
+def salva_cnpj_padrao_banco(cnpj):
+ conn = sqlite3.connect('notas.db')
+ existe_cnpj = busca_cnpj_padrao_valor()
+ query = constant.QUERY_UPDATE_CNPJ_PADRAO if existe_cnpj else constant.QUERY_INSERT_CNPJ_PADRAO
+ cursor = conn.cursor()
+ #print("qurty {}".format(query))
+ #print("cnpj {}".format(cnpj))
+
+ try:
+  cursor.execute(query, (cnpj) )
+  conn.commit() 
+ except ValueError as strerr:
+   print(strerr)
+ conn.close()
 
 def busca_chaves_banco():
  conn = sqlite3.connect('notas.db')
@@ -288,8 +325,17 @@ def on_buscar_arquivo():
    
 
 def on_baixar_portal():
-  print('baixa')
-
+  rows = busca_cnpj_padrao()
+  if (not rows):
+    print('nao tem cnpj')
+    Dialog_Cnpj.show()
+    cnpj = busca_cnpj_padrao_valor()
+    dialog_cnpj_padrao.txt_cnpj_padrao.setFocus()
+    dialog_cnpj_padrao.txt_cnpj_padrao.setPlainText(cnpj)
+  else:
+    cnpj = busca_cnpj_padrao_valor()
+    print('tem cnpj: {}'.format(cnpj))    
+       
 def monthdelta(d1, d2):
     delta = 0
     while True:
@@ -360,6 +406,11 @@ def sequencia_adiciona_nota(chave):
    mostra_mensagem(m.chave_existe)
    print("Chave {} já existe".format(chave))     
 
+def on_cnpj_padrao_alterado():
+    print('cnpj padrao alterado')
+    text = dialog_cnpj_padrao.txt_cnpj_padrao.toPlainText()
+    print(text)
+
 def on_campo_chave_alterado():
     text = get_chave()
     atualiza_contagem_digitos(text)
@@ -427,6 +478,28 @@ def modoarquivo():
 def modoportal():
     ui.tab_opcao.setCurrentIndex (3)
     ui.btn_portal.setFocus()
+
+def valida_cnpj(cnpj):
+    return ValidadorCnpj.validar(cnpj)
+
+def txt_cnpj_padrao_keyPressEvent(e):
+     if (e.key() == QtCore.Qt.Key_Escape ):
+         Dialog_Cnpj.reject()
+     else:    
+       if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ): 
+         
+         cnpj = dialog_cnpj_padrao.txt_cnpj_padrao.toPlainText()  
+         
+         if (valida_cnpj(cnpj)):
+          salva_cnpj_padrao_banco(cnpj)  
+          Dialog_Cnpj.accept()
+         else:  
+          dialog_cnpj_padrao.lbl_message_cnpj_padrao.setText(m.cnpj_invalido)
+          print(m.cnpj_invalido)
+
+       else: 
+         return QtWidgets.QPlainTextEdit.keyPressEvent(dialog_cnpj_padrao.txt_cnpj_padrao, e)     
+
 
 def txtChave_3_keyPressEvent(e):
      if (e.key() == QtCore.Qt.Key_Escape ):
@@ -571,8 +644,12 @@ if __name__ == "__main__":
     dialog = ui_cnpj_dialog.Ui_Dialog()
     dialog.setupUi(Dialog)
     Dialog.setModal(True)
-    
 
+    Dialog_Cnpj = QtWidgets.QDialog()
+    dialog_cnpj_padrao = ui_cnpj_padrao_dialog.Ui_Dialog()
+    dialog_cnpj_padrao.setupUi(Dialog_Cnpj)
+    Dialog_Cnpj.setModal(True)
+    
 
     #connect events
     ui.txtChave.textChanged.connect(on_campo_chave_alterado)    
@@ -585,8 +662,11 @@ if __name__ == "__main__":
 
     ui.btn_arquivo.clicked.connect(on_buscar_arquivo)    
     ui.btn_importar.clicked.connect(on_importar_arquivo)    
-    ui.btn_portal.clicked.connect(on_baixar_portal)    
+    ui.btn_portal.clicked.connect(on_baixar_portal) 
 
+    dialog_cnpj_padrao.txt_cnpj_padrao.textChanged.connect(on_cnpj_padrao_alterado )
+    dialog_cnpj_padrao.txt_cnpj_padrao.keyPressEvent = txt_cnpj_padrao_keyPressEvent
+    
     m = Messages()
 
     lista_notas = []
