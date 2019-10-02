@@ -17,11 +17,6 @@ class Ui_Dialog(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         Dialog.setFont(font)
-        self.dialog_buttons = QtWidgets.QDialogButtonBox(Dialog)
-        self.dialog_buttons.setGeometry(QtCore.QRect(550, 30, 91, 111))
-        self.dialog_buttons.setOrientation(QtCore.Qt.Vertical)
-        self.dialog_buttons.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
-        self.dialog_buttons.setObjectName("dialog_buttons")
         self.grupo_atalhos_2 = QtWidgets.QGroupBox(Dialog)
         self.grupo_atalhos_2.setGeometry(QtCore.QRect(20, 20, 511, 131))
         self.grupo_atalhos_2.setObjectName("grupo_atalhos_2")
@@ -38,13 +33,19 @@ class Ui_Dialog(object):
         self.lbl_message_cnpj_padrao.setFont(font)
         self.lbl_message_cnpj_padrao.setText("")
         self.lbl_message_cnpj_padrao.setObjectName("lbl_message_cnpj_padrao")
+        self.btn_ok = QtWidgets.QPushButton(Dialog)
+        self.btn_ok.setGeometry(QtCore.QRect(550, 30, 75, 23))
+        self.btn_ok.setObjectName("btn_ok")
+        self.btn_cancel = QtWidgets.QPushButton(Dialog)
+        self.btn_cancel.setGeometry(QtCore.QRect(550, 60, 75, 23))
+        self.btn_cancel.setObjectName("btn_cancel")
 
         self.retranslateUi(Dialog)
-        self.dialog_buttons.accepted.connect(Dialog.accept)
-        self.dialog_buttons.rejected.connect(Dialog.reject)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "CNPJ Padrão"))
         self.grupo_atalhos_2.setTitle(_translate("Dialog", "Digite o CNPJ Padrão da Instituição"))
+        self.btn_ok.setText(_translate("Dialog", "OK"))
+        self.btn_cancel.setText(_translate("Dialog", "Cancelar"))

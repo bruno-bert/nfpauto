@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1630</width>
-    <height>751</height>
+    <height>791</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -127,7 +127,7 @@
       <x>980</x>
       <y>460</y>
       <width>631</width>
-      <height>261</height>
+      <height>281</height>
      </rect>
     </property>
     <property name="title">
@@ -238,6 +238,27 @@
       <string>D - Buscar do Portal Nota do Bem</string>
      </property>
     </widget>
+    <widget class="QLabel" name="lbl_atalho1_6">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>230</y>
+       <width>591</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Tahoma</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>E - Atualizar CNPJ da instituição</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QTabWidget" name="tab_opcao">
     <property name="geometry">
@@ -249,7 +270,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -646,16 +667,19 @@
      </widget>
     </widget>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1630</width>
-     <height>21</height>
-    </rect>
-   </property>
+   <widget class="QPushButton" name="btn_cnpj">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>291</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Atualizar CNPJ da Instituição</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

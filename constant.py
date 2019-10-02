@@ -4,8 +4,8 @@ EMPTY_STR=""
 
 QUERY_SAVE="INSERT INTO notas (chave, cnpj, data, uf, numero, codigo, modelo, serie, tipo_emissao, status, message)  VALUES (?,?,?,?,?,?,?,?,?,?,?)"
 QUERY_SAVE_CNPJ="INSERT INTO cnpj (cnpj, uf, modelo, serie)  VALUES (?,?,?,?)"
-QUERY_INSERT_CNPJ_PADRAO="INSERT INTO cnpj_padrao (cnpj)  VALUES (?)"
-QUERY_UPDATE_CNPJ_PADRAO="UPDATE cnpj_padrao set cnpj=?"
+QUERY_INSERT_CNPJ_PADRAO="INSERT INTO cnpj_padrao ('cnpj') VALUES ('{}')"
+QUERY_UPDATE_CNPJ_PADRAO="UPDATE cnpj_padrao set cnpj='{}'"
 QUERY_SELECT_CNPJ_PADRAO="select cnpj from cnpj_padrao"
 
 VALIDA_CHAVE_PELO_DIGITO=True

@@ -27,9 +27,8 @@ import ui_cnpj_padrao_dialog
 def busca_cnpj_padrao_valor():
  rows = busca_cnpj_padrao()
  if (rows):
-  for row_data in rows:
-   row = dict(row_data)  
-   cnpj = row['cnpj']   
+  for row_data in rows:    
+   cnpj = row_data  
   return cnpj
  else:
   return constant.EMPTY_STR
@@ -49,14 +48,10 @@ def salva_cnpj_padrao_banco(cnpj):
  existe_cnpj = busca_cnpj_padrao_valor()
  query = constant.QUERY_UPDATE_CNPJ_PADRAO if existe_cnpj else constant.QUERY_INSERT_CNPJ_PADRAO
  cursor = conn.cursor()
- #print("qurty {}".format(query))
- #print("cnpj {}".format(cnpj))
-
- try:
-  cursor.execute(query, (cnpj) )
-  conn.commit() 
- except ValueError as strerr:
-   print(strerr)
+ query = query.format(cnpj)
+ print("query: {}".format(query))
+ cursor.execute(query )
+ conn.commit() 
  conn.close()
 
 def busca_chaves_banco():
@@ -327,11 +322,7 @@ def on_buscar_arquivo():
 def on_baixar_portal():
   rows = busca_cnpj_padrao()
   if (not rows):
-    print('nao tem cnpj')
-    Dialog_Cnpj.show()
-    cnpj = busca_cnpj_padrao_valor()
-    dialog_cnpj_padrao.txt_cnpj_padrao.setFocus()
-    dialog_cnpj_padrao.txt_cnpj_padrao.setPlainText(cnpj)
+     mostra_dialogCnpj()
   else:
     cnpj = busca_cnpj_padrao_valor()
     print('tem cnpj: {}'.format(cnpj))    
@@ -479,24 +470,32 @@ def modoportal():
     ui.tab_opcao.setCurrentIndex (3)
     ui.btn_portal.setFocus()
 
+def mostra_dialogCnpj():
+   Dialog_Cnpj.show()
+   cnpj = busca_cnpj_padrao_valor()
+   dialog_cnpj_padrao.txt_cnpj_padrao.setFocus()
+   dialog_cnpj_padrao.txt_cnpj_padrao.setPlainText(cnpj)
+
 def valida_cnpj(cnpj):
     return ValidadorCnpj.validar(cnpj)
+
+def confirma_cnpj_padrao():
+   cnpj = dialog_cnpj_padrao.txt_cnpj_padrao.toPlainText()  
+         
+   if (valida_cnpj(cnpj)):
+     salva_cnpj_padrao_banco(cnpj)  
+     Dialog_Cnpj.accept()
+   else:  
+     dialog_cnpj_padrao.lbl_message_cnpj_padrao.setText(m.cnpj_invalido)
+     print(m.cnpj_invalido)
+
 
 def txt_cnpj_padrao_keyPressEvent(e):
      if (e.key() == QtCore.Qt.Key_Escape ):
          Dialog_Cnpj.reject()
      else:    
        if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ): 
-         
-         cnpj = dialog_cnpj_padrao.txt_cnpj_padrao.toPlainText()  
-         
-         if (valida_cnpj(cnpj)):
-          salva_cnpj_padrao_banco(cnpj)  
-          Dialog_Cnpj.accept()
-         else:  
-          dialog_cnpj_padrao.lbl_message_cnpj_padrao.setText(m.cnpj_invalido)
-          print(m.cnpj_invalido)
-
+         confirma_cnpj_padrao()
        else: 
          return QtWidgets.QPlainTextEdit.keyPressEvent(dialog_cnpj_padrao.txt_cnpj_padrao, e)     
 
@@ -519,7 +518,11 @@ def txtChave_3_keyPressEvent(e):
 
      if (e.key() == QtCore.Qt.Key_D ):
        modoportal()   
-       return    
+       return 
+
+     if (e.key() == QtCore.Qt.Key_E ):
+       mostra_dialogCnpj()
+       return      
 
      if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
        text = get_chave_parcial()
@@ -614,6 +617,10 @@ def txtChave_keyPressEvent(e):
        modoportal()   
        return      
        
+   if (e.key() == QtCore.Qt.Key_E ):
+       mostra_dialogCnpj()
+       return      
+
    if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
        text = get_chave()
        chave_ok = valida_chave(text)    
@@ -667,6 +674,11 @@ if __name__ == "__main__":
     dialog_cnpj_padrao.txt_cnpj_padrao.textChanged.connect(on_cnpj_padrao_alterado )
     dialog_cnpj_padrao.txt_cnpj_padrao.keyPressEvent = txt_cnpj_padrao_keyPressEvent
     
+    ui.btn_cnpj.clicked.connect(mostra_dialogCnpj)
+    
+    dialog_cnpj_padrao.btn_ok.clicked.connect(confirma_cnpj_padrao)
+    dialog_cnpj_padrao.btn_cancel.clicked.connect(Dialog_Cnpj.reject)
+
     m = Messages()
 
     lista_notas = []
