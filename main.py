@@ -19,7 +19,8 @@ import constant
 from nota import Nota
 from messages import Messages
 from login import Login
-from database import * 
+from database import *
+from auth import Auth 
 
 #ui - internal modules
 import ui_list
@@ -243,13 +244,22 @@ def on_buscar_arquivo():
       print(strerror)
    
 
+def buscar_portal(): 
+  print('nao implementado')
+  token = Auth.getInstance().token
+  cnpj = busca_cnpj_padrao_valor() 
+
+
 def on_baixar_portal():
   rows = busca_cnpj_padrao()
   if (not rows):
      mostra_dialogCnpj()
   else:
-    cnpj = busca_cnpj_padrao_valor()
-    print('tem cnpj: {}'.format(cnpj))    
+    token = Auth.getInstance().token
+    if (not token):
+      servico_login.mostra_login()
+    else: 
+      buscar_portal()
        
 def monthdelta(d1, d2):
     delta = 0

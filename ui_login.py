@@ -13,12 +13,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(391, 279)
+        Dialog.resize(391, 324)
         font = QtGui.QFont()
         font.setPointSize(10)
         Dialog.setFont(font)
         self.grupo_login = QtWidgets.QGroupBox(Dialog)
-        self.grupo_login.setGeometry(QtCore.QRect(20, 20, 351, 241))
+        self.grupo_login.setGeometry(QtCore.QRect(20, 20, 351, 281))
         self.grupo_login.setObjectName("grupo_login")
         self.lbl_message_login = QtWidgets.QLabel(self.grupo_login)
         self.lbl_message_login.setGeometry(QtCore.QRect(30, 200, 291, 31))
@@ -26,6 +26,7 @@ class Ui_Dialog(object):
         font.setPointSize(10)
         self.lbl_message_login.setFont(font)
         self.lbl_message_login.setStyleSheet("color: rgb(255, 0, 0);")
+        self.lbl_message_login.setWordWrap(True)
         self.lbl_message_login.setObjectName("lbl_message_login")
         self.lbl_message_login_2 = QtWidgets.QLabel(self.grupo_login)
         self.lbl_message_login_2.setGeometry(QtCore.QRect(30, 40, 71, 31))

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>391</width>
-    <height>279</height>
+    <height>324</height>
    </rect>
   </property>
   <property name="font">
@@ -24,7 +24,7 @@
      <x>20</x>
      <y>20</y>
      <width>351</width>
-     <height>241</height>
+     <height>281</height>
     </rect>
    </property>
    <property name="title">
@@ -49,6 +49,9 @@
     </property>
     <property name="text">
      <string>[message]</string>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="lbl_message_login_2">

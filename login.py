@@ -2,10 +2,12 @@ from PyQt5 import QtWidgets, QtCore
 import ui_login
 import messages
 from database import busca_cnpj_padrao_valor
+from auth import Auth
+from api import ApiPortal, LoginResult
 
 class Login:
  def __init__(self):
-
+     
      self.dialog_login = ui_login.Ui_Dialog()
      
      self.DialogLogin = QtWidgets.QDialog()
@@ -23,9 +25,8 @@ class Login:
  def mostra_login(self):   
       self.DialogLogin.show()
  
- def executa_login_servidor(self, usuario, senha, cnpj):
-     return False 
 
+     
  def limpa_info_login(self):
      self.dialog_login.lbl_message_login.setText("")
      self.dialog_login.txt_usuario.clear() 
@@ -34,12 +35,19 @@ class Login:
  def executa_login(self):
      usuario = self.dialog_login.txt_usuario.text() 
      senha = self.dialog_login.txt_password.text() 
-     cnpj = busca_cnpj_padrao_valor()
-     login_success = self.executa_login_servidor(usuario, senha, cnpj)
+     #cnpj = busca_cnpj_padrao_valor()
 
-     if (login_success): 
-      self.dialog_login.lbl_message_login.setText(self.messages.good_login)
-      #self.DialogLogin.accept()
-     else:
-      self.dialog_login.lbl_message_login.setText(self.messages.bad_login)
-      #self.DialogLogin.reject()
+     service = ApiPortal()
+     result = LoginResult()
+     result = service.login(usuario, senha)
+     
+     if (result.success): 
+      Auth.getInstance().token = result.token
+      self.DialogLogin.accept()  
+     else:  
+      if (result.err):
+        self.dialog_login.lbl_message_login.setText(self.messages.bad_login + " - " + result.err )
+      else:
+        self.dialog_login.lbl_message_login.setText(self.messages.bad_login)   
+
+     
