@@ -18,61 +18,13 @@ from initdb import init_db, limpa_notas_db
 import constant
 from nota import Nota
 from messages import Messages
+from login import Login
+from database import * 
 
 #ui - internal modules
 import ui_list
 import ui_cnpj_dialog
 import ui_cnpj_padrao_dialog
-
-def busca_cnpj_padrao_valor():
- rows = busca_cnpj_padrao()
- if (rows):
-  for row_data in rows:    
-   cnpj = row_data  
-  return cnpj
- else:
-  return constant.EMPTY_STR
-
-def busca_cnpj_padrao():
- conn = sqlite3.connect('notas.db')
- query = constant.QUERY_SELECT_CNPJ_PADRAO
- conn.row_factory = sqlite3.Row
- cur = conn.cursor()
- cur.execute(query)
- rows = cur.fetchone()
- conn.close()
- return rows
-
-def salva_cnpj_padrao_banco(cnpj):
- conn = sqlite3.connect('notas.db')
- existe_cnpj = busca_cnpj_padrao_valor()
- query = constant.QUERY_UPDATE_CNPJ_PADRAO if existe_cnpj else constant.QUERY_INSERT_CNPJ_PADRAO
- cursor = conn.cursor()
- query = query.format(cnpj)
- print("query: {}".format(query))
- cursor.execute(query )
- conn.commit() 
- conn.close()
-
-def busca_chaves_banco():
- conn = sqlite3.connect('notas.db')
- query = "select * from notas"
- conn.row_factory = sqlite3.Row
- cur = conn.cursor()
- cur.execute(query)
- rows = cur.fetchall()
- conn.close()
- return rows
-
-def busca_cnpj_banco():
- conn = sqlite3.connect('notas.db')
- query = "select * from cnpj"
- conn.row_factory = sqlite3.Row
- cur = conn.cursor()
- cur.execute(query)
- rows = cur.fetchall()
- conn.close()
- return rows 
 
 
 def carrega_lista_empresas(rows):
@@ -224,35 +176,7 @@ def get_chave():
 def get_chave_parcial():
     return ui.txtChave_2.toPlainText() + ui.txtChave_3.toPlainText()
 
-def salva_chave_banco(new_nota):
-    conn = sqlite3.connect('notas.db')
-    cursor = conn.cursor()
-    cursor.execute(constant.QUERY_SAVE,  
-                    (new_nota.chave, 
-                     new_nota.cnpj, 
-                     new_nota.data, 
-                     new_nota.uf, 
-                     new_nota.numero, 
-                     new_nota.codigo, 
-                     new_nota.modelo, 
-                     new_nota.serie, 
-                     new_nota.tipo_emissao, 
-                     constant.DEFAULT_STATUS, 
-                     m.aguardando_postagem) )
-    conn.commit()
-    conn.close()
 
-def salva_cnpj_banco(new_nota):
-    conn = sqlite3.connect('notas.db')
-    cursor = conn.cursor()
-    cursor.execute(constant.QUERY_SAVE_CNPJ,  
-                    (
-                     new_nota.cnpj, 
-                     new_nota.uf, 
-                     new_nota.modelo, 
-                     new_nota.serie) )
-    conn.commit()
-    conn.close()
 
 
 def mostra_mensagem(text):
@@ -523,6 +447,10 @@ def txtChave_3_keyPressEvent(e):
      if (e.key() == QtCore.Qt.Key_E ):
        mostra_dialogCnpj()
        return      
+     
+     if (e.key() == QtCore.Qt.Key_L ):
+      servico_login.mostra_login()
+      return  
 
      if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
        text = get_chave_parcial()
@@ -621,6 +549,10 @@ def txtChave_keyPressEvent(e):
        mostra_dialogCnpj()
        return      
 
+   if (e.key() == QtCore.Qt.Key_L ):
+      servico_login.mostra_login()
+      return   
+
    if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
        text = get_chave()
        chave_ok = valida_chave(text)    
@@ -636,82 +568,90 @@ def txtChave_keyPressEvent(e):
        return QtWidgets.QPlainTextEdit.keyPressEvent(ui.txtChave, e)
 
 
+def on_abre_login():
+  servico_login.mostra_login()
 
 if __name__ == "__main__":
-    import sys    
+        import sys    
     
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = ui_list.Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    ui.txtChave.setFocus()
+        app = QtWidgets.QApplication(sys.argv)
 
-    Dialog = QtWidgets.QDialog()
-    dialog = ui_cnpj_dialog.Ui_Dialog()
-    dialog.setupUi(Dialog)
-    Dialog.setModal(True)
+        MainWindow = QtWidgets.QMainWindow()
+        ui = ui_list.Ui_MainWindow()
+        ui.setupUi(MainWindow)
+        MainWindow.show()
 
-    Dialog_Cnpj = QtWidgets.QDialog()
-    dialog_cnpj_padrao = ui_cnpj_padrao_dialog.Ui_Dialog()
-    dialog_cnpj_padrao.setupUi(Dialog_Cnpj)
-    Dialog_Cnpj.setModal(True)
+        ui.txtChave.setFocus()
+
+        Dialog = QtWidgets.QDialog()
+        dialog = ui_cnpj_dialog.Ui_Dialog()
+        dialog.setupUi(Dialog)
+        Dialog.setModal(True)
+
+        Dialog_Cnpj = QtWidgets.QDialog()
+        dialog_cnpj_padrao = ui_cnpj_padrao_dialog.Ui_Dialog()
+        dialog_cnpj_padrao.setupUi(Dialog_Cnpj)
+        Dialog_Cnpj.setModal(True)
+        
+        servico_login = Login()
+        ui.btn_login.clicked.connect(on_abre_login)    
+
+        #connect events
+        ui.txtChave.textChanged.connect(on_campo_chave_alterado)    
+        ui.txtChave_2.textChanged.connect(on_campo_chave_alterado_2)    
+        ui.txtChave_3.textChanged.connect(on_campo_chave_alterado_2)   
+        
+        ui.txtChave.keyPressEvent = txtChave_keyPressEvent
+        ui.txtChave_3.keyPressEvent = txtChave_3_keyPressEvent
+        ui.btn_limpa_banco.clicked.connect(on_limpa_banco_clickado)    
+
+        ui.btn_arquivo.clicked.connect(on_buscar_arquivo)    
+        ui.btn_importar.clicked.connect(on_importar_arquivo)    
+        ui.btn_portal.clicked.connect(on_baixar_portal) 
+
+        dialog_cnpj_padrao.txt_cnpj_padrao.textChanged.connect(on_cnpj_padrao_alterado )
+        dialog_cnpj_padrao.txt_cnpj_padrao.keyPressEvent = txt_cnpj_padrao_keyPressEvent
+        
+        ui.btn_cnpj.clicked.connect(mostra_dialogCnpj)
+        
+        dialog_cnpj_padrao.btn_ok.clicked.connect(confirma_cnpj_padrao)
+        dialog_cnpj_padrao.btn_cancel.clicked.connect(Dialog_Cnpj.reject)
+
+        m = Messages()
+
+        lista_notas = []
+        lista_cnpj = []
+        
+        mes_tipo = 1 #mes atual
+        mes_sel = define_mes_padrao()
+        mes_sel_int = define_mes_padrao_int()
+        
+      
+
+        if constant.INICIA_DB_INICIO:
+            init_db()
+
+        #cria lista (notas e empresas)
+        cria_tabela_notas()  
+        cria_tabela_empresas()      
+      
+        dialog.lista_empresas.keyPressEvent = lista_empresas_keyPressEvent
+
+        #carrega lista de notas do banco
+        rows = busca_chaves_banco()
+        carrega_lista_chaves(rows)
+
+
+        #carrega cnpjs na memoria
+        rows = busca_cnpj_banco()
+        carrega_lista_empresas(rows)
+
+        modo_leitor()
+
+        sys.exit(app.exec_())
+
     
 
-    #connect events
-    ui.txtChave.textChanged.connect(on_campo_chave_alterado)    
-    ui.txtChave_2.textChanged.connect(on_campo_chave_alterado_2)    
-    ui.txtChave_3.textChanged.connect(on_campo_chave_alterado_2)   
-    
-    ui.txtChave.keyPressEvent = txtChave_keyPressEvent
-    ui.txtChave_3.keyPressEvent = txtChave_3_keyPressEvent
-    ui.btn_limpa_banco.clicked.connect(on_limpa_banco_clickado)    
-
-    ui.btn_arquivo.clicked.connect(on_buscar_arquivo)    
-    ui.btn_importar.clicked.connect(on_importar_arquivo)    
-    ui.btn_portal.clicked.connect(on_baixar_portal) 
-
-    dialog_cnpj_padrao.txt_cnpj_padrao.textChanged.connect(on_cnpj_padrao_alterado )
-    dialog_cnpj_padrao.txt_cnpj_padrao.keyPressEvent = txt_cnpj_padrao_keyPressEvent
-    
-    ui.btn_cnpj.clicked.connect(mostra_dialogCnpj)
-    
-    dialog_cnpj_padrao.btn_ok.clicked.connect(confirma_cnpj_padrao)
-    dialog_cnpj_padrao.btn_cancel.clicked.connect(Dialog_Cnpj.reject)
-
-    m = Messages()
-
-    lista_notas = []
-    lista_cnpj = []
-    
-    mes_tipo = 1 #mes atual
-    mes_sel = define_mes_padrao()
-    mes_sel_int = define_mes_padrao_int()
-    
-   
-
-    if constant.INICIA_DB_INICIO:
-        init_db()
-
-    #cria lista (notas e empresas)
-    cria_tabela_notas()  
-    cria_tabela_empresas()      
-   
-    dialog.lista_empresas.keyPressEvent = lista_empresas_keyPressEvent
-
-    #carrega lista de notas do banco
-    rows = busca_chaves_banco()
-    carrega_lista_chaves(rows)
-
-
-     #carrega cnpjs na memoria
-    rows = busca_cnpj_banco()
-    carrega_lista_empresas(rows)
-
-    modo_leitor()
-
-    sys.exit(app.exec_())    
-    
     
    
  

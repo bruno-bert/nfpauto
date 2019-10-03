@@ -8,3 +8,5 @@ class Messages:
    self.erro_separacao = "Erro ao tentar separar dados da nota pela chave de acesso"
    self.chave_existe = "Chave já existe na lista"
    self.cnpj_invalido = "CNPJ inválido"
+   self.bad_login = "Usuário ou senha incorretos"
+   self.good_login = "Usuário logado com sucesso"
