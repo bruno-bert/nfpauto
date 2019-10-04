@@ -16,4 +16,5 @@ class Auth:
          Auth.__instance = self
 
       self.token = None 
-     
+      self.user = None 
+      self.name = None 

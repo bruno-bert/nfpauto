@@ -1,3 +1,7 @@
+ENV="DEV"
+TEST_USER="test@test.com"
+TEST_PASSWORD="test"
+
 NUM_CHAVE=44
 DEFAULT_STATUS="1"
 EMPTY_STR=""
@@ -13,8 +17,13 @@ SALVA_NOTA_EXPIRADA=True
 LIMPA_CAMPO_QUANDO_INVALIDA=False
 MESES_EXPIRACAO=1
 DIA_EXPIRA=20
+DEFAULT_NUMERO_NOTAS=50
+MAX_NOTAS=100
+MIN_NOTAS=1
 SALVA_CNPJ=True
 TITULO_DIALOG_ARQUIVO="Selecionar arquivo"
+
+
 
 MESES=('Janeiro','Fevereiro','Mar','Abril','Maio','Junho',
            'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro')

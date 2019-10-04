@@ -3,7 +3,8 @@ import ui_login
 import messages
 from database import busca_cnpj_padrao_valor
 from auth import Auth
-from api import ApiPortal, LoginResult
+from api import ApiPortal, ApiResult
+import constant
 
 class Login:
  def __init__(self):
@@ -23,8 +24,15 @@ class Login:
      self.messages = messages.Messages()
 
  def mostra_login(self):   
-      self.DialogLogin.show()
+      if (constant.ENV == 'DEV'):
+         self.dialog_login.txt_usuario.setText(constant.TEST_USER)
+         self.dialog_login.txt_password.setText(constant.TEST_PASSWORD)
  
+      #self.DialogLogin.show()
+      if  (self.DialogLogin.exec_()):
+          return True
+      else:
+        return False 
 
      
  def limpa_info_login(self):
@@ -35,14 +43,14 @@ class Login:
  def executa_login(self):
      usuario = self.dialog_login.txt_usuario.text() 
      senha = self.dialog_login.txt_password.text() 
-     #cnpj = busca_cnpj_padrao_valor()
-
+    
      service = ApiPortal()
-     result = LoginResult()
+     result = ApiResult()
      result = service.login(usuario, senha)
      
      if (result.success): 
-      Auth.getInstance().token = result.token
+      Auth.getInstance().token = result.data
+      Auth.getInstance().user = usuario
       self.DialogLogin.accept()  
      else:  
       if (result.err):

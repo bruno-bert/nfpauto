@@ -1,4 +1,5 @@
 
+
 class Messages:
   def __init__(self):
    self.chave_invalida = "Chave de Acesso inválida" 
@@ -10,3 +11,7 @@ class Messages:
    self.cnpj_invalido = "CNPJ inválido"
    self.bad_login = "Falha no login"
    self.good_login = "Usuário logado com sucesso"
+   self.invalid_param = "Invalid params"
+   self.cnpj_estabelecimento_invalido = "CNPJ do Estabelecimento é inválido"
+   self.numero_notas_fora_range = "Número de notas está fora do permitido"
+   self.nenhuma_nota = "Nenhuma nota encontrada"

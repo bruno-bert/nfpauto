@@ -1,5 +1,5 @@
 #external libs
-from PyQt5 import QtWidgets, QtCore
+from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QTableWidgetItem, QListWidgetItem
 from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
 from bradocs4py.cnpj import  ValidadorCnpj 
@@ -26,6 +26,9 @@ from auth import Auth
 import ui_list
 import ui_cnpj_dialog
 import ui_cnpj_padrao_dialog
+
+
+from api import ApiPortal, ApiResult
 
 
 def carrega_lista_empresas(rows):
@@ -243,12 +246,51 @@ def on_buscar_arquivo():
   except ValueError as strerror:
       print(strerror)
    
+def valida_filtros_busca_nota():
+  
+  estab = ui.txt_cnpj_estab.text()
+  if ( (len(estab)>0) & (not valida_cnpj(estab))):
+    mostra_mensagem(m.cnpj_estabelecimento_invalido)
+    return False
+  
+  limit = int(ui.txt_num_notas.text())
+  if (limit <constant.MIN_NOTAS | limit > constant.MAX_NOTAS):  
+    mostra_mensagem(m.numero_notas_fora_range)
+    return False
+
+  return True  
 
 def buscar_portal(): 
-  print('nao implementado')
+  import json
   token = Auth.getInstance().token
   cnpj = busca_cnpj_padrao_valor() 
+  estab = ui.txt_cnpj_estab.text()
+  limit = int(ui.txt_num_notas.text())
 
+  service = ApiPortal()
+  result = ApiResult()
+  
+  if (valida_filtros_busca_nota()) :
+
+    result = service.busca_notas(token, cnpj, estab, limit )
+
+    if (result.success):
+      if (not result.data):
+        mostra_mensagem(m.nenhuma_nota) 
+      else:
+          for index, item in enumerate(result.data):
+            if (item['status']=="1"):
+              if valida_chave(item['chave']):
+                sequencia_adiciona_nota(item['chave'])         
+              else:
+                print("Item {item} - Chave {chave} inválida".format(item=index+1, chave=item['chave']))
+            
+    else:
+      mostra_mensagem(result.err) 
+
+
+def atualiza_botao_login():
+  ui.btn_login.setText("Usuário Logado: " + Auth.getInstance().user)
 
 def on_baixar_portal():
   rows = busca_cnpj_padrao()
@@ -257,7 +299,9 @@ def on_baixar_portal():
   else:
     token = Auth.getInstance().token
     if (not token):
-      servico_login.mostra_login()
+      if (servico_login.mostra_login()):
+        atualiza_botao_login()
+        buscar_portal()  
     else: 
       buscar_portal()
        
@@ -403,6 +447,7 @@ def modoarquivo():
 def modoportal():
     ui.tab_opcao.setCurrentIndex (3)
     ui.btn_portal.setFocus()
+    ui.txt_num_notas.text = str(constant.DEFAULT_NUMERO_NOTAS)
 
 def mostra_dialogCnpj():
    Dialog_Cnpj.show()
@@ -459,7 +504,7 @@ def txtChave_3_keyPressEvent(e):
        return      
      
      if (e.key() == QtCore.Qt.Key_L ):
-      servico_login.mostra_login()
+      on_abre_login()
       return  
 
      if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
@@ -560,7 +605,7 @@ def txtChave_keyPressEvent(e):
        return      
 
    if (e.key() == QtCore.Qt.Key_L ):
-      servico_login.mostra_login()
+      on_abre_login()
       return   
 
    if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
@@ -579,7 +624,8 @@ def txtChave_keyPressEvent(e):
 
 
 def on_abre_login():
-  servico_login.mostra_login()
+  if (servico_login.mostra_login()):
+    atualiza_botao_login()
 
 if __name__ == "__main__":
         import sys    
@@ -626,6 +672,12 @@ if __name__ == "__main__":
         
         dialog_cnpj_padrao.btn_ok.clicked.connect(confirma_cnpj_padrao)
         dialog_cnpj_padrao.btn_cancel.clicked.connect(Dialog_Cnpj.reject)
+        
+        ui.txt_num_notas.setValidator(QtGui.QIntValidator(constant.MIN_NOTAS , constant.MAX_NOTAS) )
+        ui.txt_num_notas.setText(str(constant.DEFAULT_NUMERO_NOTAS))
+        #ui.txt_num_notas.text = str(constant.DEFAULT_NUMERO_NOTAS)
+        ui.txt_cnpj_estab.setText(constant.EMPTY_STR)
+        #ui.txt_cnpj_estab.text  = constant.EMPTY_STR
 
         m = Messages()
 
