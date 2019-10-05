@@ -14,7 +14,7 @@ import os.path
 
 
 #internal modules
-from initdb import init_db, limpa_notas_db
+from db.initdb import init_db, limpa_notas_db
 import constant
 from nota import Nota
 from messages import Messages
@@ -29,6 +29,7 @@ import ui_cnpj_padrao_dialog
 
 
 from api import ApiPortal, ApiResult
+
 
 
 def carrega_lista_empresas(rows):
@@ -202,37 +203,23 @@ def chave_ja_existe(chave):
 def cnpj_ja_existe(cnpj):
  return cnpj in lista_cnpj
 
-
 def on_importar_arquivo():
-    file_path = ui.txt_arquivo.toPlainText()
-    if (os.path.exists(file_path)):
+  import importa
+  importador = importa.ImportaArquivo()
+  result = importa.ImportResult()
+  result = importador.importar_arquivo(ui.txt_arquivo.toPlainText())
+     
+  if (result.success): 
+    
+    for index, data in enumerate(result.data):
 
-        try:
-         f = open(file_path, 'r')
-         with f:
-          
-          data = f.readline().rstrip()            
-          conta_linha = 1
+      if valida_chave(data):
+          sequencia_adiciona_nota(data)         
+      else:
+          print("Linha {linha} - Chave {chave} inválida".format(linha=index, chave=data))
 
-          while data:
-           
-           if valida_chave(data):
-             sequencia_adiciona_nota(data)         
-           else:
-             print("Linha {linha} - Chave {chave} inválida".format(linha=conta_linha, chave=data))
-
-           data = f.readline().rstrip()            
-           conta_linha+=1
-
-         f.close() 
-
-        except ValueError as strerr:
-            print(strerr)
-        finally:
-         try:
-           f.close()     
-         except ValueError as strerr1:
-           print(strerr1) 
+  else:
+    mostra_mensagem(result.err)
    
 
 def on_buscar_arquivo():

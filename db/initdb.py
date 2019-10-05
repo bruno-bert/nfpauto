@@ -16,6 +16,10 @@ def init_db():
  cursor.execute("DROP TABLE IF EXISTS cnpj_padrao")
  cursor.execute("CREATE TABLE IF NOT EXISTS cnpj_padrao (id INTEGER PRIMARY KEY, cnpj TEXT  ) ")
 
+ #tabela configura arquivo
+ cursor.execute("DROP TABLE IF EXISTS config_arquivo")
+ cursor.execute("CREATE TABLE IF NOT EXISTS config_arquivo (id INTEGER PRIMARY KEY, cnpj TEXT, id_text TEXT, nome TEXT, delimitador TEXT, tipo TEXT, coluna INTEGER, nome_coluna TEXT, header TEXT   ) ")
+ 
 
  conn.commit()
  conn.close()

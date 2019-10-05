@@ -35,6 +35,7 @@ VALIDA_CNPJ=True
 
 #dev constants
 INICIA_DB_INICIO=False
+IMPORTA_PADRAO="TEXT_PADRAO" #id da configuracao do config_arquivo - usado na importacao do arquivo massivo
 
 #chaves de acesso - exemplos
 #35190928408897000106590004726960913876503564
