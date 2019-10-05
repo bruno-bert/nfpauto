@@ -11,6 +11,8 @@ QUERY_SAVE_CNPJ="INSERT INTO cnpj (cnpj, uf, modelo, serie)  VALUES (?,?,?,?)"
 QUERY_INSERT_CNPJ_PADRAO="INSERT INTO cnpj_padrao ('cnpj') VALUES ('{}')"
 QUERY_UPDATE_CNPJ_PADRAO="UPDATE cnpj_padrao set cnpj='{}'"
 QUERY_SELECT_CNPJ_PADRAO="select cnpj from cnpj_padrao"
+QUERY_SELECT_CONFIG_ARQUIVO="select * from config_arquivo where id_text = '{}'"
+QUERY_SELECT_CONFIG_ARQUIVO_PADRAO="select id_text from config_arquivo_padrao"
 
 VALIDA_CHAVE_PELO_DIGITO=True
 SALVA_NOTA_EXPIRADA=True

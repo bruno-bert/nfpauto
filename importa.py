@@ -1,6 +1,7 @@
 import messages
 import constant
 import os.path
+from database import busca_config_arquivo, busca_config_arquivo_padrao
 
 class ImportResult:
     def __init__(self):
@@ -16,31 +17,53 @@ class ImportaArquivo:
      self.messages = messages.Messages()
 
  def seleciona_tipo_importacao(self, file):
-   #todo - definir automaticamente
-  return constant.IMPORTA_PADRAO
+  result = busca_config_arquivo_padrao()
+  return result['id_text']
+  #return constant.IMPORTA_PADRAO
 
  def importar_arquivo(self, file):
    tipo = self.seleciona_tipo_importacao(file)
+   config = busca_config_arquivo(tipo)
+   config = dict(config)
    result = ImportResult()
-
-   if (tipo == "TEXT_PADRAO"): #txt sem header
-    result =  self.importa_arquivo_texto(file)
-   elif (tipo == "TEXT_MULT_COL"):
-    result =  self.importa_arquivo_texto(file)
-   elif (tipo == "TEXT_MULT_COL_HEADER"):
-    result =  self.importa_arquivo_texto(file)
-   elif (tipo == "CSV"):    
-    result =  self.importa_arquivo_texto(file)
-   elif (tipo == "CSV_HEADER"):  
-    result =  self.importa_arquivo_texto(file)
-   elif (tipo == "EXCEL"):
-    result =  self.importa_arquivo_texto(file)
-   elif (tipo == "EXCEL_HEADER"):
-    result = self.importa_arquivo_texto(file)
-
+   if (config['tipo'] == "txt"):
+    result =  self.importa_arquivo_texto(file, config)
+   elif (config['tipo'] == "csv"):
+    result =  self.importa_arquivo_csv(file, config)
+   elif (config['tipo'] == "excel"):
+    result =  self.importa_arquivo_excel(file, config)
+   
    return result
-    
- def importa_arquivo_texto(self, file):  
+
+ def importa_arquivo_csv(self, file, config):  
+   result = ImportResult()
+   list_result = [] 
+   result.data = list_result
+   result.status = 0
+   result.err =  None
+   result.success = True  
+   return result
+
+ def importa_arquivo_excel(self, file, config):  
+   result = ImportResult()
+   list_result = [] 
+   result.data = list_result
+   result.status = 0
+   result.err =  None
+   result.success = True  
+   return result
+
+ def extract_value(self, data, config): 
+   sep = str(data).split(config['delimitador'])
+   if (sep):
+     try:
+       return sep[int(config['coluna'])] 
+     except:
+       return constant.EMPTY_STR
+   else:
+     return constant.EMPTY_STR
+
+ def importa_arquivo_texto(self, file, config):  
      
      result = ImportResult()
      list_result = []
@@ -49,13 +72,16 @@ class ImportaArquivo:
 
         try:
          f = open(file, 'r')
+
          with f:
           
-          data = f.readline().rstrip()            
+          lines = f.readlines()
          
-          while data:
-           list_result.append(data) 
-           data = f.readline().rstrip()  
+          for data in lines:
+           data = self.extract_value(data, config)
+           if (data):
+             list_result.append(data.rstrip()) 
+             
          
          #adiciona resultados no retorno
          result.data = list_result

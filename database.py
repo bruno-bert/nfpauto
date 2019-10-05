@@ -13,6 +13,26 @@ def busca_cnpj_padrao():
  conn.close()
  return rows
 
+def busca_config_arquivo(id):
+ conn = sqlite3.connect('notas.db')
+ query = constant.QUERY_SELECT_CONFIG_ARQUIVO.format(id)
+ conn.row_factory = sqlite3.Row
+ cur = conn.cursor()
+ cur.execute(query)
+ rows = cur.fetchone()
+ conn.close()
+ return rows 
+ 
+def busca_config_arquivo_padrao():
+ conn = sqlite3.connect('notas.db')
+ query = constant.QUERY_SELECT_CONFIG_ARQUIVO_PADRAO
+ conn.row_factory = sqlite3.Row
+ cur = conn.cursor()
+ cur.execute(query)
+ rows = cur.fetchone()
+ conn.close()
+ return rows 
+
 def busca_cnpj_padrao_valor():
  rows = busca_cnpj_padrao()
  if (rows):

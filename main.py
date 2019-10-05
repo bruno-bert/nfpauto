@@ -225,7 +225,7 @@ def on_importar_arquivo():
 def on_buscar_arquivo():
  
   try:
-      filename = QtWidgets.QFileDialog.getOpenFileName(ui.centralwidget, constant.TITULO_DIALOG_ARQUIVO, None, "Text files (*.txt)")  
+      filename = QtWidgets.QFileDialog.getOpenFileName(ui.centralwidget, constant.TITULO_DIALOG_ARQUIVO, None, "Text files (*.txt);;Csv files (*.csv);;Excel files (*.xlsx);Excel files - Office 97-2003 (*.xls)")  
       print("filename: {}".format(filename))
       if filename: 
         ui.txt_arquivo.setPlainText(filename[0])  

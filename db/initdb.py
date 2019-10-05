@@ -19,6 +19,12 @@ def init_db():
  #tabela configura arquivo
  cursor.execute("DROP TABLE IF EXISTS config_arquivo")
  cursor.execute("CREATE TABLE IF NOT EXISTS config_arquivo (id INTEGER PRIMARY KEY, cnpj TEXT, id_text TEXT, nome TEXT, delimitador TEXT, tipo TEXT, coluna INTEGER, nome_coluna TEXT, header TEXT   ) ")
+
+ #tabela configura arquivo padrão
+ cursor.execute("DROP TABLE IF EXISTS config_arquivo_padrao")
+ cursor.execute("CREATE TABLE IF NOT EXISTS config_arquivo_padrao (id INTEGER PRIMARY KEY, id_text TEXT ) ")
+
+
  
 
  conn.commit()
