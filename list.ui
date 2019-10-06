@@ -299,7 +299,7 @@
      <string notr="true">selection-background-color: rgb(249, 255, 229);</string>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -622,6 +622,24 @@
         <string>Importar</string>
        </property>
       </widget>
+     </widget>
+     <widget class="QCheckBox" name="check_dir">
+      <property name="geometry">
+       <rect>
+        <x>690</x>
+        <y>30</y>
+        <width>201</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Modo Diretório XMLs</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_4">

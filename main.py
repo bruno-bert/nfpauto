@@ -204,10 +204,15 @@ def cnpj_ja_existe(cnpj):
  return cnpj in lista_cnpj
 
 def on_importar_arquivo():
-  import importa
+  import importa  
   importador = importa.ImportaArquivo()
   result = importa.ImportResult()
-  result = importador.importar_arquivo(ui.txt_arquivo.toPlainText())
+  path = ui.txt_arquivo.toPlainText()
+
+  if (not os.path.isdir(path) ) :
+    result = importador.importar_arquivo(path)
+  else: 
+    result = importador.importar_dir_xml(path)
      
   if (result.success): 
     
@@ -225,10 +230,15 @@ def on_importar_arquivo():
 def on_buscar_arquivo():
  
   try:
+    if (not ui.check_dir.isChecked()):
       filename = QtWidgets.QFileDialog.getOpenFileName(ui.centralwidget, constant.TITULO_DIALOG_ARQUIVO, None, "Text files (*.txt);;Csv files (*.csv);;Excel files (*.xlsx)")  
-      print("filename: {}".format(filename))
       if filename: 
         ui.txt_arquivo.setPlainText(filename[0])  
+    else: 
+      filename = str(QtWidgets.QFileDialog.getExistingDirectory(ui.centralwidget, constant.TITULO_DIALOG_ARQUIVO))
+      if filename: 
+        ui.txt_arquivo.setPlainText(filename)  
+      
       
   except ValueError as strerror:
       print(strerror)

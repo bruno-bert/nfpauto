@@ -2,7 +2,9 @@ import messages
 import constant
 import os.path
 from database import busca_config_arquivo, busca_config_arquivo_padrao
+from PyQt5.QtWidgets import QMessageBox
 import csv
+from xml.dom.minidom import parse
 
 class ImportResult:
     def __init__(self):
@@ -21,6 +23,34 @@ class ImportaArquivo:
   result = busca_config_arquivo_padrao()
   return result['id_text']
   #return constant.IMPORTA_PADRAO
+ 
+ def importar_dir_xml(self, path):
+   result = ImportResult()
+   list_result = [] 
+   
+   
+   files = []
+   # r=root, d=directories, f = files
+   for r, d, f in os.walk(path):
+      for file in f:
+          if '.xml' in file:
+              files.append(os.path.join(r, file))
+
+   for f in files:
+     try:
+      doc = parse(f)
+      elem = doc.getElementsByTagName("chNFe")
+      for e in elem:
+         list_result.append(e.childNodes[0].data)
+     except:
+       continue
+
+   result.data = list_result
+   result.status = 0
+   result.err =  None
+   result.success = True 
+
+   return result
 
  def importar_arquivo(self, file):
    tipo = self.seleciona_tipo_importacao(file)
@@ -61,7 +91,6 @@ class ImportaArquivo:
             list_result.append(row[coluna])  
         except:
           continue  
-            
     
 
    result.data = list_result

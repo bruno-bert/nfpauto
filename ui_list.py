@@ -247,6 +247,12 @@ class Ui_MainWindow(object):
         self.btn_importar = QtWidgets.QPushButton(self.grupo_chave_completa_3)
         self.btn_importar.setGeometry(QtCore.QRect(10, 80, 841, 41))
         self.btn_importar.setObjectName("btn_importar")
+        self.check_dir = QtWidgets.QCheckBox(self.tab_3)
+        self.check_dir.setGeometry(QtCore.QRect(690, 30, 201, 17))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.check_dir.setFont(font)
+        self.check_dir.setObjectName("check_dir")
         self.tab_opcao.addTab(self.tab_3, "")
         self.tab_4 = QtWidgets.QWidget()
         self.tab_4.setObjectName("tab_4")
@@ -318,7 +324,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tab_opcao.setCurrentIndex(3)
+        self.tab_opcao.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -347,6 +353,7 @@ class Ui_MainWindow(object):
         self.txt_arquivo.setToolTip(_translate("MainWindow", "Digite a Chave de Acesso Aqui"))
         self.btn_arquivo.setText(_translate("MainWindow", "Buscar Arquivo"))
         self.btn_importar.setText(_translate("MainWindow", "Importar"))
+        self.check_dir.setText(_translate("MainWindow", "Modo Diretório XMLs"))
         self.tab_opcao.setTabText(self.tab_opcao.indexOf(self.tab_3), _translate("MainWindow", "Importar Arquivo"))
         self.grupo_chave_completa_4.setTitle(_translate("MainWindow", "Clique no botão abaixo para buscar chaves de acesso disponíveis no Portal do Bem"))
         self.btn_portal.setText(_translate("MainWindow", "Baixar Chaves de Acesso"))
