@@ -13,7 +13,7 @@ def save_config():
  cursor.execute("INSERT INTO config_arquivo (cnpj, id_text, nome, delimitador, tipo, coluna, nome_coluna, header)  VALUES (?,?,?,?,?,?,?,?)",  ('*', 'CSV', 'Csv', ',', 'csv', '4','','0'  ) )
  cursor.execute("INSERT INTO config_arquivo (cnpj, id_text, nome, delimitador, tipo, coluna, nome_coluna, header)  VALUES (?,?,?,?,?,?,?,?)",  ('*', 'CSV_HEADER', 'Csv com Header e Ponto e Vírgula', ';', 'csv', '4','','1'  ) )
  cursor.execute("INSERT INTO config_arquivo (cnpj, id_text, nome, delimitador, tipo, coluna, nome_coluna, header)  VALUES (?,?,?,?,?,?,?,?)",  ('*', 'EXCEL', 'Excel sem Header', '', 'excel', '4','','0'  ) )
- cursor.execute("INSERT INTO config_arquivo (cnpj, id_text, nome, delimitador, tipo, coluna, nome_coluna, header)  VALUES (?,?,?,?,?,?,?,?)",  ('*', 'EXCEL_HEADER', 'Excel com Header', '', 'excel', '','Chave','1'  ) )
+ cursor.execute("INSERT INTO config_arquivo (cnpj, id_text, nome, delimitador, tipo, coluna, nome_coluna, header)  VALUES (?,?,?,?,?,?,?,?)",  ('*', 'EXCEL_HEADER', 'Excel com Header', '', 'excel', '4','Chave','1'  ) )
 
  cursor.execute("INSERT INTO config_arquivo_padrao (id_text)  VALUES ('{}')".format('TEXT_PADRAO')  )
 

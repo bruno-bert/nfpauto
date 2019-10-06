@@ -2,6 +2,7 @@ import messages
 import constant
 import os.path
 from database import busca_config_arquivo, busca_config_arquivo_padrao
+import csv
 
 class ImportResult:
     def __init__(self):
@@ -38,6 +39,31 @@ class ImportaArquivo:
  def importa_arquivo_csv(self, file, config):  
    result = ImportResult()
    list_result = [] 
+   delim = config['delimitador']
+   header = config['header']
+   coluna = int(config['coluna'])
+
+   with open(file) as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=delim)
+    
+    for index, row in enumerate(csv_reader):
+
+        #skip no header - caso arquivo tenha header
+        if ( (header == "1") & (index == 0) ):
+          continue 
+        
+        
+        try:
+          
+          if (delim != ','):
+            list_result.append(row[0].split(delim)[coluna])         
+          else:
+            list_result.append(row[coluna])  
+        except:
+          continue  
+            
+    
+
    result.data = list_result
    result.status = 0
    result.err =  None
@@ -76,11 +102,16 @@ class ImportaArquivo:
          with f:
           
           lines = f.readlines()
-         
-          for data in lines:
-           data = self.extract_value(data, config)
-           if (data):
-             list_result.append(data.rstrip()) 
+
+          for index, data in enumerate(lines):
+           
+            #skip no header - caso arquivo tenha header
+            if ( (config['header'] == "1") & (index == 0) ):
+             continue 
+
+            data = self.extract_value(data, config)
+            if (data):
+              list_result.append(data.rstrip()) 
              
          
          #adiciona resultados no retorno
