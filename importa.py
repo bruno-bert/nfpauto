@@ -71,8 +71,45 @@ class ImportaArquivo:
    return result
 
  def importa_arquivo_excel(self, file, config):  
+   import pandas as pd
+   from math import isnan
    result = ImportResult()
    list_result = [] 
+   header = None if (config["header"] == "0") else 0
+
+   if (config['sheet_name']):
+     data = pd.read_excel(file, sheet_name=config['sheet_name'], header=header, skip_blank_lines=True)
+   else:
+     data = pd.read_excel(file, header=header, skip_blank_lines=True)
+     
+   if (config['nome_coluna']):
+
+    df = pd.DataFrame(data, columns=[config['nome_coluna'] ] )
+
+    for index, row in df.iterrows():
+     try:
+      value = row.iloc[config["coluna"]]
+      is_str = isinstance(value, str)
+      if (is_str):   
+         list_result.append(value)    
+     except:
+      continue
+
+   else:
+
+    df = pd.DataFrame(data)
+    
+     #value = df.iloc[:, config.coluna]  
+    for index, row in df.iterrows():
+      try: 
+       value = row.iloc[config["coluna"]]
+       is_str = isinstance(value, str)
+       if (is_str): 
+         list_result.append(value)    
+      except:
+       continue
+
+    
    result.data = list_result
    result.status = 0
    result.err =  None

@@ -4,7 +4,7 @@ def update_config():
  conn = sqlite3.connect('notas.db')
  
  #alterar aqui para o tipo de importacao padrao
- id_text='CSV'
+ id_text='EXCEL'
 
  cursor = conn.cursor()
  cursor.execute("DELETE FROM config_arquivo_padrao")
