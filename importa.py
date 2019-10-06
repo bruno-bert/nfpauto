@@ -78,17 +78,18 @@ class ImportaArquivo:
    header = None if (config["header"] == "0") else 0
 
    if (config['sheet_name']):
-     data = pd.read_excel(file, sheet_name=config['sheet_name'], header=header, skip_blank_lines=True)
+     data = pd.read_excel(file, sheet_name=config['sheet_name'], header=header)
    else:
-     data = pd.read_excel(file, header=header, skip_blank_lines=True)
+     data = pd.read_excel(file, header=header)
      
    if (config['nome_coluna']):
 
-    df = pd.DataFrame(data, columns=[config['nome_coluna'] ] )
-
+    #df = pd.DataFrame(data, columns=[config['nome_coluna'] ] )
+    df = pd.DataFrame(data)
     for index, row in df.iterrows():
      try:
-      value = row.iloc[config["coluna"]]
+      #value = row.iloc[config["coluna"]]
+      value = row[config["nome_coluna"]]
       is_str = isinstance(value, str)
       if (is_str):   
          list_result.append(value)    
