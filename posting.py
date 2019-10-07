@@ -4,6 +4,7 @@ import ui_dialog_postar
 import messages
 import constant
 from database import busca_chaves_banco
+from nfp_posting.main import NotaPaulista_Posting
 
 class Posting:
  def __init__(self):
@@ -12,6 +13,7 @@ class Posting:
      self.DialogPostar = QtWidgets.QDialog()
      self.dialog_postar.setupUi(self.DialogPostar)
      self.DialogPostar.setModal(True)
+     self.service_posting = NotaPaulista_Posting()
 
      self.dialog_postar.btn_iniciar_postagem.clicked.connect(self.inicia_postagem)
      self.dialog_postar.btn_fechar.clicked.connect(self.DialogPostar.reject)
@@ -51,4 +53,4 @@ class Posting:
 
      
  def inicia_postagem(self):
-   print('nao implementado') 
+    self.service_posting.start()

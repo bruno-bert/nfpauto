@@ -1,0 +1,1 @@
+URL_PORTAL="https://www.nfp.fazenda.sp.gov.br/login.aspx?ReturnUrl=%2fPrincipal.aspx"
