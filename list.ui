@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1630</width>
-    <height>791</height>
+    <height>845</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -127,7 +127,7 @@
       <x>980</x>
       <y>460</y>
       <width>631</width>
-      <height>311</height>
+      <height>361</height>
      </rect>
     </property>
     <property name="title">
@@ -278,6 +278,27 @@
      </property>
      <property name="text">
       <string>L - Fazer Login no Portal</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_atalho1_8">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>310</y>
+       <width>591</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Tahoma</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>P - Postar no ambiente do governo</string>
      </property>
     </widget>
    </widget>
@@ -812,6 +833,24 @@
     </property>
     <property name="text">
      <string>Fazer Login no Portal</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_postar">
+    <property name="geometry">
+     <rect>
+      <x>1030</x>
+      <y>10</y>
+      <width>411</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Postar no Ambiente do Governo</string>
     </property>
    </widget>
   </widget>

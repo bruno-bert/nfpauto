@@ -19,6 +19,7 @@ import constant
 from nota import Nota
 from messages import Messages
 from login import Login
+from posting import Posting
 from database import *
 from auth import Auth 
 
@@ -504,6 +505,10 @@ def txtChave_3_keyPressEvent(e):
       on_abre_login()
       return  
 
+     if (e.key() == QtCore.Qt.Key_P ):
+      on_abre_postar()
+      return 
+
      if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
        text = get_chave_parcial()
        chave_ok = valida_chave(text)    
@@ -577,6 +582,12 @@ def lista_empresas_keyPressEvent(e):
        else: 
          return QtWidgets.QTableWidget.keyPressEvent(dialog.lista_empresas, e)
 
+def on_abre_postar():
+ if (servico_posting.mostra_posting()):
+   print('ok')
+ else:
+   print('nok')  
+
 def txtChave_keyPressEvent(e):
    if (e.key() == QtCore.Qt.Key_Escape ):
        limpa_campo_chave()
@@ -603,6 +614,11 @@ def txtChave_keyPressEvent(e):
 
    if (e.key() == QtCore.Qt.Key_L ):
       on_abre_login()
+      return   
+
+   
+   if (e.key() == QtCore.Qt.Key_P ):
+      on_abre_postar()
       return   
 
    if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
@@ -661,6 +677,9 @@ if __name__ == "__main__":
         ui.btn_arquivo.clicked.connect(on_buscar_arquivo)    
         ui.btn_importar.clicked.connect(on_importar_arquivo)    
         ui.btn_portal.clicked.connect(on_baixar_portal) 
+        
+        
+        
 
         dialog_cnpj_padrao.txt_cnpj_padrao.textChanged.connect(on_cnpj_padrao_alterado )
         dialog_cnpj_padrao.txt_cnpj_padrao.keyPressEvent = txt_cnpj_padrao_keyPressEvent
@@ -672,9 +691,11 @@ if __name__ == "__main__":
         
         ui.txt_num_notas.setValidator(QtGui.QIntValidator(constant.MIN_NOTAS , constant.MAX_NOTAS) )
         ui.txt_num_notas.setText(str(constant.DEFAULT_NUMERO_NOTAS))
-        #ui.txt_num_notas.text = str(constant.DEFAULT_NUMERO_NOTAS)
+        
         ui.txt_cnpj_estab.setText(constant.EMPTY_STR)
-        #ui.txt_cnpj_estab.text  = constant.EMPTY_STR
+        
+        servico_posting = Posting() 
+        ui.btn_postar.clicked.connect(on_abre_postar)    
 
         m = Messages()
 
