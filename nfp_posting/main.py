@@ -62,9 +62,6 @@ class NotaPaulista_Posting:
     try:
         print('procurando elemento aviso')
         element = WebDriverWait(driver, 200000000000 ).until(EC.presence_of_element_located( (By.NAME, "ctl00$ConteudoPagina$btnContinuar")) )
-
-        #element.send_keys(Keys.BACKSPACE)
-        #element.send_keys('3211-1111-1111-1111-1111-1111-1111-1113-3333-3333-3333')
         print('achou elemento continuar - clica no botao continuar')
         element.click()  
     finally:
@@ -106,20 +103,87 @@ class NotaPaulista_Posting:
       self.log('step 3 concluida!!')   
    
       #step 4 
+   STEP4 = False
+   if (STEP4):    
+    try:
+        self.log('procurando elemento mensagem popup')
+        element_popup = WebDriverWait(driver, 5 ).until(EC.presence_of_element_located( (By.XPATH, "//div[@aria-labelledby='ui-dialog-title-divPerguntaMaster']")) )
+        self.log('achou element janela popup')
+        self.log('procurando elemento mensagem popup botao click sim')
+        if (element_popup):
+         element = element_popup.find_element_by_xpath(".//span[contains(text(), 'Sim')]")
+         self.log('achou elemento mensagem popup botao click sim')
+         if (element):
+          element.click()
+        self.log('clicou elemento mensagem popup botao click sim')
+    except ValueError as strerr:
+        self.log(strerr) 
+    finally:
+        self.log('step 4 concluida!!')   
+
+
+      #step 5 
    try:
-      self.log('procurando elemento mensagem popup')
-      element_popup = WebDriverWait(driver, 5 ).until(EC.presence_of_element_located( (By.XPATH, "//div[@aria-labelledby='ui-dialog-title-divPerguntaMaster']")) )
-      self.log('achou element janela popup')
-      self.log('procurando elemento mensagem popup botao click sim')
-      element = element_popup.find_element_by_xpath(".//span[contains(text(), 'Sim')]")
-      self.log('achou elemento mensagem popup botao click sim')
-      element.click()
-      self.log('clicou elemento mensagem popup botao click sim')
+      self.log('procurando elemento chave de acesso')
+      div_dados = WebDriverWait(driver, 5 ).until(EC.presence_of_element_located( (By.ID, "divDados")) )
+      div_dados_com_chave = div_dados.find_element_by_id("divDocComChave")
+      div_dados_sem_chave = div_dados.find_element_by_id("divDocSemChave") 
+
+      input_chave = div_dados_com_chave.find_element_by_xpath("//span[contains(text(), 'Chave-de-acesso')]/following-sibling::input")
+
+      self.log('achou element chave de acesso')
+      self.log('preenchendo element com chave de acesso')
+      input_chave.send_keys(Keys.BACKSPACE)
+      input_chave.send_keys('3211-1111-1111-1111-1111-1111-1111-1113-3333-3333-3333')
+      self.log('chave de acesso preenchida') 
    except ValueError as strerr:
       self.log(strerr) 
    finally:
-      self.log('step 4 concluida!!')   
-   
+      self.log('step 5 concluida!!')    
+
+
+     #step 6 
+   try:
+      input_cnpj = WebDriverWait(driver, 1 ).until(EC.presence_of_element_located( (By.NAME, "ctl00$ConteudoPagina$entiFilantropica$txtCNPJEntidade")) )
+      input_cnpj.send_keys(Keys.BACKSPACE)
+      input_cnpj.send_keys('01.146.603/0001-69')       
+   except ValueError as strerr:
+      self.log(strerr) 
+   finally:
+      self.log('step 6 concluida!!')    
+
+      
+    #step 7 
+   try:
+      btn_buscar = WebDriverWait(driver, 1 ).until(EC.presence_of_element_located( (By.NAME, "ctl00$ConteudoPagina$entiFilantropica$btnBuscar")) )
+      btn_buscar.click()
+   except ValueError as strerr:
+      self.log(strerr) 
+   finally:
+      self.log('step 7 concluida!!')    
+
+
+    #step 8 
+   try:
+      input_selecao_entidade = WebDriverWait(driver, 10 ).until(EC.presence_of_element_located( (By.NAME, "ctl00$ConteudoPagina$entiFilantropica$gdvConsultaEntidades$ctl02$rdbSelecao")) )
+      input_selecao_entidade.click()
+   except ValueError as strerr:
+      self.log(strerr) 
+   finally:
+      self.log('step 8 concluida!!')    
+
+
+    
+     #step 9 
+   try:
+      btn_salvar = WebDriverWait(driver, 1 ).until(EC.presence_of_element_located( (By.NAME, "ctl00$ConteudoPagina$btnSalvarNota")) )
+      btn_salvar.click()
+   except ValueError as strerr:
+      self.log(strerr) 
+   finally:
+      self.log('step 9 concluida!!')   
+
+
 
 
  def log(self, message):
