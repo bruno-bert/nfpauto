@@ -141,8 +141,8 @@ class NotaPaulista_Posting:
    finally:
       self.log('step 5 concluida!!')    
 
-
-     #step 6 
+   
+   #step 6 
    try:
       input_cnpj = WebDriverWait(driver, 1 ).until(EC.presence_of_element_located( (By.NAME, "ctl00$ConteudoPagina$entiFilantropica$txtCNPJEntidade")) )
       input_cnpj.send_keys(Keys.BACKSPACE)
@@ -192,6 +192,8 @@ class NotaPaulista_Posting:
     try:
         element_erro = WebDriverWait(driver, 5 ).until(EC.presence_of_element_located( (By.XPATH, "//div[@aria-labelledby='ui-dialog-title-divErroMaster']")) )
         tela_erro_encontrada = True
+        erro_mensagem = element_erro.find_element_by_id("lblErroMaster")
+        self.log(erro_mensagem.text) 
         btn_Ok = element_erro.find_element_by_xpath(".//span[contains(text(), 'Ok')]")
         btn_Ok.click()
             
@@ -201,8 +203,27 @@ class NotaPaulista_Posting:
     finally:
         self.log('step 10 concluida!!')     
 
+    
+     #step 11
+     # se não deu erro - vai mostrar tela de sucesso 
+    if (not tela_erro_encontrada):
+      try:
+        element_success = WebDriverWait(driver, 5 ).until(EC.presence_of_element_located( (By.XPATH, "//div[@aria-labelledby='ui-dialog-title-divPerguntaMaster']")) )
+        tela_success_encontrada = True
+        success_mensagem = element_success.find_element_by_id("lblPerguntaMaster")
+        self.log(success_mensagem.text) 
+        btn_Nao = element_success.find_element_by_xpath(".//span[contains(text(), 'Não')]")
+        btn_Nao.click()
+            
+      except ValueError as strerr:
+        self.log(strerr) 
+        tela_success_encontrada = False
+      finally:
+        self.log('step 11 concluida!!')     
+     
 
-
+     #mensagemBemVindo
+     
  def log(self, message):
    print(message) 
 
