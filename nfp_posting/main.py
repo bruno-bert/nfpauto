@@ -125,9 +125,9 @@ class NotaPaulista_Posting:
       #step 5 
    try:
       self.log('procurando elemento chave de acesso')
-      div_dados = WebDriverWait(driver, 5 ).until(EC.presence_of_element_located( (By.ID, "divDados")) )
+      div_dados = WebDriverWait(driver, 3 ).until(EC.presence_of_element_located( (By.ID, "divDados")) )
       div_dados_com_chave = div_dados.find_element_by_id("divDocComChave")
-      div_dados_sem_chave = div_dados.find_element_by_id("divDocSemChave") 
+      #div_dados_sem_chave = div_dados.find_element_by_id("divDocSemChave") 
 
       input_chave = div_dados_com_chave.find_element_by_xpath("//span[contains(text(), 'Chave-de-acesso')]/following-sibling::input")
 
@@ -183,6 +183,23 @@ class NotaPaulista_Posting:
    finally:
       self.log('step 9 concluida!!')   
 
+    
+     #step 10
+     # se deu erro - vai mostrar tela de erro 
+   STEP10 = True
+   tela_erro_encontrada = False
+   if (STEP10):    
+    try:
+        element_erro = WebDriverWait(driver, 5 ).until(EC.presence_of_element_located( (By.XPATH, "//div[@aria-labelledby='ui-dialog-title-divErroMaster']")) )
+        tela_erro_encontrada = True
+        btn_Ok = element_erro.find_element_by_xpath(".//span[contains(text(), 'Ok')]")
+        btn_Ok.click()
+            
+    except ValueError as strerr:
+        self.log(strerr) 
+        tela_erro_encontrada = False
+    finally:
+        self.log('step 10 concluida!!')     
 
 
 
