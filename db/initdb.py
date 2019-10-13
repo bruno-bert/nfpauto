@@ -24,8 +24,16 @@ def init_db():
  cursor.execute("DROP TABLE IF EXISTS config_arquivo_padrao")
  cursor.execute("CREATE TABLE IF NOT EXISTS config_arquivo_padrao (id INTEGER PRIMARY KEY, id_text TEXT ) ")
 
+ #tabela script automation
+ #cursor.execute("DROP TABLE IF EXISTS scripts")
+ #cursor.execute("CREATE TABLE IF NOT EXISTS scripts (id INTEGER PRIMARY KEY, name TEXT, description TEXT, version TEXT DEFAULT '1', status TEXT DEFAULT '0', delete_on_sync TEXT DEFAULT '0' ) ")
 
- 
+  #tabela steps automation
+ #cursor.execute("DROP TABLE IF EXISTS steps")
+ #cursor.execute("CREATE TABLE IF NOT EXISTS steps (id INTEGER PRIMARY KEY, script_id INTEGER, step_id INTEGER, step_name TEXT, step_description TEXT, sort_number INTEGER DEFAULT 0, skip TEXT DEFAULT '0', on_success_goto INTEGER DEFAULT 0, on_error_goto INTEGER DEFAULT 0, steps_to_skip_on_next_run TEXT, find_method TEXT, expression TEXT, action TEXT, text_to_type TEXT, check_session TEXT DEFAULT '1', is_check_session_timeout TEXT DEFAULT '0', session_timeout__step_id INTEGER, on_session_timeout_start_from INTEGER, base_element TEXT, element_from_step INTEGER, error_message_finder TEXT, success_message_finder TEXT, must_wait_element TEXT default '1', timeout_to_element INTEGER, log_message_before TEXT, log_message_after TEXT, wait_manual_action TEXT DEFAULT '0', steps_to_skip_on_next_run TEXT ,  CONSTRAINT fk_script  FOREIGN KEY (script_id) REFERENCES scripts (id) ON DELETE CASCADE ) ")
+
+
+
 
  conn.commit()
  conn.close()

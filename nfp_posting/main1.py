@@ -11,44 +11,20 @@ import os
 import subprocess
 import webbrowser
 import time
-from database import busca_steps, busca_steps_check_timeout
-from script import Script, Step
+from script_cadastra_cupons import  CadastramentodeCupons
 
 class NotaPaulista_Posting:
  def __init__(self):
      self.messages = nfp_messages.Messages()
       
  def start(self):
-   #self.open_browser()
-   lista_steps = self.get_steps()
+   self.open_browser()
 
-   print(lista_steps)
-
- def get_steps(self):
-   script_id = self.get_script_id()
-   steps = busca_steps(script_id)
-   lista_steps = [] 
    
-   for data in steps:
-      step = dict(data)
-      model = self.row_to_model(step)
-      lista_steps.append(model)
-
-   return lista_steps     
-
- def get_script_id(self):
-    return 1 
+  
  
- def row_to_model(self, row):
-    model = Step()
-    for col_name in row:
-       model.__setattr__(col_name, row[col_name])
-             
-    return model
-
  def open_browser(self):
    
-
    try:
      chrome_options =  Options()
      chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
@@ -80,11 +56,11 @@ class NotaPaulista_Posting:
     
     cont+=1
 
-  
-   
-   
-
+   CadastramentodeCupons().execute(driver) 
+    
+   #step 1 
    STEP1 = False
+
    if (STEP1):
     try:
         print('procurando elemento aviso')

@@ -3,6 +3,9 @@ import sqlite3
 import constant
 import messages
 
+
+
+
 def busca_cnpj_padrao():
  conn = sqlite3.connect('notas.db')
  query = constant.QUERY_SELECT_CNPJ_PADRAO
@@ -103,3 +106,5 @@ def salva_cnpj_banco(new_nota):
                      new_nota.serie) )
     conn.commit()
     conn.close()   
+
+
