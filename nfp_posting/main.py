@@ -17,12 +17,80 @@ from script import Script, Step
 class NotaPaulista_Posting:
  def __init__(self):
      self.messages = nfp_messages.Messages()
-      
- def start(self):
-   #self.open_browser()
-   lista_steps = self.get_steps()
 
-   print(lista_steps)
+ def get_text_to_type(self, item):
+    return "11111"
+
+ def start(self):
+   driver = self.open_browser()
+   lista_steps = self.get_steps()
+   index = 0
+
+   while (index <= lista_steps.count - 1):
+      step = Step()
+      step = lista_steps[index]
+
+      try:
+         
+         #message before
+         self.log(step.log_message_before)
+
+         #find
+         if (step.must_wait_element == "1"):
+          if (step.find_method == "name"):  
+           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.NAME, step.expression)) )
+          elif (step.find_method == "id"):
+           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.ID, step.expression)) )  
+          elif (step.find_method == "xpath"):
+           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.XPATH, step.expression)) )  
+          elif (step.find_method == "class_name"):
+           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CLASS_NAME, step.expression)) )  
+          elif (step.find_method == "css_selector"):
+           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CSS_SELECTOR, step.expression)) )  
+          elif (step.find_method == "link_text"):              
+           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.LINK_TEXT, step.expression)) )  
+          elif (step.find_method == "tag_name"):      
+           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.TAG_NAME, step.expression)) )  
+          elif (step.find_method == "partial_link_text"):      
+           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.PARTIAL_LINK_TEXT, step.expression)) )   
+         else:
+          if (step.find_method == "name"):  
+           element = driver.find_element_by_name(step.expression)
+          elif (step.find_method == "id"):
+           element = driver.find_element_by_id(step.expression)
+          elif (step.find_method == "xpath"):
+           element = driver.find_element_by_xpath(step.expression)
+          elif (step.find_method == "class_name"):
+           element = driver.find_element_by_class_name(step.expression)
+          elif (step.find_method == "css_selector"):
+           element = driver.find_element_by_css_selector(step.expression)
+          elif (step.find_method == "link_text"):              
+           element = driver.find_element_by_link_text(step.expression)
+          elif (step.find_method == "tag_name"):      
+           element = driver.find_element_by_tag_name(step.expression)
+          elif (step.find_method == "partial_link_text"):      
+           element = driver.find_element_by_partial_link_text(step.expression)
+         
+         #action
+         if (step.action == "click"):
+            element.click()  
+
+         elif (step.action == "type"):
+            element.send_keys(Keys.BACKSPACE)
+            element.send_keys(self.get_text_to_type(step.text_to_type)) 
+
+         #elif (step.action == "find"):            
+         #elif (step.action == "show"):    
+         
+         #message after
+         self.log(step.log_message_after)
+
+      except ValueError as err:
+         self.log(print('step {} - erro: {}'.format(step.step_id, err)))  
+      finally:
+         self.log(print('step {} concluída'.format(step.step_id)))  
+         index += 1  
+        
 
  def get_steps(self):
    script_id = self.get_script_id()
@@ -79,6 +147,8 @@ class NotaPaulista_Posting:
      found = False 
     
     cont+=1
+
+   return driver 
 
   
    
