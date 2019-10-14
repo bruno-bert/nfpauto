@@ -11,27 +11,48 @@ import os
 import subprocess
 import webbrowser
 import time
-from database import busca_steps, busca_steps_check_timeout
+from database import busca_steps
 from script import Script, Step
 
 class NotaPaulista_Posting:
  def __init__(self):
      self.messages = nfp_messages.Messages()
 
- def get_text_to_type(self, item):
+ def get_text_to_type(self, item, values):
     return "11111"
 
+ def get_element_from_other_step(self, steps, step_id):
+    step = Step()
+    step = next((x for x in steps if x.step_id == step_id), None)
+    return step.resulted_element
+
  def start(self):
-   driver = self.open_browser()
+   driver = None #self.open_browser()
    lista_steps = self.get_steps()
    index = 0
+   values = None
 
+
+   #filtra lista retirando os steps de checagem de sessao 
+   lista_steps_sem_timeout = list(filter(lambda x: x.is_check_session_timeout == '0', lista_steps)) 
+
+   #busca as steps de checagem de timeout e inclui em lista separada
+   lista_steps_timeout = list(filter(lambda x: x.is_check_session_timeout == '1', lista_steps))  
+
+   #orderna lista pelo sort_number
+   lista_steps_sem_timeout.sort(key=lambda x: x.sort_number)
+   lista_steps_timeout.sort(key=lambda x: x.sort_number)
+    
+   
+   
    while (index <= lista_steps.count - 1):
-      step = Step()
-      step = lista_steps[index]
-
+      step = Step()      
+      step = lista_steps_sem_timeout[index]
+    
       try:
          
+        if (not step.skip):
+
          #message before
          self.log(step.log_message_before)
 
@@ -54,22 +75,28 @@ class NotaPaulista_Posting:
           elif (step.find_method == "partial_link_text"):      
            element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.PARTIAL_LINK_TEXT, step.expression)) )   
          else:
+
+          if (step.base_element != 'other_step'):
+            base_element = driver
+          else:
+            base_element = self.get_element_from_other_step(lista_steps, step.element_from_step)
+
           if (step.find_method == "name"):  
-           element = driver.find_element_by_name(step.expression)
+           element = base_element.find_element_by_name(step.expression)
           elif (step.find_method == "id"):
-           element = driver.find_element_by_id(step.expression)
+           element = base_element.find_element_by_id(step.expression)
           elif (step.find_method == "xpath"):
-           element = driver.find_element_by_xpath(step.expression)
+           element = base_element.find_element_by_xpath(step.expression)
           elif (step.find_method == "class_name"):
-           element = driver.find_element_by_class_name(step.expression)
+           element = base_element.find_element_by_class_name(step.expression)
           elif (step.find_method == "css_selector"):
-           element = driver.find_element_by_css_selector(step.expression)
+           element = base_element.find_element_by_css_selector(step.expression)
           elif (step.find_method == "link_text"):              
-           element = driver.find_element_by_link_text(step.expression)
+           element = base_element.find_element_by_link_text(step.expression)
           elif (step.find_method == "tag_name"):      
-           element = driver.find_element_by_tag_name(step.expression)
+           element = base_element.find_element_by_tag_name(step.expression)
           elif (step.find_method == "partial_link_text"):      
-           element = driver.find_element_by_partial_link_text(step.expression)
+           element = base_element.find_element_by_partial_link_text(step.expression)
          
          #action
          if (step.action == "click"):
@@ -77,13 +104,17 @@ class NotaPaulista_Posting:
 
          elif (step.action == "type"):
             element.send_keys(Keys.BACKSPACE)
-            element.send_keys(self.get_text_to_type(step.text_to_type)) 
+            element.send_keys(self.get_text_to_type(step.text_to_type, values)) 
 
          #elif (step.action == "find"):            
          #elif (step.action == "show"):    
          
          #message after
          self.log(step.log_message_after)
+
+        else:
+         #skipped step
+         self.log(print('pulou step {} '.format(step.step_id)))   
 
       except ValueError as err:
          self.log(print('step {} - erro: {}'.format(step.step_id, err)))  
@@ -153,51 +184,9 @@ class NotaPaulista_Posting:
   
    
    
-
-   STEP1 = False
-   if (STEP1):
-    try:
-        print('procurando elemento aviso')
-        element = WebDriverWait(driver, 200000000000 ).until(EC.presence_of_element_located( (By.NAME, "ctl00$ConteudoPagina$btnContinuar")) )
-        print('achou elemento continuar - clica no botao continuar')
-        element.click()  
-    finally:
-        print('achou!!')  
-
-   #step 2 
-   try:
-      self.log('procurando elemento menu nivel 1')
-      element = WebDriverWait(driver, 5 ).until(EC.presence_of_element_located( (By.XPATH, "//a[contains(text(), 'Entidades')]")) )
-      self.log('clicando elemento menu nivel 1')
-      element.click()
-      self.log('clicou elemento menu nivel 1')
-      
-      
-      self.log('procurando elemento menu nivel 2')
-      element = WebDriverWait(driver, 5 ).until(EC.presence_of_element_located( (By.XPATH, "//a[@href='/EntidadesFilantropicas/DoacaoNotasListagem.aspx']")) )
-      self.log('clicando elemento menu nivel 2')
-      element.click()  
-      self.log('clicou elemento menu nivel 2')
-
+     
       
 
-   except ValueError as strerr:
-      self.log(strerr) 
-   finally:
-      self.log('step 2 concluida!!')   
-    
-
-     #step 3 
-   try:
-      self.log('procurando elemento nova doacao')
-      element = WebDriverWait(driver, 5 ).until(EC.presence_of_element_located( (By.ID, "btnNovaDoacao")) )
-      self.log('clicando elemento nova doacao')
-      element.click()
-      self.log('clicou elemento nova doacao')
-   except ValueError as strerr:
-      self.log(strerr) 
-   finally:
-      self.log('step 3 concluida!!')   
    
       #step 4 
    STEP4 = False
