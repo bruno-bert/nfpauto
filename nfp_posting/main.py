@@ -18,20 +18,46 @@ class NotaPaulista_Posting:
  def __init__(self):
      self.messages = nfp_messages.Messages()
 
- def get_text_to_type(self, item, values):
-    return "11111"
+ def is_dinamic(self, attr):
+    index = str(attr).find("{")
+    return (index != -1) 
+
+ def get_text_to_type(self, attribute, values):
+    if self.is_dinamic(attribute):
+     return values[attribute]
 
  def get_element_from_other_step(self, steps, step_id):
     step = Step()
     step = next((x for x in steps if x.step_id == step_id), None)
     return step.resulted_element
 
- def start(self):
-   driver = None #self.open_browser()
-   lista_steps = self.get_steps()
-   index = 0
-   values = None
+ def get_chaves(self):
+    return ['11111','22222','33333']
+ 
+ def get_cnpj(self):
+    return '01.146.603/0001-69'
+ 
+ def must_skip(self, step_id,  skip, steps_to_skip ):
+   if (skip): 
+      return True
+   else:
+      if (not steps_to_skip) or (steps_to_skip == 'none'):
+         return True
+      else:
+        steps_to_check = str(steps_to_skip).split('|')
+        for step_to_check in steps_to_check:
+          if (step_to_check == step_id):
+             return True
 
+      return False       
+
+
+ def start(self):
+   driver = self.open_browser()
+   lista_steps = self.get_steps()
+   values = None
+   chaves = self.get_chaves()
+   cnpj = self.get_cnpj()
 
    #filtra lista retirando os steps de checagem de sessao 
    lista_steps_sem_timeout = list(filter(lambda x: x.is_check_session_timeout == '0', lista_steps)) 
@@ -42,16 +68,26 @@ class NotaPaulista_Posting:
    #orderna lista pelo sort_number
    lista_steps_sem_timeout.sort(key=lambda x: x.sort_number)
    lista_steps_timeout.sort(key=lambda x: x.sort_number)
-    
+
+   #pega primeira step 
+   index = 0
+   step = Step()      
+   step = lista_steps_sem_timeout[index]
+   step_id = step.step_id
+   chegou_fim = False
    
-   
-   while (index <= lista_steps.count - 1):
-      step = Step()      
-      step = lista_steps_sem_timeout[index]
+   for chave in chaves:
     
+    values = { chave: chave, cnpj: cnpj}
+
+    while (not chegou_fim):
+      
+      #pega step pelo step id
+      step = next((x for x in lista_steps_sem_timeout if x.step_id == step_id), None)
+
       try:
          
-        if (not step.skip):
+        if (not self.must_skip(step.step_id, step.skip, steps_to_skip)):
 
          #message before
          self.log(step.log_message_before)
@@ -97,6 +133,9 @@ class NotaPaulista_Posting:
            element = base_element.find_element_by_tag_name(step.expression)
           elif (step.find_method == "partial_link_text"):      
            element = base_element.find_element_by_partial_link_text(step.expression)
+          
+         #salva elemento resultante
+         step.resulted_element = element
          
          #action
          if (step.action == "click"):
@@ -106,22 +145,48 @@ class NotaPaulista_Posting:
             element.send_keys(Keys.BACKSPACE)
             element.send_keys(self.get_text_to_type(step.text_to_type, values)) 
 
+         elif (step.action == "show"):   
+
+            if (step.error_message_finder == "1"):
+             step.resulted_error_message = element.text
+             step.success = False
+
+            if (step.success_message_finder == "1"):
+             step.resulted_success_message = element.text
+             step.success = True
+             
+            
+            self.log('step {} - resultado: {}'.format(step.step_id, element.text))
+            
          #elif (step.action == "find"):            
-         #elif (step.action == "show"):    
-         
          #message after
          self.log(step.log_message_after)
 
         else:
          #skipped step
-         self.log(print('pulou step {} '.format(step.step_id)))   
+         self.log('pulou step {} '.format(step.step_id))   
+        
+        success = True
 
       except ValueError as err:
-         self.log(print('step {} - erro: {}'.format(step.step_id, err)))  
+         self.log('step {} - erro: {}'.format(step.step_id, err))
+         success = False
       finally:
-         self.log(print('step {} concluída'.format(step.step_id)))  
-         index += 1  
-        
+         self.log('step {} concluída'.format(step.step_id))
+
+         if ((step.on_success_goto != 0) & success):
+          step_id = step.on_success_goto 
+          steps_to_skip = step.steps_to_skip_on_next_run   
+         elif ((step.on_error_goto != 0) & (not success) ):
+          step_id = step.on_error_goto  
+          steps_to_skip = step.steps_to_skip_on_next_run   
+         else:
+          index = lista_steps_sem_timeout.index(step)
+          index += 1   
+          step_id = lista_steps_sem_timeout[index]
+          steps_to_skip = step.steps_to_skip_on_next_run     
+
+         chegou_fim = step.is_end_step
 
  def get_steps(self):
    script_id = self.get_script_id()
@@ -181,134 +246,6 @@ class NotaPaulista_Posting:
 
    return driver 
 
-  
-   
-   
-     
-      
-
-   
-      #step 4 
-   STEP4 = False
-   if (STEP4):    
-    try:
-        self.log('procurando elemento mensagem popup')
-        element_popup = WebDriverWait(driver, 5 ).until(EC.presence_of_element_located( (By.XPATH, "//div[@aria-labelledby='ui-dialog-title-divPerguntaMaster']")) )
-        self.log('achou element janela popup')
-        self.log('procurando elemento mensagem popup botao click sim')
-        if (element_popup):
-         element = element_popup.find_element_by_xpath(".//span[contains(text(), 'Sim')]")
-         self.log('achou elemento mensagem popup botao click sim')
-         if (element):
-          element.click()
-        self.log('clicou elemento mensagem popup botao click sim')
-    except ValueError as strerr:
-        self.log(strerr) 
-    finally:
-        self.log('step 4 concluida!!')   
-
-
-      #step 5 
-   try:
-      self.log('procurando elemento chave de acesso')
-      div_dados = WebDriverWait(driver, 3 ).until(EC.presence_of_element_located( (By.ID, "divDados")) )
-      div_dados_com_chave = div_dados.find_element_by_id("divDocComChave")
-      #div_dados_sem_chave = div_dados.find_element_by_id("divDocSemChave") 
-
-      input_chave = div_dados_com_chave.find_element_by_xpath("//span[contains(text(), 'Chave-de-acesso')]/following-sibling::input")
-
-      self.log('achou element chave de acesso')
-      self.log('preenchendo element com chave de acesso')
-      input_chave.send_keys(Keys.BACKSPACE)
-      input_chave.send_keys('3211-1111-1111-1111-1111-1111-1111-1113-3333-3333-3333')
-      self.log('chave de acesso preenchida') 
-   except ValueError as strerr:
-      self.log(strerr) 
-   finally:
-      self.log('step 5 concluida!!')    
-
-   
-   #step 6 
-   try:
-      input_cnpj = WebDriverWait(driver, 1 ).until(EC.presence_of_element_located( (By.NAME, "ctl00$ConteudoPagina$entiFilantropica$txtCNPJEntidade")) )
-      input_cnpj.send_keys(Keys.BACKSPACE)
-      input_cnpj.send_keys('01.146.603/0001-69')       
-   except ValueError as strerr:
-      self.log(strerr) 
-   finally:
-      self.log('step 6 concluida!!')    
-
-      
-    #step 7 
-   try:
-      btn_buscar = WebDriverWait(driver, 1 ).until(EC.presence_of_element_located( (By.NAME, "ctl00$ConteudoPagina$entiFilantropica$btnBuscar")) )
-      btn_buscar.click()
-   except ValueError as strerr:
-      self.log(strerr) 
-   finally:
-      self.log('step 7 concluida!!')    
-
-
-    #step 8 
-   try:
-      input_selecao_entidade = WebDriverWait(driver, 10 ).until(EC.presence_of_element_located( (By.NAME, "ctl00$ConteudoPagina$entiFilantropica$gdvConsultaEntidades$ctl02$rdbSelecao")) )
-      input_selecao_entidade.click()
-   except ValueError as strerr:
-      self.log(strerr) 
-   finally:
-      self.log('step 8 concluida!!')    
-
-
-    
-     #step 9 
-   try:
-      btn_salvar = WebDriverWait(driver, 1 ).until(EC.presence_of_element_located( (By.NAME, "ctl00$ConteudoPagina$btnSalvarNota")) )
-      btn_salvar.click()
-   except ValueError as strerr:
-      self.log(strerr) 
-   finally:
-      self.log('step 9 concluida!!')   
-
-    
-     #step 10
-     # se deu erro - vai mostrar tela de erro 
-   STEP10 = True
-   tela_erro_encontrada = False
-   if (STEP10):    
-    try:
-        element_erro = WebDriverWait(driver, 5 ).until(EC.presence_of_element_located( (By.XPATH, "//div[@aria-labelledby='ui-dialog-title-divErroMaster']")) )
-        tela_erro_encontrada = True
-        erro_mensagem = element_erro.find_element_by_id("lblErroMaster")
-        self.log(erro_mensagem.text) 
-        btn_Ok = element_erro.find_element_by_xpath(".//span[contains(text(), 'Ok')]")
-        btn_Ok.click()
-            
-    except ValueError as strerr:
-        self.log(strerr) 
-        tela_erro_encontrada = False
-    finally:
-        self.log('step 10 concluida!!')     
-
-    
-     #step 11
-     # se não deu erro - vai mostrar tela de sucesso 
-    if (not tela_erro_encontrada):
-      try:
-        element_success = WebDriverWait(driver, 5 ).until(EC.presence_of_element_located( (By.XPATH, "//div[@aria-labelledby='ui-dialog-title-divPerguntaMaster']")) )
-        tela_success_encontrada = True
-        success_mensagem = element_success.find_element_by_id("lblPerguntaMaster")
-        self.log(success_mensagem.text) 
-        btn_Nao = element_success.find_element_by_xpath(".//span[contains(text(), 'Não')]")
-        btn_Nao.click()
-            
-      except ValueError as strerr:
-        self.log(strerr) 
-        tela_success_encontrada = False
-      finally:
-        self.log('step 11 concluida!!')     
-     
-
-     #mensagemBemVindo
 
  def log(self, message):
    print(message) 
