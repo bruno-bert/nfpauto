@@ -37,16 +37,16 @@ class NotaPaulista_Posting:
  def get_cnpj(self):
     return '01.146.603/0001-69'
  
- def must_skip(self, step_id,  skip, steps_to_skip ):
-   if (skip): 
-      return True
+ def must_skip(self, step, steps_to_skip ):
+   if (step.skip): 
+      return True   
    else:
-      if (not steps_to_skip) or (steps_to_skip == 'none'):
-         return True
+      if (not steps_to_skip) or (steps_to_skip == 'none'):        
+        return True
       else:
         steps_to_check = str(steps_to_skip).split('|')
         for step_to_check in steps_to_check:
-          if (step_to_check == step_id):
+          if (step_to_check == step.step_id):
              return True
 
       return False       
@@ -60,19 +60,23 @@ class NotaPaulista_Posting:
    cnpj = self.get_cnpj()
 
    #filtra lista retirando os steps de checagem de sessao 
-   lista_steps_sem_timeout = list(filter(lambda x: x.is_check_session_timeout == '0', lista_steps)) 
+   #lista_steps_sem_timeout = list(filter(lambda x: x.is_check_session_timeout == '0', lista_steps)) 
 
    #busca as steps de checagem de timeout e inclui em lista separada
-   lista_steps_timeout = list(filter(lambda x: x.is_check_session_timeout == '1', lista_steps))  
+   #lista_steps_timeout = list(filter(lambda x: x.is_check_session_timeout == '1', lista_steps))  
+
+  
 
    #orderna lista pelo sort_number
-   lista_steps_sem_timeout.sort(key=lambda x: x.sort_number)
-   lista_steps_timeout.sort(key=lambda x: x.sort_number)
+   #lista_steps_sem_timeout.sort(key=lambda x: x.sort_number)
+   #lista_steps_timeout.sort(key=lambda x: x.sort_number)
+   lista_steps.sort(key=lambda x: x.sort_number)
 
    #pega primeira step 
    index = 0
    step = Step()      
-   step = lista_steps_sem_timeout[index]
+   #step = lista_steps_sem_timeout[index]
+   step = lista_steps[index]
    step_id = step.step_id
    chegou_fim = False
    
@@ -83,11 +87,13 @@ class NotaPaulista_Posting:
     while (not chegou_fim):
       
       #pega step pelo step id
-      step = next((x for x in lista_steps_sem_timeout if x.step_id == step_id), None)
+      #step = next((x for x in lista_steps_sem_timeout if x.step_id == step_id), None)
+      step = next((x for x in lista_steps if x.step_id == step_id), None)
+      
 
       try:
          
-        if (not self.must_skip(step.step_id, step.skip, steps_to_skip)):
+        if (not self.must_skip(step, steps_to_skip)):
 
          #message before
          self.log(step.log_message_before)
@@ -158,7 +164,8 @@ class NotaPaulista_Posting:
             
             self.log('step {} - resultado: {}'.format(step.step_id, element.text))
             
-         #elif (step.action == "find"):            
+         #elif (step.action == "find"):
+                     
          #message after
          self.log(step.log_message_after)
 
@@ -173,20 +180,32 @@ class NotaPaulista_Posting:
          success = False
       finally:
          self.log('step {} concluída'.format(step.step_id))
-
+       
+         #se foi bem sucedido e tem um step seguinte identificado
          if ((step.on_success_goto != 0) & success):
           step_id = step.on_success_goto 
-          steps_to_skip = step.steps_to_skip_on_next_run   
+          steps_to_skip = step.steps_to_skip_on_next_run             
          elif ((step.on_error_goto != 0) & (not success) ):
+          #se deu erro e tem um step seguinte identificado
           step_id = step.on_error_goto  
-          steps_to_skip = step.steps_to_skip_on_next_run   
+          steps_to_skip = step.steps_to_skip_on_next_run
          else:
-          index = lista_steps_sem_timeout.index(step)
-          index += 1   
-          step_id = lista_steps_sem_timeout[index]
-          steps_to_skip = step.steps_to_skip_on_next_run     
+          #se nao tem um step seguinte identificado e foi bem sucedido, segue pro proximo step da lista  
+          if (success):  
+            #index = lista_steps_sem_timeout.index(step)
+            index = lista_steps.index(step)
+            index += 1   
+            #step_id = lista_steps_sem_timeout[index]
+            step_id = lista_steps[index]
+            steps_to_skip = step.steps_to_skip_on_next_run
+          else:
+            #se deu erro inesperado e nao tem  pra onde ir, para o processo
+
 
          chegou_fim = step.is_end_step
+
+        
+
 
  def get_steps(self):
    script_id = self.get_script_id()
