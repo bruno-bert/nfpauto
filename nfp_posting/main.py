@@ -58,154 +58,135 @@ class NotaPaulista_Posting:
    values = None
    chaves = self.get_chaves()
    cnpj = self.get_cnpj()
-
-   #filtra lista retirando os steps de checagem de sessao 
-   #lista_steps_sem_timeout = list(filter(lambda x: x.is_check_session_timeout == '0', lista_steps)) 
-
-   #busca as steps de checagem de timeout e inclui em lista separada
-   #lista_steps_timeout = list(filter(lambda x: x.is_check_session_timeout == '1', lista_steps))  
-
   
-
    #orderna lista pelo sort_number
-   #lista_steps_sem_timeout.sort(key=lambda x: x.sort_number)
-   #lista_steps_timeout.sort(key=lambda x: x.sort_number)
    lista_steps.sort(key=lambda x: x.sort_number)
 
    #pega primeira step 
    index = 0
    step = Step()      
-   #step = lista_steps_sem_timeout[index]
    step = lista_steps[index]
    step_id = step.step_id
    chegou_fim = False
    
    for chave in chaves:
     
-    values = { chave: chave, cnpj: cnpj}
+      values = { chave: chave, cnpj: cnpj}
 
-    while (not chegou_fim):
+      while (not chegou_fim):
       
-      #pega step pelo step id
-      #step = next((x for x in lista_steps_sem_timeout if x.step_id == step_id), None)
-      step = next((x for x in lista_steps if x.step_id == step_id), None)
-      
-
-      try:
+         #pega step pelo step id
+         step = next((x for x in lista_steps if x.step_id == step_id), None)
          
-        if (not self.must_skip(step, steps_to_skip)):
 
-         #message before
-         self.log(step.log_message_before)
-
-         #find
-         if (step.must_wait_element == "1"):
-          if (step.find_method == "name"):  
-           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.NAME, step.expression)) )
-          elif (step.find_method == "id"):
-           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.ID, step.expression)) )  
-          elif (step.find_method == "xpath"):
-           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.XPATH, step.expression)) )  
-          elif (step.find_method == "class_name"):
-           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CLASS_NAME, step.expression)) )  
-          elif (step.find_method == "css_selector"):
-           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CSS_SELECTOR, step.expression)) )  
-          elif (step.find_method == "link_text"):              
-           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.LINK_TEXT, step.expression)) )  
-          elif (step.find_method == "tag_name"):      
-           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.TAG_NAME, step.expression)) )  
-          elif (step.find_method == "partial_link_text"):      
-           element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.PARTIAL_LINK_TEXT, step.expression)) )   
-         else:
-
-          if (step.base_element != 'other_step'):
-            base_element = driver
-          else:
-            base_element = self.get_element_from_other_step(lista_steps, step.element_from_step)
-
-          if (step.find_method == "name"):  
-           element = base_element.find_element_by_name(step.expression)
-          elif (step.find_method == "id"):
-           element = base_element.find_element_by_id(step.expression)
-          elif (step.find_method == "xpath"):
-           element = base_element.find_element_by_xpath(step.expression)
-          elif (step.find_method == "class_name"):
-           element = base_element.find_element_by_class_name(step.expression)
-          elif (step.find_method == "css_selector"):
-           element = base_element.find_element_by_css_selector(step.expression)
-          elif (step.find_method == "link_text"):              
-           element = base_element.find_element_by_link_text(step.expression)
-          elif (step.find_method == "tag_name"):      
-           element = base_element.find_element_by_tag_name(step.expression)
-          elif (step.find_method == "partial_link_text"):      
-           element = base_element.find_element_by_partial_link_text(step.expression)
-          
-         #salva elemento resultante
-         step.resulted_element = element
-         
-         #action
-         if (step.action == "click"):
-            element.click()  
-
-         elif (step.action == "type"):
-            element.send_keys(Keys.BACKSPACE)
-            element.send_keys(self.get_text_to_type(step.text_to_type, values)) 
-
-         elif (step.action == "show"):   
-
-            if (step.error_message_finder == "1"):
-             step.resulted_error_message = element.text
-             step.success = False
-
-            if (step.success_message_finder == "1"):
-             step.resulted_success_message = element.text
-             step.success = True
-             
+         try:
             
-            self.log('step {} - resultado: {}'.format(step.step_id, element.text))
+            if (not self.must_skip(step, steps_to_skip)):
+
+               #message before
+               self.log(step.log_message_before)
+
+               #find
+               if (step.must_wait_element == "1"):
+                  if (step.find_method == "name"):  
+                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.NAME, step.expression)) )
+                  elif (step.find_method == "id"):
+                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.ID, step.expression)) )  
+                  elif (step.find_method == "xpath"):
+                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.XPATH, step.expression)) )  
+                  elif (step.find_method == "class_name"):
+                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CLASS_NAME, step.expression)) )  
+                  elif (step.find_method == "css_selector"):
+                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CSS_SELECTOR, step.expression)) )  
+                  elif (step.find_method == "link_text"):              
+                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.LINK_TEXT, step.expression)) )  
+                  elif (step.find_method == "tag_name"):      
+                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.TAG_NAME, step.expression)) )  
+                  elif (step.find_method == "partial_link_text"):      
+                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.PARTIAL_LINK_TEXT, step.expression)) )   
+               else:
+
+                  if (step.base_element != 'other_step'):
+                     base_element = driver
+                  else:
+                     base_element = self.get_element_from_other_step(lista_steps, step.element_from_step)
+
+                     if (step.find_method == "name"):  
+                       element = base_element.find_element_by_name(step.expression)
+                     elif (step.find_method == "id"):
+                       element = base_element.find_element_by_id(step.expression)
+                     elif (step.find_method == "xpath"):
+                       element = base_element.find_element_by_xpath(step.expression)
+                     elif (step.find_method == "class_name"):
+                       element = base_element.find_element_by_class_name(step.expression)
+                     elif (step.find_method == "css_selector"):
+                       element = base_element.find_element_by_css_selector(step.expression)
+                     elif (step.find_method == "link_text"):              
+                       element = base_element.find_element_by_link_text(step.expression)
+                     elif (step.find_method == "tag_name"):      
+                       element = base_element.find_element_by_tag_name(step.expression)
+                     elif (step.find_method == "partial_link_text"):      
+                       element = base_element.find_element_by_partial_link_text(step.expression)
+                  
+               #salva elemento resultante
+               step.resulted_element = element
+               
+               #action
+               if (step.action == "click"):
+                  element.click()  
+
+               elif (step.action == "type"):
+                  element.send_keys(Keys.BACKSPACE)
+                  element.send_keys(self.get_text_to_type(step.text_to_type, values)) 
+
+               elif (step.action == "show"):   
+
+                  if (step.error_message_finder == "1"):
+                    step.resulted_error_message = element.text
+                    step.success = False
+
+                  if (step.success_message_finder == "1"):
+                    step.resulted_success_message = element.text
+                    step.success = True
+                  
+                  
+                  self.log('step {} - resultado: {}'.format(step.step_id, element.text))
+                  
+               #elif (step.action == "find"):
+                           
+               #message after
+               self.log(step.log_message_after)
+
+            else:
+               #skipped step
+               self.log('pulou step {} '.format(step.step_id))   
             
-         #elif (step.action == "find"):
-                     
-         #message after
-         self.log(step.log_message_after)
+            success = True
 
-        else:
-         #skipped step
-         self.log('pulou step {} '.format(step.step_id))   
-        
-        success = True
+         except ValueError as err:
+            self.log('step {} - erro: {}'.format(step.step_id, err))
+            success = False
+         finally:
+            self.log('step {} concluída'.format(step.step_id))
 
-      except ValueError as err:
-         self.log('step {} - erro: {}'.format(step.step_id, err))
-         success = False
-      finally:
-         self.log('step {} concluída'.format(step.step_id))
-       
-         #se foi bem sucedido e tem um step seguinte identificado
-         if ((step.on_success_goto != 0) & success):
-          step_id = step.on_success_goto 
-          steps_to_skip = step.steps_to_skip_on_next_run             
-         elif ((step.on_error_goto != 0) & (not success) ):
-          #se deu erro e tem um step seguinte identificado
-          step_id = step.on_error_goto  
-          steps_to_skip = step.steps_to_skip_on_next_run
-         else:
-          #se nao tem um step seguinte identificado e foi bem sucedido, segue pro proximo step da lista  
-          if (success):  
-            #index = lista_steps_sem_timeout.index(step)
-            index = lista_steps.index(step)
-            index += 1   
-            #step_id = lista_steps_sem_timeout[index]
-            step_id = lista_steps[index]
-            steps_to_skip = step.steps_to_skip_on_next_run
-          else:
-            #se deu erro inesperado e nao tem  pra onde ir, para o processo
+            chegou_fim = step.is_end_step
 
-
-         chegou_fim = step.is_end_step
-
-        
-
+            #se foi bem sucedido e tem um step seguinte identificado
+            if ((step.on_success_goto != 0) & success):
+                step_id = step.on_success_goto 
+                steps_to_skip = step.steps_to_skip_on_next_run             
+            elif ((step.on_error_goto != 0) & (not success) ):
+                #se deu erro e tem um step seguinte identificado
+                step_id = step.on_error_goto  
+                steps_to_skip = step.steps_to_skip_on_next_run
+            else:
+                #se nao tem um step seguinte identificado e foi bem sucedido, segue pro proximo step da lista  
+                if (success):  
+                   index = lista_steps.index(step)
+                   index += 1   
+                   step_id = lista_steps[index]
+                   steps_to_skip = step.steps_to_skip_on_next_run
+               
 
  def get_steps(self):
    script_id = self.get_script_id()
