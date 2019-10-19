@@ -52,7 +52,7 @@ class NotaPaulista_Posting:
       else:
         steps_to_check = str(steps_to_skip).split('|')
         for step_to_check in steps_to_check:
-          if (step_to_check == step.step_id):
+          if (step_to_check == str(step.step_id)):
              return True
 
       return False       
@@ -198,8 +198,15 @@ class NotaPaulista_Posting:
                 if (success):  
                    index = lista_steps.index(step)
                    index += 1   
-                   steps_to_skip = step.steps_to_skip_on_next_run
                    step_id = lista_steps[index].step_id
+
+                   #limpa steps_to_skip  apenas se for igual a 'none'
+                   if (not steps_to_skip) :
+                     steps_to_skip = step.steps_to_skip_on_next_run
+                   else:  
+                     if ( step.steps_to_skip_on_next_run == 'none' ):
+                       steps_to_skip = step.steps_to_skip_on_next_run
+                   
                
 
  def get_steps(self):

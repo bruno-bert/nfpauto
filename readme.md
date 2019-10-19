@@ -1,16 +1,10 @@
-- [x] criar banco de dados de notas
-- [x] criar tela onde notas irão aparecendo conforme bipadas
-  - [x] ler notas do db e mostrar na lista
-  - [x] cursor no campo de chave no load do form
-  - [x] ao digitar no campo de texto, quando chegar no tamanho da chave (N chars), joga pra lista e salva na base, e limpa o campo de texto
-  - [x] ao pressionar enter faz o mesmo
-- [x] verificar possibilidade de extrair informações da chave e mostrar também
-- [x] validacoes
-  - [x] validar chave de acesso pelo modulo 11
-  - [x] checar se nota ja existe
-  - [x] checar data da nota e não inserir se ja passou do prazo (apenas mes e ano)
-- [ ] carga manual pelo cnpj
-  - [x] salva cnpjs
-  - [ ] tela da carga manual
-- [ ] automatizar postagem no site da NFP
-- [ ] alterar status indicando notas postadas
+- [] manter steps_to_skip até mandar zerar com o 'none'
+- [] tratar quando não encontrar cnpj
+- [] mostrar resultados no final (salvar em uma classe de resultados) - atualmente está salvando no step
+- []
+- []
+- []
+- []
+- []
+- []
+- []
