@@ -1,4 +1,4 @@
-- [] manter steps_to_skip até mandar zerar com o 'none'
+- [x] manter steps_to_skip até mandar zerar com o 'none'
 - [] tratar quando não encontrar cnpj
 - [] mostrar resultados no final (salvar em uma classe de resultados) - atualmente está salvando no step
 - []

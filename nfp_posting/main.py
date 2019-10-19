@@ -13,6 +13,7 @@ import webbrowser
 import time
 from database import busca_steps
 from script import Script, Step
+from cycle_result import CycleResult
 import re
 
 class NotaPaulista_Posting:
@@ -64,6 +65,7 @@ class NotaPaulista_Posting:
    values = None
    chaves = self.get_chaves()
    cnpj = self.get_cnpj()
+   list_result = []
   
    #orderna lista pelo sort_number
    lista_steps.sort(key=lambda x: x.sort_number)
@@ -162,14 +164,21 @@ class NotaPaulista_Posting:
                   if (step.success_message_finder == "1"):
                     step.resulted_success_message = element.text
                     step.success = True
-                  
-                  
-                  self.log('step {} - resultado: {}'.format(step.step_id, element.text))
+
+                  self.log('step {} - resultado: {}'.format(step.step_id, element.text))  
                   
                #elif (step.action == "find"):
                            
                #message after
                self.log(step.log_message_after)
+               #se deve salvar resultado do ciclo, grava o resultado
+               save_result = (step.save_result == '1' )
+               if (save_result):
+                  result = CycleResult()  
+                  result.value = chave
+                  result.success = step.success or True
+                  result.message = step.resulted_success_message or step.resulted_error_message
+                  list_result.append(result)   
 
             else:
                #skipped step
@@ -184,7 +193,7 @@ class NotaPaulista_Posting:
             self.log('step {} concluída'.format(step.step_id))
 
             chegou_fim = (step.is_end_step == '1' )
-
+           
             #se foi bem sucedido e tem um step seguinte identificado
             if ((step.on_success_goto != 0) & success):
                 step_id = step.on_success_goto 
@@ -206,8 +215,13 @@ class NotaPaulista_Posting:
                    else:  
                      if ( step.steps_to_skip_on_next_run == 'none' ):
                        steps_to_skip = step.steps_to_skip_on_next_run
-                   
-               
+
+   self.log('Resultado Final')                
+   for res in list_result:
+      self.log(res.value + ' - ' + str(res.success))
+      self.log('Mensagem: ' + res.message)
+      
+
 
  def get_steps(self):
    script_id = self.get_script_id()
@@ -233,15 +247,6 @@ class NotaPaulista_Posting:
 
  def open_browser(self):
    
-   #try:
-     #chrome_options =  Options()
-     #chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
-     #driver = webdriver.Chrome('chromedriver.exe', options=chrome_options)
-     #found = True
-   #except:
-     #found = False 
-
-   #if (not found):  
    args = ' --remote-debugging-port=9222 --user-data-dir=C:\\selenium\\AutomationProfile'
    CHROME = os.path.join('C:\\', 'Program Files (x86)', 'Google', 'Chrome', 'Application', 'chrome.exe')
    os.system('taskkill /im chrome.exe')
