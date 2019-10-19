@@ -39,6 +39,7 @@ class Step:
         self.wait_manual_action = None
         self.steps_to_skip_on_next_run = None
         self.is_end_step = None
+        self.manual_action_message = None
 
         #estas colunas não são do banco de dados
         self.resulted_element = None

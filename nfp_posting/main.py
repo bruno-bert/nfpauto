@@ -38,11 +38,11 @@ class NotaPaulista_Posting:
     return '01.146.603/0001-69'
  
  def must_skip(self, step, steps_to_skip ):
-   if (step.skip): 
+   if (step.skip == "1"): 
       return True   
    else:
       if (not steps_to_skip) or (steps_to_skip == 'none'):        
-        return True
+        return False
       else:
         steps_to_check = str(steps_to_skip).split('|')
         for step_to_check in steps_to_check:
@@ -68,10 +68,11 @@ class NotaPaulista_Posting:
    step = lista_steps[index]
    step_id = step.step_id
    chegou_fim = False
+   steps_to_skip = None
    
    for chave in chaves:
     
-      values = { chave: chave, cnpj: cnpj}
+      values = { "chave": chave, "cnpj": cnpj}
 
       while (not chegou_fim):
       
@@ -85,6 +86,9 @@ class NotaPaulista_Posting:
 
                #message before
                self.log(step.log_message_before)
+
+               if (step.wait_manual_action == "1"): 
+                  self.log(step.manual_action_message)
 
                #find
                if (step.must_wait_element == "1"):
@@ -163,13 +167,13 @@ class NotaPaulista_Posting:
             
             success = True
 
-         except ValueError as err:
+         except Exception as err:
             self.log('step {} - erro: {}'.format(step.step_id, err))
             success = False
          finally:
             self.log('step {} concluída'.format(step.step_id))
 
-            chegou_fim = step.is_end_step
+            chegou_fim = (step.is_end_step == '1' )
 
             #se foi bem sucedido e tem um step seguinte identificado
             if ((step.on_success_goto != 0) & success):
@@ -184,8 +188,8 @@ class NotaPaulista_Posting:
                 if (success):  
                    index = lista_steps.index(step)
                    index += 1   
-                   step_id = lista_steps[index]
                    steps_to_skip = step.steps_to_skip_on_next_run
+                   step_id = lista_steps[index].step_id
                
 
  def get_steps(self):
@@ -212,24 +216,23 @@ class NotaPaulista_Posting:
 
  def open_browser(self):
    
+   #try:
+     #chrome_options =  Options()
+     #chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+     #driver = webdriver.Chrome('chromedriver.exe', options=chrome_options)
+     #found = True
+   #except:
+     #found = False 
 
-   try:
-     chrome_options =  Options()
-     chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
-     driver = webdriver.Chrome('chromedriver.exe', options=chrome_options)
-     found = True
-   except:
-     found = False 
-
-   if (not found):  
-    args = ' --remote-debugging-port=9222 --user-data-dir=C:\\selenium\\AutomationProfile'
-    CHROME = os.path.join('C:\\', 'Program Files (x86)', 'Google', 'Chrome', 'Application', 'chrome.exe')
-    os.system('taskkill /im chrome.exe')
-    os.system('start CHROME "' + nfp_settings.URL_PORTAL +  '"' + args)
-    cont = 0
-    self.log('delay para abertura do site')
-    time.sleep(5)
-    found = False
+   #if (not found):  
+   args = ' --remote-debugging-port=9222 --user-data-dir=C:\\selenium\\AutomationProfile'
+   CHROME = os.path.join('C:\\', 'Program Files (x86)', 'Google', 'Chrome', 'Application', 'chrome.exe')
+   os.system('taskkill /im chrome.exe')
+   os.system('start CHROME "' + nfp_settings.URL_PORTAL +  '"' + args)
+   cont = 0
+   self.log('delay para abertura do site')
+   time.sleep(5)
+   found = False
    
    while (not found):
     self.log('buscando site aberto - tentativa ' + str(cont))
