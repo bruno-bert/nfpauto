@@ -13,6 +13,7 @@ import webbrowser
 import time
 from database import busca_steps
 from script import Script, Step
+import re
 
 class NotaPaulista_Posting:
  def __init__(self):
@@ -22,9 +23,12 @@ class NotaPaulista_Posting:
     index = str(attr).find("{")
     return (index != -1) 
 
- def get_text_to_type(self, attribute, values):
-    if self.is_dinamic(attribute):
-     return values[attribute]
+ def get_text_to_type(self, value, values):
+    if self.is_dinamic(value):
+      attribute = re.sub(r'[^\w]', '', value) 
+      return values[attribute]
+    else: 
+      return value
 
  def get_element_from_other_step(self, steps, step_id):
     step = Step()
@@ -32,7 +36,9 @@ class NotaPaulista_Posting:
     return step.resulted_element
 
  def get_chaves(self):
-    return ['11111','22222','33333']
+    return ['11111111111111111111111111111111111111111111',
+            '22222222222222222222222222222222222222222222',
+            '33333333333333333333333333333333333333333333']
  
  def get_cnpj(self):
     return '01.146.603/0001-69'
@@ -71,7 +77,8 @@ class NotaPaulista_Posting:
    steps_to_skip = None
    
    for chave in chaves:
-    
+      
+      chegou_fim = False
       values = { "chave": chave, "cnpj": cnpj}
 
       while (not chegou_fim):
@@ -115,22 +122,22 @@ class NotaPaulista_Posting:
                   else:
                      base_element = self.get_element_from_other_step(lista_steps, step.element_from_step)
 
-                     if (step.find_method == "name"):  
-                       element = base_element.find_element_by_name(step.expression)
-                     elif (step.find_method == "id"):
-                       element = base_element.find_element_by_id(step.expression)
-                     elif (step.find_method == "xpath"):
-                       element = base_element.find_element_by_xpath(step.expression)
-                     elif (step.find_method == "class_name"):
-                       element = base_element.find_element_by_class_name(step.expression)
-                     elif (step.find_method == "css_selector"):
-                       element = base_element.find_element_by_css_selector(step.expression)
-                     elif (step.find_method == "link_text"):              
-                       element = base_element.find_element_by_link_text(step.expression)
-                     elif (step.find_method == "tag_name"):      
-                       element = base_element.find_element_by_tag_name(step.expression)
-                     elif (step.find_method == "partial_link_text"):      
-                       element = base_element.find_element_by_partial_link_text(step.expression)
+                  if (step.find_method == "name"):  
+                    element = base_element.find_element_by_name(step.expression)
+                  elif (step.find_method == "id"):
+                    element = base_element.find_element_by_id(step.expression)
+                  elif (step.find_method == "xpath"):
+                    element = base_element.find_element_by_xpath(step.expression)
+                  elif (step.find_method == "class_name"):
+                    element = base_element.find_element_by_class_name(step.expression)
+                  elif (step.find_method == "css_selector"):
+                    element = base_element.find_element_by_css_selector(step.expression)
+                  elif (step.find_method == "link_text"):              
+                    element = base_element.find_element_by_link_text(step.expression)
+                  elif (step.find_method == "tag_name"):      
+                    element = base_element.find_element_by_tag_name(step.expression)
+                  elif (step.find_method == "partial_link_text"):      
+                    element = base_element.find_element_by_partial_link_text(step.expression)
                   
                #salva elemento resultante
                step.resulted_element = element
@@ -140,6 +147,9 @@ class NotaPaulista_Posting:
                   element.click()  
 
                elif (step.action == "type"):
+                  element.clear()
+                  element.send_keys(Keys.BACKSPACE)
+                  element.send_keys(Keys.BACKSPACE)
                   element.send_keys(Keys.BACKSPACE)
                   element.send_keys(self.get_text_to_type(step.text_to_type, values)) 
 
