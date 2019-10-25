@@ -40,6 +40,9 @@ class Step:
         self.steps_to_skip_on_next_run = None
         self.is_end_step = None
         self.manual_action_message = None
+        self.show_error_log = None
+        self.wait_next = None
+        self.id_tela = None
 
         #estas colunas não são do banco de dados
         self.resulted_element = None

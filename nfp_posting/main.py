@@ -58,7 +58,51 @@ class NotaPaulista_Posting:
 
       return False       
 
+ def find_element(self, driver, step, lista_steps):
 
+    if (step.must_wait_element == "1"):
+      if (step.find_method == "name"):  
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.NAME, step.expression)) )
+      elif (step.find_method == "id"):
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.ID, step.expression)) )  
+      elif (step.find_method == "xpath"):
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.XPATH, step.expression)) )  
+      elif (step.find_method == "class_name"):
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CLASS_NAME, step.expression)) )  
+      elif (step.find_method == "css_selector"):
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CSS_SELECTOR, step.expression)) )  
+      elif (step.find_method == "link_text"):              
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.LINK_TEXT, step.expression)) )  
+      elif (step.find_method == "tag_name"):      
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.TAG_NAME, step.expression)) )  
+      elif (step.find_method == "partial_link_text"):      
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.PARTIAL_LINK_TEXT, step.expression)) )   
+    else:
+
+      if (step.base_element != 'other_step'):
+          base_element = driver
+      else:
+          base_element = self.get_element_from_other_step(lista_steps, step.element_from_step)
+
+      if (step.find_method == "name"):  
+        element = base_element.find_element_by_name(step.expression)
+      elif (step.find_method == "id"):
+        element = base_element.find_element_by_id(step.expression)
+      elif (step.find_method == "xpath"):
+        element = base_element.find_element_by_xpath(step.expression)
+      elif (step.find_method == "class_name"):
+        element = base_element.find_element_by_class_name(step.expression)
+      elif (step.find_method == "css_selector"):
+        element = base_element.find_element_by_css_selector(step.expression)
+      elif (step.find_method == "link_text"):              
+        element = base_element.find_element_by_link_text(step.expression)
+      elif (step.find_method == "tag_name"):      
+        element = base_element.find_element_by_tag_name(step.expression)
+      elif (step.find_method == "partial_link_text"):      
+        element = base_element.find_element_by_partial_link_text(step.expression)
+
+    return element
+                  
  def start(self):
    driver = self.open_browser()
    lista_steps = self.get_steps()
@@ -96,51 +140,21 @@ class NotaPaulista_Posting:
                #message before
                self.log(step.log_message_before)
 
-               if (step.wait_manual_action == "1"): 
-                  self.log(step.manual_action_message)
-
-               #find
-               if (step.must_wait_element == "1"):
-                  if (step.find_method == "name"):  
-                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.NAME, step.expression)) )
-                  elif (step.find_method == "id"):
-                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.ID, step.expression)) )  
-                  elif (step.find_method == "xpath"):
-                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.XPATH, step.expression)) )  
-                  elif (step.find_method == "class_name"):
-                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CLASS_NAME, step.expression)) )  
-                  elif (step.find_method == "css_selector"):
-                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CSS_SELECTOR, step.expression)) )  
-                  elif (step.find_method == "link_text"):              
-                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.LINK_TEXT, step.expression)) )  
-                  elif (step.find_method == "tag_name"):      
-                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.TAG_NAME, step.expression)) )  
-                  elif (step.find_method == "partial_link_text"):      
-                    element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.PARTIAL_LINK_TEXT, step.expression)) )   
+               
+               if (step.wait_manual_action == "0"):
+                #find element
+                element = self.find_element(driver, step, lista_steps)
                else:
 
-                  if (step.base_element != 'other_step'):
-                     base_element = driver
-                  else:
-                     base_element = self.get_element_from_other_step(lista_steps, step.element_from_step)
+                #para esperar por ação manual, 
+                #faz loop até quando determinado elemento for encontrado na tela
+                #quando não for mais encontrado, significa que houve uma ação manual na tela
+                while (True):
+                  #show waiting message
+                  self.log(step.manual_action_message)
+                  element = self.find_element(driver, step, lista_steps)
+                  time.sleep(5)
 
-                  if (step.find_method == "name"):  
-                    element = base_element.find_element_by_name(step.expression)
-                  elif (step.find_method == "id"):
-                    element = base_element.find_element_by_id(step.expression)
-                  elif (step.find_method == "xpath"):
-                    element = base_element.find_element_by_xpath(step.expression)
-                  elif (step.find_method == "class_name"):
-                    element = base_element.find_element_by_class_name(step.expression)
-                  elif (step.find_method == "css_selector"):
-                    element = base_element.find_element_by_css_selector(step.expression)
-                  elif (step.find_method == "link_text"):              
-                    element = base_element.find_element_by_link_text(step.expression)
-                  elif (step.find_method == "tag_name"):      
-                    element = base_element.find_element_by_tag_name(step.expression)
-                  elif (step.find_method == "partial_link_text"):      
-                    element = base_element.find_element_by_partial_link_text(step.expression)
-                  
                #salva elemento resultante
                step.resulted_element = element
                
@@ -156,41 +170,45 @@ class NotaPaulista_Posting:
                   element.send_keys(self.get_text_to_type(step.text_to_type, values)) 
 
                elif (step.action == "show"):   
+                  
+                  message = str(element.text).partition('\n')[0]
 
                   if (step.error_message_finder == "1"):
-                    step.resulted_error_message = element.text
+                    step.resulted_error_message = message
                     step.success = False
 
                   if (step.success_message_finder == "1"):
-                    step.resulted_success_message = element.text
+                    step.resulted_success_message = message
                     step.success = True
 
-                  self.log('step {} - resultado: {}'.format(step.step_id, element.text))  
+                  self.log('step {} - resultado: {}'.format(step.id_tela, message))  
                   
                #elif (step.action == "find"):
                            
                #message after
                self.log(step.log_message_after)
+
                #se deve salvar resultado do ciclo, grava o resultado
                save_result = (step.save_result == '1' )
                if (save_result):
                   result = CycleResult()  
                   result.value = chave
-                  result.success = step.success or True
+                  result.success = step.success
                   result.message = step.resulted_success_message or step.resulted_error_message
                   list_result.append(result)   
 
             else:
                #skipped step
-               self.log('pulou step {} '.format(step.step_id))   
+               self.log('pulou step {} '.format(step.id_tela))   
             
             success = True
 
          except Exception as err:
-            self.log('step {} - erro: {}'.format(step.step_id, err))
+            if (step.show_error_log == "1"):
+              self.log('step {} - erro: {}'.format(step.id_tela, err))
             success = False
          finally:
-            self.log('step {} concluída'.format(step.step_id))
+            self.log('step {} concluída'.format(step.id_tela))
 
             chegou_fim = (step.is_end_step == '1' )
            
@@ -215,6 +233,10 @@ class NotaPaulista_Posting:
                    else:  
                      if ( step.steps_to_skip_on_next_run == 'none' ):
                        steps_to_skip = step.steps_to_skip_on_next_run
+
+            if (step.wait_next > 0):
+              self.log('Esperando {} segundos para execução do próximo passo'.format(str(step.wait_next)))
+              time.sleep(step.wait_next)           
 
    self.log('Resultado Final')                
    for res in list_result:
