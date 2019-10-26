@@ -1,7 +1,7 @@
 - [x] manter steps_to_skip até mandar zerar com o 'none'
-- [] tratar quando não encontrar cnpj
-- [] mostrar resultados no final (salvar em uma classe de resultados) - atualmente está salvando no step
-- []
+- [x] tratar quando não encontrar cnpj
+- [x] mostrar resultados no final (salvar em uma classe de resultados) - atualmente está salvando no step
+- [] testar tratativas de erro: timeout de sessao, expiracao, etc..
 - []
 - []
 - []

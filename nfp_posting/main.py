@@ -104,9 +104,11 @@ class NotaPaulista_Posting:
     return element
                   
  def start(self):
-   driver = self.open_browser()
+   
+   self.open_browser()
+   driver = self.attach_to_browser()
+
    lista_steps = self.get_steps()
-   values = None
    chaves = self.get_chaves()
    cnpj = self.get_cnpj()
    list_result = []
@@ -132,6 +134,8 @@ class NotaPaulista_Posting:
          #pega step pelo step id
          step = next((x for x in lista_steps if x.step_id == step_id), None)
          
+         #if (step_id == 20):
+         #  print('teste')
 
          try:
             
@@ -214,12 +218,23 @@ class NotaPaulista_Posting:
            
             #se foi bem sucedido e tem um step seguinte identificado
             if ((step.on_success_goto != 0) & success):
-                step_id = step.on_success_goto 
-                steps_to_skip = step.steps_to_skip_on_next_run             
+              
+              if (step.refresh_on_success == "1"):
+                self.refresh_browser(driver)
+                time.sleep(10)
+
+              step_id = step.on_success_goto 
+              steps_to_skip = step.steps_to_skip_on_next_run
+
             elif ((step.on_error_goto != 0) & (not success) ):
-                #se deu erro e tem um step seguinte identificado
-                step_id = step.on_error_goto  
-                steps_to_skip = step.steps_to_skip_on_next_run
+              
+              if (step.refresh_on_error == "1"):
+                self.refresh_browser(driver)    
+                time.sleep(10)
+
+              #se deu erro e tem um step seguinte identificado
+              step_id = step.on_error_goto  
+              steps_to_skip = step.steps_to_skip_on_next_run
             else:
                 #se nao tem um step seguinte identificado e foi bem sucedido, segue pro proximo step da lista  
                 if (success):  
@@ -238,10 +253,9 @@ class NotaPaulista_Posting:
               self.log('Esperando {} segundos para execução do próximo passo'.format(str(step.wait_next)))
               time.sleep(step.wait_next)           
 
-   self.log('Resultado Final')                
+                
    for res in list_result:
-      self.log(res.value + ' - ' + str(res.success))
-      self.log('Mensagem: ' + res.message)
+      self.log(res.value + ' - ' + str(res.success) + ' - ' + res.message)
       
 
 
@@ -267,31 +281,37 @@ class NotaPaulista_Posting:
              
     return model
 
- def open_browser(self):
-   
-   args = ' --remote-debugging-port=9222 --user-data-dir=C:\\selenium\\AutomationProfile'
-   CHROME = os.path.join('C:\\', 'Program Files (x86)', 'Google', 'Chrome', 'Application', 'chrome.exe')
-   os.system('taskkill /im chrome.exe')
-   os.system('start CHROME "' + nfp_settings.URL_PORTAL +  '"' + args)
-   cont = 0
-   self.log('delay para abertura do site')
-   time.sleep(5)
-   found = False
-   
-   while (not found):
+ def refresh_browser(self, driver):
+   driver.get(nfp_settings.URL_PORTAL)
+
+
+ def attach_to_browser(self):
+
+  cont = 1
+  time.sleep(3)
+  found = False
+
+  while (not found):
     self.log('buscando site aberto - tentativa ' + str(cont))
     
     try:
      chrome_options =  Options()
      chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
      driver = webdriver.Chrome('chromedriver.exe', options=chrome_options)
+     
      found = True
     except:
      found = False 
     
     cont+=1
+  return driver 
 
-   return driver 
+ def open_browser(self):
+   args = ' --remote-debugging-port=9222 --user-data-dir=C:\\selenium\\AutomationProfile'
+   CHROME = os.path.join('C:\\', 'Program Files (x86)', 'Google', 'Chrome', 'Application', 'chrome.exe')
+   os.system('taskkill /im chrome.exe')
+   os.system('start CHROME "' + nfp_settings.URL_PORTAL +  '"' + args)
+   
 
 
  def log(self, message):

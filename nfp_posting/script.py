@@ -43,6 +43,8 @@ class Step:
         self.show_error_log = None
         self.wait_next = None
         self.id_tela = None
+        self.refresh_on_error = None
+        self.refresh_on_success = None
 
         #estas colunas não são do banco de dados
         self.resulted_element = None
