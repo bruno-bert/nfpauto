@@ -106,16 +106,22 @@ class Selenium_Through_DB:
     return element
                   
  def start(self):
-   
-   start_config = self.get_start_config()
-   script_config = self.get_script_config()
+   script_id = self.get_script_id()
+   start_config = self.get_start_config(script_id)
+   script_config = self.get_script_config(script_id)
 
-   self.open_browser(start_config)
-   driver = self.attach_to_browser(start_config)
+   
 
    lista_steps = self.get_steps()
+
+   if (len(lista_steps) == 0):
+     self.log('Steps not found on script {}'.format(str(script_id)))
+     return
+
+   #TODO remove specific code from this class through events
    chaves = self.get_chaves()
    cnpj = self.get_cnpj()
+
    list_result = []
   
    #orderna lista pelo sort_number
@@ -128,6 +134,9 @@ class Selenium_Through_DB:
    step_id = step.step_id
    chegou_fim = False
    steps_to_skip = None
+
+   self.open_browser(start_config)
+   driver = self.attach_to_browser(start_config)
    
    for chave in chaves:
       
@@ -255,7 +264,7 @@ class Selenium_Through_DB:
                    index += 1   
                    step_id = lista_steps[index].step_id
 
-                   #limpa steps_to_skip  apenas se for igual a 'none'
+                   #limpa steps_to_skip  apenas se for igual a constant.RESET_SKIP_INDICATOR ('none')
                    if (not steps_to_skip) :
                      steps_to_skip = step.steps_to_skip_on_next_run
                    else:  
@@ -284,24 +293,22 @@ class Selenium_Through_DB:
 
    return lista_steps     
 
- def get_start_config(self):
-   script_id = self.get_script_id()
+ def get_start_config(self, script_id):   
    start_config = busca_start_config(script_id)
    start_config = dict(start_config)
    start_config = self.row_to_model(Start_Config(), start_config)
    return start_config     
 
  
- def get_script_config(self):
-   script_id = self.get_script_id()
+ def get_script_config(self, script_id):
    script_config = busca_script(script_id)
    script_config = dict(script_config)
    script_config = self.row_to_model(Script(), script_config)
    return script_config 
 
  def get_script_id(self):
-   #TODO
-   return 1 
+   #TODO script id must come from user interface
+   return 2
  
  def row_to_model(self, model_instance, row):    
     for col_name in row:
