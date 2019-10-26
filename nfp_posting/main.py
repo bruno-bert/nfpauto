@@ -45,6 +45,9 @@ class Selenium_Through_DB:
  
  def get_cnpj(self):
     return '01.146.603/0001-69'
+
+ def get_descricao_entidade(self):
+    return "GACC GRUPO DE ASSISTENCIA A CRIANCA COM CANCER"   
  
  def must_skip(self, step, steps_to_skip ):
    if (step.skip == "1"): 
@@ -60,25 +63,27 @@ class Selenium_Through_DB:
 
       return False       
 
- def find_element(self, driver, step, lista_steps):
-
+ def find_element(self, driver, step, lista_steps, values_on_expression):
+    
+    expression = self.get_text_to_type(step.expression, values_on_expression)
+    
     if (step.must_wait_element == "1"):
       if (step.find_method == "name"):  
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.NAME, step.expression)) )
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.NAME, expression)) )
       elif (step.find_method == "id"):
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.ID, step.expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.ID, expression)) )  
       elif (step.find_method == "xpath"):
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.XPATH, step.expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.XPATH, expression)) )  
       elif (step.find_method == "class_name"):
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CLASS_NAME, step.expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CLASS_NAME, expression)) )  
       elif (step.find_method == "css_selector"):
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CSS_SELECTOR, step.expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CSS_SELECTOR, expression)) )  
       elif (step.find_method == "link_text"):              
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.LINK_TEXT, step.expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.LINK_TEXT, expression)) )  
       elif (step.find_method == "tag_name"):      
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.TAG_NAME, step.expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.TAG_NAME, expression)) )  
       elif (step.find_method == "partial_link_text"):      
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.PARTIAL_LINK_TEXT, step.expression)) )   
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.PARTIAL_LINK_TEXT, expression)) )   
     else:
 
       if (step.base_element != 'other_step'):
@@ -87,21 +92,21 @@ class Selenium_Through_DB:
           base_element = self.get_element_from_other_step(lista_steps, step.element_from_step)
 
       if (step.find_method == "name"):  
-        element = base_element.find_element_by_name(step.expression)
+        element = base_element.find_element_by_name(expression)
       elif (step.find_method == "id"):
-        element = base_element.find_element_by_id(step.expression)
+        element = base_element.find_element_by_id(expression)
       elif (step.find_method == "xpath"):
-        element = base_element.find_element_by_xpath(step.expression)
+        element = base_element.find_element_by_xpath(expression)
       elif (step.find_method == "class_name"):
-        element = base_element.find_element_by_class_name(step.expression)
+        element = base_element.find_element_by_class_name(expression)
       elif (step.find_method == "css_selector"):
-        element = base_element.find_element_by_css_selector(step.expression)
+        element = base_element.find_element_by_css_selector(expression)
       elif (step.find_method == "link_text"):              
-        element = base_element.find_element_by_link_text(step.expression)
+        element = base_element.find_element_by_link_text(expression)
       elif (step.find_method == "tag_name"):      
-        element = base_element.find_element_by_tag_name(step.expression)
+        element = base_element.find_element_by_tag_name(expression)
       elif (step.find_method == "partial_link_text"):      
-        element = base_element.find_element_by_partial_link_text(step.expression)
+        element = base_element.find_element_by_partial_link_text(expression)
 
     return element
                   
@@ -121,6 +126,7 @@ class Selenium_Through_DB:
    #TODO remove specific code from this class through events
    chaves = self.get_chaves()
    cnpj = self.get_cnpj()
+   descricao_entidade = self.get_descricao_entidade() 
 
    list_result = []
   
@@ -138,10 +144,14 @@ class Selenium_Through_DB:
    self.open_browser(start_config)
    driver = self.attach_to_browser(start_config)
    
+
+   values_on_expression = { "descricao_entidade" : descricao_entidade}
+
    for chave in chaves:
       
       chegou_fim = False
       values = { "chave": chave, "cnpj": cnpj}
+      
 
       while (not chegou_fim):
       
@@ -161,7 +171,7 @@ class Selenium_Through_DB:
                
                if (step.wait_manual_action == "0"):
                 #find element
-                element = self.find_element(driver, step, lista_steps)
+                element = self.find_element(driver, step, lista_steps, values_on_expression)
                else:
 
                 #para esperar por ação manual, 
@@ -171,7 +181,7 @@ class Selenium_Through_DB:
                   #show waiting message
                   self.log(step.manual_action_message)
                   time.sleep(5)
-                  element = self.find_element(driver, step, lista_steps)
+                  element = self.find_element(driver, step, lista_steps, values)
                   
 
                #salva elemento resultante
@@ -216,7 +226,7 @@ class Selenium_Through_DB:
 
             else:
                #skipped step
-               self.log('Step {} skipped'.format(step.id_tela))   
+               self.log('Step {} Skipped'.format(step.id_tela))   
             
             success = True
 
