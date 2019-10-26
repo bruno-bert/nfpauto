@@ -7,7 +7,26 @@ class Script:
         self.version = None
         self.status = None
         self.delete_on_sync = None
-        
+        self.wait_message_between_steps = None
+
+class Start_Config:
+   
+    def __init__(self):
+        self.id = None
+        self.script_id = None        
+        self.driver_name = None
+        self.debugger_host = None
+        self.browser_path = None
+        self.browser_args = None    
+        self.browser_kill_cmd = None  
+        self.browser_start_cmd = None  
+        self.initial_url = None  
+        self.attempt_attach_message = None
+        self.delay_between_attempt = None
+        self.wait_after_refresh = None
+
+
+
 class Step:
     
     def __init__(self):
@@ -45,6 +64,7 @@ class Step:
         self.id_tela = None
         self.refresh_on_error = None
         self.refresh_on_success = None
+        self.minimize_after_step = None
 
         #estas colunas não são do banco de dados
         self.resulted_element = None

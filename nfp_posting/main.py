@@ -1,5 +1,9 @@
-import nfp_messages
-import nfp_settings
+import os
+import subprocess
+import webbrowser
+import time
+import re
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -7,18 +11,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import *
 from selenium.webdriver.support import  expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
-import os
-import subprocess
-import webbrowser
-import time
-from database import busca_steps
-from script import Script, Step
-from cycle_result import CycleResult
-import re
 
-class NotaPaulista_Posting:
+import constant
+from database import busca_steps, busca_script, busca_start_config
+from script import Script, Step, Start_Config
+from cycle_result import CycleResult
+
+
+class Selenium_Through_DB:
  def __init__(self):
-     self.messages = nfp_messages.Messages()
+     self.log('Instantiated Selenium_Through_DB Service..')
 
  def is_dinamic(self, attr):
     index = str(attr).find("{")
@@ -105,8 +107,11 @@ class NotaPaulista_Posting:
                   
  def start(self):
    
-   self.open_browser()
-   driver = self.attach_to_browser()
+   start_config = self.get_start_config()
+   script_config = self.get_script_config()
+
+   self.open_browser(start_config)
+   driver = self.attach_to_browser(start_config)
 
    lista_steps = self.get_steps()
    chaves = self.get_chaves()
@@ -185,10 +190,8 @@ class NotaPaulista_Posting:
                     step.resulted_success_message = message
                     step.success = True
 
-                  self.log('step {} - resultado: {}'.format(step.id_tela, message))  
+                  self.log('Step {} - Result: {}'.format(step.id_tela, message))  
                   
-               #elif (step.action == "find"):
-                           
                #message after
                self.log(step.log_message_after)
 
@@ -203,16 +206,21 @@ class NotaPaulista_Posting:
 
             else:
                #skipped step
-               self.log('pulou step {} '.format(step.id_tela))   
+               self.log('Step {} skipped'.format(step.id_tela))   
             
             success = True
 
          except Exception as err:
             if (step.show_error_log == "1"):
-              self.log('step {} - erro: {}'.format(step.id_tela, err))
+              self.log('Step {} - Error: {}'.format(step.id_tela, err))
             success = False
          finally:
-            self.log('step {} concluída'.format(step.id_tela))
+            
+            self.log('Step {} Completed'.format(step.id_tela))
+            
+            if (step.minimize_after_step == "1"):
+              driver.minimize_window()
+              
 
             chegou_fim = (step.is_end_step == '1' )
            
@@ -220,8 +228,8 @@ class NotaPaulista_Posting:
             if ((step.on_success_goto != 0) & success):
               
               if (step.refresh_on_success == "1"):
-                self.refresh_browser(driver)
-                time.sleep(10)
+                self.refresh_browser(driver, start_config)
+                time.sleep(start_config.wait_after_refresh)
 
               step_id = step.on_success_goto 
               steps_to_skip = step.steps_to_skip_on_next_run
@@ -229,8 +237,8 @@ class NotaPaulista_Posting:
             elif ((step.on_error_goto != 0) & (not success) ):
               
               if (step.refresh_on_error == "1"):
-                self.refresh_browser(driver)    
-                time.sleep(10)
+                self.refresh_browser(driver, start_config)    
+                time.sleep(start_config.wait_after_refresh)
 
               #se deu erro e tem um step seguinte identificado
               step_id = step.on_error_goto  
@@ -246,11 +254,11 @@ class NotaPaulista_Posting:
                    if (not steps_to_skip) :
                      steps_to_skip = step.steps_to_skip_on_next_run
                    else:  
-                     if ( step.steps_to_skip_on_next_run == 'none' ):
+                     if ( step.steps_to_skip_on_next_run == constant.RESET_SKIP_INDICATOR ):
                        steps_to_skip = step.steps_to_skip_on_next_run
 
             if (step.wait_next > 0):
-              self.log('Esperando {} segundos para execução do próximo passo'.format(str(step.wait_next)))
+              self.log(script_config.wait_message_between_steps.format(str(step.wait_next)))
               time.sleep(step.wait_next)           
 
                 
@@ -266,59 +274,73 @@ class NotaPaulista_Posting:
    
    for data in steps:
       step = dict(data)
-      model = self.row_to_model(step)
+      model = self.row_to_model(Step(), step)
       lista_steps.append(model)
 
    return lista_steps     
 
- def get_script_id(self):
-    return 1 
+ def get_start_config(self):
+   script_id = self.get_script_id()
+   start_config = busca_start_config(script_id)
+   start_config = dict(start_config)
+   start_config = self.row_to_model(Start_Config(), start_config)
+   return start_config     
+
  
- def row_to_model(self, row):
-    model = Step()
+ def get_script_config(self):
+   script_id = self.get_script_id()
+   script_config = busca_script(script_id)
+   script_config = dict(script_config)
+   script_config = self.row_to_model(Script(), script_config)
+   return script_config 
+
+ def get_script_id(self):
+   #TODO
+   return 1 
+ 
+ def row_to_model(self, model_instance, row):    
     for col_name in row:
-       model.__setattr__(col_name, row[col_name])
+       model_instance.__setattr__(col_name, row[col_name])
              
-    return model
+    return model_instance
 
- def refresh_browser(self, driver):
-   driver.get(nfp_settings.URL_PORTAL)
+ def refresh_browser(self, driver, start_config):
+   driver.get(start_config.initial_url)
 
 
- def attach_to_browser(self):
+ def attach_to_browser(self, start_config):
 
   cont = 1
-  time.sleep(3)
   found = False
 
   while (not found):
-    self.log('buscando site aberto - tentativa ' + str(cont))
+    self.log(str(cont) + '...' + start_config.attempt_attach_message)
     
     try:
      chrome_options =  Options()
-     chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
-     driver = webdriver.Chrome('chromedriver.exe', options=chrome_options)
+     chrome_options.add_experimental_option("debuggerAddress", start_config.debugger_host + ':' + start_config.debugger_port)
+     driver = webdriver.Chrome(start_config.driver_name, options=chrome_options)
      
      found = True
+     
     except:
      found = False 
+     time.sleep(start_config.delay_between_attempt)
     
     cont+=1
+    
+    
   return driver 
 
- def open_browser(self):
-   args = ' --remote-debugging-port=9222 --user-data-dir=C:\\selenium\\AutomationProfile'
-   CHROME = os.path.join('C:\\', 'Program Files (x86)', 'Google', 'Chrome', 'Application', 'chrome.exe')
-   os.system('taskkill /im chrome.exe')
-   os.system('start CHROME "' + nfp_settings.URL_PORTAL +  '"' + args)
-   
-
+ def open_browser(self, start_config):
+   #CHROME = start_config.browser_path
+   os.system(start_config.browser_kill_cmd)
+   os.system(start_config.browser_start_cmd + ' "' + start_config.initial_url +  '" ' + start_config.browser_args)
+ 
 
  def log(self, message):
    print(message) 
 
-
-
 if __name__ == "__main__":
-  service = NotaPaulista_Posting()
+  service = Selenium_Through_DB()
   service.start()
