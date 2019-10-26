@@ -161,8 +161,9 @@ class Selenium_Through_DB:
                 while (True):
                   #show waiting message
                   self.log(step.manual_action_message)
-                  element = self.find_element(driver, step, lista_steps)
                   time.sleep(5)
+                  element = self.find_element(driver, step, lista_steps)
+                  
 
                #salva elemento resultante
                step.resulted_element = element
@@ -220,7 +221,12 @@ class Selenium_Through_DB:
             
             if (step.minimize_after_step == "1"):
               driver.minimize_window()
-              
+              if (script_config.minimize_message):
+                self.log(script_config.minimize_message)
+
+            if (step.maximize_after_step == "1"):
+              driver.maximize_window()
+            
 
             chegou_fim = (step.is_end_step == '1' )
            
@@ -229,8 +235,7 @@ class Selenium_Through_DB:
               
               if (step.refresh_on_success == "1"):
                 self.refresh_browser(driver, start_config)
-                time.sleep(start_config.wait_after_refresh)
-
+               
               step_id = step.on_success_goto 
               steps_to_skip = step.steps_to_skip_on_next_run
 
@@ -238,7 +243,7 @@ class Selenium_Through_DB:
               
               if (step.refresh_on_error == "1"):
                 self.refresh_browser(driver, start_config)    
-                time.sleep(start_config.wait_after_refresh)
+                
 
               #se deu erro e tem um step seguinte identificado
               step_id = step.on_error_goto  
@@ -304,8 +309,12 @@ class Selenium_Through_DB:
              
     return model_instance
 
+ #def refresh_browser(self, driver, start_config):
  def refresh_browser(self, driver, start_config):
-   driver.get(start_config.initial_url)
+   #driver.get(start_config.initial_url)
+   driver.refresh()
+   if ( (start_config.wait_after_refresh) & (start_config.wait_after_refresh > 0)):
+    time.sleep(start_config.wait_after_refresh)
 
 
  def attach_to_browser(self, start_config):

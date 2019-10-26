@@ -8,6 +8,7 @@ class Script:
         self.status = None
         self.delete_on_sync = None
         self.wait_message_between_steps = None
+        self.minimize_message = None
 
 class Start_Config:
    
@@ -65,6 +66,7 @@ class Step:
         self.refresh_on_error = None
         self.refresh_on_success = None
         self.minimize_after_step = None
+        self.maximize_after_step = None
 
         #estas colunas não são do banco de dados
         self.resulted_element = None
