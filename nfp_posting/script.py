@@ -25,6 +25,8 @@ class Start_Config:
         self.attempt_attach_message = None
         self.delay_between_attempt = None
         self.wait_after_refresh = None
+        self.get_opened_browser = None
+        self.close_opened_browser_windows = None
 
 
 

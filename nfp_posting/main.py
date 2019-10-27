@@ -26,6 +26,17 @@ class Selenium_Through_DB:
     index = str(attr).find("{")
     return (index != -1) 
 
+ 
+
+ def get_expression(self, value, values):
+    if self.is_dinamic(value):
+      attribute = value[value.find("{")+1:value.find("}")]
+      attrib_value = values[attribute]
+      value = str(value).replace(attribute, '')
+      return str(value).format(attrib_value)
+    else: 
+      return value
+
  def get_text_to_type(self, value, values):
     if self.is_dinamic(value):
       attribute = re.sub(r'[^\w]', '', value) 
@@ -39,12 +50,15 @@ class Selenium_Through_DB:
     return step.resulted_element
 
  def get_chaves(self):
-    return ['11111111111111111111111111111111111111111111',
+    return ['35191007424394000154590005988310737378424829',
             '22222222222222222222222222222222222222222222',
             '33333333333333333333333333333333333333333333']
  
  def get_cnpj(self):
     return '01.146.603/0001-69'
+
+ def get_descricao_entidade(self):
+    return "GACC GRUPO DE ASSISTENCIA A CRIANCA COM CANCER"   
  
  def must_skip(self, step, steps_to_skip ):
    if (step.skip == "1"): 
@@ -60,25 +74,27 @@ class Selenium_Through_DB:
 
       return False       
 
- def find_element(self, driver, step, lista_steps):
-
+ def find_element(self, driver, step, lista_steps, values_on_expression):
+    
+    expression = self.get_expression(step.expression, values_on_expression)
+    
     if (step.must_wait_element == "1"):
       if (step.find_method == "name"):  
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.NAME, step.expression)) )
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.NAME, expression)) )
       elif (step.find_method == "id"):
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.ID, step.expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.ID, expression)) )  
       elif (step.find_method == "xpath"):
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.XPATH, step.expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.XPATH, expression)) )  
       elif (step.find_method == "class_name"):
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CLASS_NAME, step.expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CLASS_NAME, expression)) )  
       elif (step.find_method == "css_selector"):
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CSS_SELECTOR, step.expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CSS_SELECTOR, expression)) )  
       elif (step.find_method == "link_text"):              
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.LINK_TEXT, step.expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.LINK_TEXT, expression)) )  
       elif (step.find_method == "tag_name"):      
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.TAG_NAME, step.expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.TAG_NAME, expression)) )  
       elif (step.find_method == "partial_link_text"):      
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.PARTIAL_LINK_TEXT, step.expression)) )   
+        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.PARTIAL_LINK_TEXT, expression)) )   
     else:
 
       if (step.base_element != 'other_step'):
@@ -87,35 +103,42 @@ class Selenium_Through_DB:
           base_element = self.get_element_from_other_step(lista_steps, step.element_from_step)
 
       if (step.find_method == "name"):  
-        element = base_element.find_element_by_name(step.expression)
+        element = base_element.find_element_by_name(expression)
       elif (step.find_method == "id"):
-        element = base_element.find_element_by_id(step.expression)
+        element = base_element.find_element_by_id(expression)
       elif (step.find_method == "xpath"):
-        element = base_element.find_element_by_xpath(step.expression)
+        element = base_element.find_element_by_xpath(expression)
       elif (step.find_method == "class_name"):
-        element = base_element.find_element_by_class_name(step.expression)
+        element = base_element.find_element_by_class_name(expression)
       elif (step.find_method == "css_selector"):
-        element = base_element.find_element_by_css_selector(step.expression)
+        element = base_element.find_element_by_css_selector(expression)
       elif (step.find_method == "link_text"):              
-        element = base_element.find_element_by_link_text(step.expression)
+        element = base_element.find_element_by_link_text(expression)
       elif (step.find_method == "tag_name"):      
-        element = base_element.find_element_by_tag_name(step.expression)
+        element = base_element.find_element_by_tag_name(expression)
       elif (step.find_method == "partial_link_text"):      
-        element = base_element.find_element_by_partial_link_text(step.expression)
+        element = base_element.find_element_by_partial_link_text(expression)
 
     return element
                   
  def start(self):
-   
-   start_config = self.get_start_config()
-   script_config = self.get_script_config()
+   script_id = self.get_script_id()
+   start_config = self.get_start_config(script_id)
+   script_config = self.get_script_config(script_id)
 
-   self.open_browser(start_config)
-   driver = self.attach_to_browser(start_config)
+   
 
    lista_steps = self.get_steps()
+
+   if (len(lista_steps) == 0):
+     self.log('Steps not found on script {}'.format(str(script_id)))
+     return
+
+   #TODO remove specific code from this class through events
    chaves = self.get_chaves()
    cnpj = self.get_cnpj()
+   descricao_entidade = self.get_descricao_entidade() 
+
    list_result = []
   
    #orderna lista pelo sort_number
@@ -128,19 +151,35 @@ class Selenium_Through_DB:
    step_id = step.step_id
    chegou_fim = False
    steps_to_skip = None
+
+   if (start_config.get_opened_browser == "1"):   
+     driver = self.attach_to_browser(start_config, True)
+     #TODO check if possible to reduce timeout when trying to find opened window
+     if (not driver):
+       self.open_browser(start_config)
+       driver = self.attach_to_browser(start_config, False)
+
+   else:
+     #abre novo navegador
+     self.open_browser(start_config)
+     driver = self.attach_to_browser(start_config, False)
    
+   
+   values_on_expression = { "descricao_entidade" : descricao_entidade}
+
    for chave in chaves:
       
       chegou_fim = False
       values = { "chave": chave, "cnpj": cnpj}
+      
 
       while (not chegou_fim):
       
          #pega step pelo step id
          step = next((x for x in lista_steps if x.step_id == step_id), None)
          
-         #if (step_id == 20):
-         #  print('teste')
+         if (step_id == 16):
+           print('teste')
 
          try:
             
@@ -152,7 +191,7 @@ class Selenium_Through_DB:
                
                if (step.wait_manual_action == "0"):
                 #find element
-                element = self.find_element(driver, step, lista_steps)
+                element = self.find_element(driver, step, lista_steps, values_on_expression)
                else:
 
                 #para esperar por ação manual, 
@@ -162,7 +201,7 @@ class Selenium_Through_DB:
                   #show waiting message
                   self.log(step.manual_action_message)
                   time.sleep(5)
-                  element = self.find_element(driver, step, lista_steps)
+                  element = self.find_element(driver, step, lista_steps, values)
                   
 
                #salva elemento resultante
@@ -207,7 +246,7 @@ class Selenium_Through_DB:
 
             else:
                #skipped step
-               self.log('Step {} skipped'.format(step.id_tela))   
+               self.log('Step {} Skipped'.format(step.id_tela))   
             
             success = True
 
@@ -255,7 +294,7 @@ class Selenium_Through_DB:
                    index += 1   
                    step_id = lista_steps[index].step_id
 
-                   #limpa steps_to_skip  apenas se for igual a 'none'
+                   #limpa steps_to_skip  apenas se for igual a constant.RESET_SKIP_INDICATOR ('none')
                    if (not steps_to_skip) :
                      steps_to_skip = step.steps_to_skip_on_next_run
                    else:  
@@ -284,24 +323,22 @@ class Selenium_Through_DB:
 
    return lista_steps     
 
- def get_start_config(self):
-   script_id = self.get_script_id()
+ def get_start_config(self, script_id):   
    start_config = busca_start_config(script_id)
    start_config = dict(start_config)
    start_config = self.row_to_model(Start_Config(), start_config)
    return start_config     
 
  
- def get_script_config(self):
-   script_id = self.get_script_id()
+ def get_script_config(self, script_id):
    script_config = busca_script(script_id)
    script_config = dict(script_config)
    script_config = self.row_to_model(Script(), script_config)
    return script_config 
 
  def get_script_id(self):
-   #TODO
-   return 1 
+   #TODO script id must come from user interface
+   return 2
  
  def row_to_model(self, model_instance, row):    
     for col_name in row:
@@ -317,10 +354,11 @@ class Selenium_Through_DB:
     time.sleep(start_config.wait_after_refresh)
 
 
- def attach_to_browser(self, start_config):
+ def attach_to_browser(self, start_config, look_for_opened):
 
   cont = 1
   found = False
+  
 
   while (not found):
     self.log(str(cont) + '...' + start_config.attempt_attach_message)
@@ -335,6 +373,10 @@ class Selenium_Through_DB:
     except:
      found = False 
      time.sleep(start_config.delay_between_attempt)
+
+     if (look_for_opened): 
+       return None 
+       
     
     cont+=1
     
@@ -343,7 +385,10 @@ class Selenium_Through_DB:
 
  def open_browser(self, start_config):
    #CHROME = start_config.browser_path
-   os.system(start_config.browser_kill_cmd)
+   
+   if (start_config.close_opened_browser_windows == "1"):
+     os.system(start_config.browser_kill_cmd)
+
    os.system(start_config.browser_start_cmd + ' "' + start_config.initial_url +  '" ' + start_config.browser_args)
  
 

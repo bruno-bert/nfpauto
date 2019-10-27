@@ -1,9 +1,9 @@
 - [x] manter steps_to_skip até mandar zerar com o 'none'
 - [x] tratar quando não encontrar cnpj
 - [x] mostrar resultados no final (salvar em uma classe de resultados) - atualmente está salvando no step
-- [] testar tratativas de erro: timeout de sessao, expiracao, etc..
-- []
-- []
+- [x] testar tratativas de erro: timeout de sessao, expiracao, etc..
+- [] gerar script de posting de notas pelo meio de cadastramento via autorização da entidade
+- [] refatoração do código - retirar a parte específica do posting de nota de dentro da classe Selenium_Through_DB
 - []
 - []
 - []
