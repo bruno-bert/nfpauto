@@ -26,6 +26,17 @@ class Selenium_Through_DB:
     index = str(attr).find("{")
     return (index != -1) 
 
+ 
+
+ def get_expression(self, value, values):
+    if self.is_dinamic(value):
+      attribute = value[value.find("{")+1:value.find("}")]
+      attrib_value = values[attribute]
+      value = str(value).replace(attribute, '')
+      return str(value).format(attrib_value)
+    else: 
+      return value
+
  def get_text_to_type(self, value, values):
     if self.is_dinamic(value):
       attribute = re.sub(r'[^\w]', '', value) 
@@ -65,7 +76,7 @@ class Selenium_Through_DB:
 
  def find_element(self, driver, step, lista_steps, values_on_expression):
     
-    expression = self.get_text_to_type(step.expression, values_on_expression)
+    expression = self.get_expression(step.expression, values_on_expression)
     
     if (step.must_wait_element == "1"):
       if (step.find_method == "name"):  
@@ -141,8 +152,12 @@ class Selenium_Through_DB:
    chegou_fim = False
    steps_to_skip = None
 
-   self.open_browser(start_config)
-   driver = self.attach_to_browser(start_config)
+   if (start_config.get_opened_browser == "1"):   
+     driver = self.attach_to_browser(start_config)
+   else:
+     #abre novo navegador
+     self.open_browser(start_config)
+     driver = self.attach_to_browser(start_config)
    
    
    values_on_expression = { "descricao_entidade" : descricao_entidade}
@@ -360,7 +375,10 @@ class Selenium_Through_DB:
 
  def open_browser(self, start_config):
    #CHROME = start_config.browser_path
-   os.system(start_config.browser_kill_cmd)
+   
+   if (start_config.close_opened_browser_windows == "1"):
+     os.system(start_config.browser_kill_cmd)
+
    os.system(start_config.browser_start_cmd + ' "' + start_config.initial_url +  '" ' + start_config.browser_args)
  
 
