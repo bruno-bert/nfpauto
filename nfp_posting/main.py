@@ -50,7 +50,7 @@ class Selenium_Through_DB:
     return step.resulted_element
 
  def get_chaves(self):
-    return ['11111111111111111111111111111111111111111111',
+    return ['35191007424394000154590005988310737378424829',
             '22222222222222222222222222222222222222222222',
             '33333333333333333333333333333333333333333333']
  
@@ -153,11 +153,16 @@ class Selenium_Through_DB:
    steps_to_skip = None
 
    if (start_config.get_opened_browser == "1"):   
-     driver = self.attach_to_browser(start_config)
+     driver = self.attach_to_browser(start_config, True)
+     #TODO check if possible to reduce timeout when trying to find opened window
+     if (not driver):
+       self.open_browser(start_config)
+       driver = self.attach_to_browser(start_config, False)
+
    else:
      #abre novo navegador
      self.open_browser(start_config)
-     driver = self.attach_to_browser(start_config)
+     driver = self.attach_to_browser(start_config, False)
    
    
    values_on_expression = { "descricao_entidade" : descricao_entidade}
@@ -173,8 +178,8 @@ class Selenium_Through_DB:
          #pega step pelo step id
          step = next((x for x in lista_steps if x.step_id == step_id), None)
          
-         #if (step_id == 20):
-         #  print('teste')
+         if (step_id == 16):
+           print('teste')
 
          try:
             
@@ -349,10 +354,11 @@ class Selenium_Through_DB:
     time.sleep(start_config.wait_after_refresh)
 
 
- def attach_to_browser(self, start_config):
+ def attach_to_browser(self, start_config, look_for_opened):
 
   cont = 1
   found = False
+  
 
   while (not found):
     self.log(str(cont) + '...' + start_config.attempt_attach_message)
@@ -367,6 +373,10 @@ class Selenium_Through_DB:
     except:
      found = False 
      time.sleep(start_config.delay_between_attempt)
+
+     if (look_for_opened): 
+       return None 
+       
     
     cont+=1
     
