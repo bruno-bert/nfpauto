@@ -144,7 +144,7 @@ class Selenium_Through_DB:
    self.open_browser(start_config)
    driver = self.attach_to_browser(start_config)
    
-
+   
    values_on_expression = { "descricao_entidade" : descricao_entidade}
 
    for chave in chaves:
