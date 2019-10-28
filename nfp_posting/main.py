@@ -12,6 +12,10 @@ from selenium.webdriver.common.keys import *
 from selenium.webdriver.support import  expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
 
+
+import win32gui
+import win32con
+
 import constant
 from database import busca_steps, busca_script, busca_start_config
 from script import Script, Step, Start_Config
@@ -27,7 +31,15 @@ class Selenium_Through_DB:
     return (index != -1) 
 
  
+ def detect_chrome_window(self, start_config): 
+   hwnd = win32gui.FindWindow(start_config.chrome_class_name, start_config.browser_title )
+   if (hwnd != 0):
+     return True
+   else:
+     return False  
 
+
+ 
  def get_expression(self, value, values):
     if self.is_dinamic(value):
       attribute = value[value.find("{")+1:value.find("}")]
@@ -53,7 +65,8 @@ class Selenium_Through_DB:
     return ['35191007424394000154590005988310737378424829',
             '22222222222222222222222222222222222222222222',
             '33333333333333333333333333333333333333333333']
- 
+
+
  def get_cnpj(self):
     return '01.146.603/0001-69'
 
@@ -152,18 +165,29 @@ class Selenium_Through_DB:
    chegou_fim = False
    steps_to_skip = None
 
+   
+   #se for pra buscar navegador já aberto
    if (start_config.get_opened_browser == "1"):   
-     driver = self.attach_to_browser(start_config, True)
-     #TODO check if possible to reduce timeout when trying to find opened window
-     if (not driver):
-       self.open_browser(start_config)
-       driver = self.attach_to_browser(start_config, False)
+    
+    #verifica se navegador parece já estar aberto
+    browser_seems_to_be_opened = self.detect_chrome_window(start_config)
+  
+    #se parecer que não está aberto, abre navegador e attach no debugger
+    if (not browser_seems_to_be_opened):
+      self.open_browser(start_config)
+      driver = self.attach_to_browser(start_config, False)
+    else:
+      driver = self.attach_to_browser(start_config, True)
+    
+    if (not driver):
+      self.open_browser(start_config)
+      driver = self.attach_to_browser(start_config, False)
 
    else:
-     #abre novo navegador
-     self.open_browser(start_config)
-     driver = self.attach_to_browser(start_config, False)
-   
+    #abre novo navegador
+    self.open_browser(start_config)
+    driver = self.attach_to_browser(start_config, False)
+  
    
    values_on_expression = { "descricao_entidade" : descricao_entidade}
 
@@ -309,7 +333,7 @@ class Selenium_Through_DB:
    for res in list_result:
       self.log(res.value + ' - ' + str(res.success) + ' - ' + res.message)
       
-
+   self.quit_browser(driver)
 
  def get_steps(self):
    script_id = self.get_script_id()
@@ -359,7 +383,6 @@ class Selenium_Through_DB:
   cont = 1
   found = False
   
-
   while (not found):
     self.log(str(cont) + '...' + start_config.attempt_attach_message)
     
@@ -367,13 +390,15 @@ class Selenium_Through_DB:
      chrome_options =  Options()
      chrome_options.add_experimental_option("debuggerAddress", start_config.debugger_host + ':' + start_config.debugger_port)
      driver = webdriver.Chrome(start_config.driver_name, options=chrome_options)
-     
+   
      found = True
      
     except:
      found = False 
      time.sleep(start_config.delay_between_attempt)
 
+     #se estiver procurando uma janela já aberta, e falhou, não vai ficar tentando
+     #vai sair do loop indicar ao caller que não foi possivel encontrar uma janela ativa com o debugger
      if (look_for_opened): 
        return None 
        
@@ -382,6 +407,9 @@ class Selenium_Through_DB:
     
     
   return driver 
+ 
+ def quit_browser(self, driver):
+   driver.quit()
 
  def open_browser(self, start_config):
    #CHROME = start_config.browser_path

@@ -27,7 +27,8 @@ class Start_Config:
         self.wait_after_refresh = None
         self.get_opened_browser = None
         self.close_opened_browser_windows = None
-
+        self.chrome_class_name = None
+        self.browser_title = None
 
 
 class Step:
