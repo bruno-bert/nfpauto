@@ -22,9 +22,41 @@ from script import Script, Step, Start_Config
 from cycle_result import CycleResult
 
 
-class Selenium_Through_DB:
- def __init__(self):
-     self.log('Instantiated Selenium_Through_DB Service..')
+class SeleniumDB:
+ 
+ 
+ def log(self, message):
+    raise Exception('log must be implemented by super class')
+
+
+
+ def show_results(self):
+    for res in self.list_result:
+      self.log(res.value + ' - ' + str(res.success) + ' - ' + res.message)
+
+
+ def clear_results(self):
+   self.list_result = []
+
+ def __init__(self, script_id):    
+
+     
+     self.driver = None
+     self.list_result = []
+     self.script_id = script_id
+
+     self.start_config = self.get_start_config(self.script_id)
+     self.script_config = self.get_script_config(self.script_id)
+     self.lista_steps = self.get_steps()
+
+     
+     if (len(self.lista_steps) == 0):
+       self.log('Steps not found on script {}'.format(str(self.script_id)))
+       return
+     
+     #orderna lista pelo sort_number
+     self.lista_steps.sort(key=lambda x: x.sort_number)
+
 
  def is_dinamic(self, attr):
     index = str(attr).find("{")
@@ -61,17 +93,6 @@ class Selenium_Through_DB:
     step = next((x for x in steps if x.step_id == step_id), None)
     return step.resulted_element
 
- def get_chaves(self):
-    return ['35191007424394000154590005988310737378424829',
-            '22222222222222222222222222222222222222222222',
-            '33333333333333333333333333333333333333333333']
-
-
- def get_cnpj(self):
-    return '01.146.603/0001-69'
-
- def get_descricao_entidade(self):
-    return "GACC GRUPO DE ASSISTENCIA A CRIANCA COM CANCER"   
  
  def must_skip(self, step, steps_to_skip ):
    if (step.skip == "1"): 
@@ -133,40 +154,12 @@ class Selenium_Through_DB:
         element = base_element.find_element_by_partial_link_text(expression)
 
     return element
-                  
- def start(self):
-   script_id = self.get_script_id()
-   start_config = self.get_start_config(script_id)
-   script_config = self.get_script_config(script_id)
 
-   
+ def handle_navigator_open(self):
 
-   lista_steps = self.get_steps()
+   start_config = self.start_config
 
-   if (len(lista_steps) == 0):
-     self.log('Steps not found on script {}'.format(str(script_id)))
-     return
-
-   #TODO remove specific code from this class through events
-   chaves = self.get_chaves()
-   cnpj = self.get_cnpj()
-   descricao_entidade = self.get_descricao_entidade() 
-
-   list_result = []
-  
-   #orderna lista pelo sort_number
-   lista_steps.sort(key=lambda x: x.sort_number)
-
-   #pega primeira step 
-   index = 0
-   step = Step()      
-   step = lista_steps[index]
-   step_id = step.step_id
-   chegou_fim = False
-   steps_to_skip = None
-
-   
-   #se for pra buscar navegador já aberto
+    #se for pra buscar navegador já aberto
    if (start_config.get_opened_browser == "1"):   
     
     #verifica se navegador parece já estar aberto
@@ -187,23 +180,29 @@ class Selenium_Through_DB:
     #abre novo navegador
     self.open_browser(start_config)
     driver = self.attach_to_browser(start_config, False)
-  
+
+   return driver
+ 
+
+ def run_steps(self, values, values_on_expression, step_id, steps_to_skip ):
    
-   values_on_expression = { "descricao_entidade" : descricao_entidade}
+     lista_steps = self.lista_steps
+     script_config = self.script_config
+     start_config = self.start_config      
+     
+     chegou_fim = False
+     
+     #se navegador não estiver aberto, abre o mesmo 
+     if (not self.driver):
+       self.driver = self.handle_navigator_open()
+     
+     driver = self.driver
 
-   for chave in chaves:
-      
-      chegou_fim = False
-      values = { "chave": chave, "cnpj": cnpj}
-      
-
-      while (not chegou_fim):
+     while (not chegou_fim):
       
          #pega step pelo step id
          step = next((x for x in lista_steps if x.step_id == step_id), None)
-         
-         if (step_id == 16):
-           print('teste')
+        
 
          try:
             
@@ -224,7 +223,7 @@ class Selenium_Through_DB:
                 while (True):
                   #show waiting message
                   self.log(step.manual_action_message)
-                  time.sleep(5)
+                  time.sleep(3)
                   element = self.find_element(driver, step, lista_steps, values)
                   
 
@@ -263,10 +262,10 @@ class Selenium_Through_DB:
                save_result = (step.save_result == '1' )
                if (save_result):
                   result = CycleResult()  
-                  result.value = chave
+                  result.value = values
                   result.success = step.success
                   result.message = step.resulted_success_message or step.resulted_error_message
-                  list_result.append(result)   
+                  self.list_result.append(result)   
 
             else:
                #skipped step
@@ -327,17 +326,13 @@ class Selenium_Through_DB:
 
             if (step.wait_next > 0):
               self.log(script_config.wait_message_between_steps.format(str(step.wait_next)))
-              time.sleep(step.wait_next)           
+              time.sleep(step.wait_next)
 
-                
-   for res in list_result:
-      self.log(res.value + ' - ' + str(res.success) + ' - ' + res.message)
-      
-   self.quit_browser(driver)
+     return { "step_id": step_id, "steps_to_skip_on_next_run" : steps_to_skip }       
+
 
  def get_steps(self):
-   script_id = self.get_script_id()
-   steps = busca_steps(script_id)
+   steps = busca_steps(self.script_id)
    lista_steps = [] 
    
    for data in steps:
@@ -360,9 +355,6 @@ class Selenium_Through_DB:
    script_config = self.row_to_model(Script(), script_config)
    return script_config 
 
- def get_script_id(self):
-   #TODO script id must come from user interface
-   return 2
  
  def row_to_model(self, model_instance, row):    
     for col_name in row:
@@ -408,8 +400,8 @@ class Selenium_Through_DB:
     
   return driver 
  
- def quit_browser(self, driver):
-   driver.quit()
+ def quit_browser(self):
+   self.driver.quit()
 
  def open_browser(self, start_config):
    #CHROME = start_config.browser_path
@@ -420,9 +412,3 @@ class Selenium_Through_DB:
    os.system(start_config.browser_start_cmd + ' "' + start_config.initial_url +  '" ' + start_config.browser_args)
  
 
- def log(self, message):
-   print(message) 
-
-if __name__ == "__main__":
-  service = Selenium_Through_DB()
-  service.start()
