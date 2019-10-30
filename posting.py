@@ -4,7 +4,7 @@ import ui_dialog_postar
 import messages
 import constant
 from database import busca_chaves_banco
-from nfp_posting.main import NotaPaulista_Posting
+from service_posting import NFPPosting
 
 class Posting:
  def __init__(self):
@@ -13,7 +13,7 @@ class Posting:
      self.DialogPostar = QtWidgets.QDialog()
      self.dialog_postar.setupUi(self.DialogPostar)
      self.DialogPostar.setModal(True)
-     self.service_posting = NotaPaulista_Posting()
+     
 
      self.dialog_postar.btn_iniciar_postagem.clicked.connect(self.inicia_postagem)
      self.dialog_postar.btn_fechar.clicked.connect(self.DialogPostar.reject)
@@ -53,4 +53,25 @@ class Posting:
 
      
  def inicia_postagem(self):
-    self.service_posting.start()
+      script_id = self.get_script_id() 
+      chaves = self.seleciona_chaves()
+      cnpj = self.seleciona_cnpj()
+      descricao_entidade = self.seleciona_descricao_entidade()
+      service = NFPPosting(script_id, cnpj, descricao_entidade, chaves)
+      service.iniciar_postagem()
+
+ def get_script_id(self):      
+      return 2
+
+ def seleciona_chaves(self):
+   return ['35191007424394000154590005988310737378424829',
+           '22222222222222222222222222222222222222222222',
+           '33333333333333333333333333333333333333333333']
+
+ def seleciona_cnpj(self):
+   return '01.146.603/0001-69'
+
+ def seleciona_descricao_entidade(self):
+   return "GACC GRUPO DE ASSISTENCIA A CRIANCA COM CANCER"     
+
+   

@@ -1,5 +1,5 @@
-- [] refatoração do código - retirar a parte específica do posting de nota de dentro da classe Selenium_Through_DB
+- [x] refatoração do código - retirar a parte específica do posting de nota de dentro da classe Selenium_Through_DB
+- [] integrar servico de posting com interface grafica
 - []
 - []
-- []
-- []
+- [] refatoração do código - isolar sqlite db para parte generica (tabelas script, start_config, steps) em db separado
