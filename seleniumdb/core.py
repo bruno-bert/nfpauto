@@ -29,10 +29,13 @@ class SeleniumDB:
     raise Exception('log must be implemented by super class')
  def get_id(self, values):
     raise Exception('get_id must be implemented by super class')
+ def get_id_to_show(self, values):
+    raise Exception('get_id_to_show must be implemented by super class') 
  def show_results(self):
     for res in self.list_result:
-      self.log(res.value + ' - ' + str(res.success) + ' - ' + res.message)
-
+      self.log(res.value + ' - ' + str(res.success) + ' - ' + res.message) 
+ def save_result(self, cycle_result):
+    raise Exception('save_result must be implemented by super class')
 
  def clear_results(self):
    self.list_result = []
@@ -257,11 +260,13 @@ class SeleniumDB:
 
                #se deve salvar resultado do ciclo, grava o resultado
                save_result = (step.save_result == '1' )
-               if (save_result):
+               if (save_result):                 
                   result = CycleResult()  
                   result.value = self.get_id(values)
+                  result.value_to_show = self.get_id_to_show(values)
                   result.success = step.success
                   result.message = step.resulted_success_message or step.resulted_error_message
+                  self.save_result(result)
                   self.list_result.append(result)   
 
             else:

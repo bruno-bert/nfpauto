@@ -15,9 +15,16 @@ class NFPPosting(SeleniumDB):
     def log(self, message):
         print(message)
 
-    def get_id(self, values ):
-      return 'CNPJ: {} - Chave de Acesso: {}'.format(values['cnpj'],values['chave'])
+    def save_result(self, result):
+      self.log(result.value_to_show + ' - ' + str(result.success) + ' - ' + result.message) 
       
+
+    def get_id_to_show(self, values ):
+      return 'CNPJ: {} - Chave de Acesso: {}'.format(values['cnpj'],values['chave'])
+    
+    def get_id(self, values ):
+      return values['chave']
+
     def iniciar_postagem(self):
 
       #pega primeira step 
@@ -34,12 +41,13 @@ class NFPPosting(SeleniumDB):
         values = { "chave": chave, "cnpj": self.cnpj}      
         run_result = self.run_steps(values, values_on_expression, step_id, steps_to_skip_on_next_run)
 
+
         # com base no retorno do ciclo anterior, 
         # determina o step inicial e se precisa pular algum step no ciclo seguinte
         step_id = run_result['step_id']
         steps_to_skip_on_next_run = run_result['steps_to_skip_on_next_run']
 
-      self.show_results()  
+      #self.show_results()  
       self.quit_browser()
 
 
