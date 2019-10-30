@@ -16,7 +16,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 import win32gui
 import win32con
 
-import seleniumdb.constant
+from seleniumdb import constant
 from seleniumdb.steps_from_database import busca_steps, busca_script, busca_start_config
 from seleniumdb.models import Script, Step, Start_Config
 from seleniumdb.cycle_result import CycleResult
@@ -27,9 +27,8 @@ class SeleniumDB:
  
  def log(self, message):
     raise Exception('log must be implemented by super class')
-
-
-
+ def get_id(self, values):
+    raise Exception('get_id must be implemented by super class')
  def show_results(self):
     for res in self.list_result:
       self.log(res.value + ' - ' + str(res.success) + ' - ' + res.message)
@@ -168,22 +167,20 @@ class SeleniumDB:
     #se parecer que não está aberto, abre navegador e attach no debugger
     if (not browser_seems_to_be_opened):
       self.open_browser(start_config)
-      driver = self.attach_to_browser(start_config, False)
+      self.driver = self.attach_to_browser(start_config, False)
     else:
-      driver = self.attach_to_browser(start_config, True)
+      self.driver = self.attach_to_browser(start_config, True)
     
-    if (not driver):
+    if (not  self.driver):
       self.open_browser(start_config)
-      driver = self.attach_to_browser(start_config, False)
+      self.driver = self.attach_to_browser(start_config, False)
 
    else:
     #abre novo navegador
     self.open_browser(start_config)
-    driver = self.attach_to_browser(start_config, False)
+    self.driver = self.attach_to_browser(start_config, False)
 
-   return driver
- 
-
+   
  def run_steps(self, values, values_on_expression, step_id, steps_to_skip ):
    
      lista_steps = self.lista_steps
@@ -194,7 +191,7 @@ class SeleniumDB:
      
      #se navegador não estiver aberto, abre o mesmo 
      if (not self.driver):
-       self.driver = self.handle_navigator_open()
+       self.handle_navigator_open()
      
      driver = self.driver
 
@@ -262,7 +259,7 @@ class SeleniumDB:
                save_result = (step.save_result == '1' )
                if (save_result):
                   result = CycleResult()  
-                  result.value = values
+                  result.value = self.get_id(values)
                   result.success = step.success
                   result.message = step.resulted_success_message or step.resulted_error_message
                   self.list_result.append(result)   
@@ -362,9 +359,7 @@ class SeleniumDB:
              
     return model_instance
 
- #def refresh_browser(self, driver, start_config):
- def refresh_browser(self, driver, start_config):
-   #driver.get(start_config.initial_url)
+ def refresh_browser(self, driver, start_config):   
    driver.refresh()
    if ( (start_config.wait_after_refresh) & (start_config.wait_after_refresh > 0)):
     time.sleep(start_config.wait_after_refresh)
@@ -385,7 +380,8 @@ class SeleniumDB:
    
      found = True
      
-    except:
+    except Exception as err:
+     print(err)
      found = False 
      time.sleep(start_config.delay_between_attempt)
 

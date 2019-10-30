@@ -1,6 +1,8 @@
 from seleniumdb.core import SeleniumDB
 from seleniumdb.models import Step
 
+
+
 class NFPPosting(SeleniumDB):
 
     def __init__(self, script_id, cnpj, descricao_entidade, chaves):      
@@ -13,7 +15,9 @@ class NFPPosting(SeleniumDB):
     def log(self, message):
         print(message)
 
-   
+    def get_id(self, values ):
+      return 'CNPJ: {} - Chave de Acesso: {}'.format(values['cnpj'],values['chave'])
+      
     def iniciar_postagem(self):
 
       #pega primeira step 
@@ -52,7 +56,7 @@ def seleciona_cnpj():
 def seleciona_descricao_entidade():
    return "GACC GRUPO DE ASSISTENCIA A CRIANCA COM CANCER"     
 
-   
+
 if __name__ == "__main__":
    
   script_id = get_script_id() 
