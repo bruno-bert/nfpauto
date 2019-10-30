@@ -1,5 +1,5 @@
 from seleniumdb.core import SeleniumDB
-from seleniumdb.script import Step
+from seleniumdb.models import Step
 
 class NFPPosting(SeleniumDB):
 
@@ -38,7 +38,21 @@ class NFPPosting(SeleniumDB):
       self.show_results()  
       self.quit_browser()
 
+def get_script_id():      
+      return 2
 
+def seleciona_chaves():
+   return ['35191007424394000154590005988310737378424829',
+           '22222222222222222222222222222222222222222222',
+           '33333333333333333333333333333333333333333333']
+
+def seleciona_cnpj():
+   return '01.146.603/0001-69'
+
+def seleciona_descricao_entidade():
+   return "GACC GRUPO DE ASSISTENCIA A CRIANCA COM CANCER"     
+
+   
 if __name__ == "__main__":
    
   script_id = get_script_id() 
@@ -49,16 +63,3 @@ if __name__ == "__main__":
   service.iniciar_postagem()
 
 
-def get_script_id(self):      
-      return 2
-
-def seleciona_chaves(self):
-   return ['35191007424394000154590005988310737378424829',
-           '22222222222222222222222222222222222222222222',
-           '33333333333333333333333333333333333333333333']
-
-def seleciona_cnpj(self):
-   return '01.146.603/0001-69'
-
-def seleciona_descricao_entidade(self):
-   return "GACC GRUPO DE ASSISTENCIA A CRIANCA COM CANCER"     

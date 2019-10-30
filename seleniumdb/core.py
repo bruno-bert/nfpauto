@@ -16,10 +16,10 @@ from selenium.webdriver.remote.webdriver import WebDriver
 import win32gui
 import win32con
 
-import constant
-from database import busca_steps, busca_script, busca_start_config
-from script import Script, Step, Start_Config
-from cycle_result import CycleResult
+import seleniumdb.constant
+from seleniumdb.steps_from_database import busca_steps, busca_script, busca_start_config
+from seleniumdb.models import Script, Step, Start_Config
+from seleniumdb.cycle_result import CycleResult
 
 
 class SeleniumDB:

@@ -1,5 +1,5 @@
 import sqlite3
-import constant
+from  seleniumdb import constant
 
 def busca_steps(script_id):
  conn = sqlite3.connect('notas.db')
