@@ -30,12 +30,7 @@ import ui_list
 import ui_cnpj_dialog
 import ui_cnpj_padrao_dialog
 
-
 from api import ApiPortal, ApiResult
-
-from service_posting import NFPPosting
-import asyncio
-from asyncqt import QEventLoop, QThreadExecutor
 
 
 def carrega_lista_empresas(rows):
@@ -746,9 +741,8 @@ if __name__ == "__main__":
         
         servico_posting = Posting() 
 
-        #ui.btn_postar.clicked.connect(on_abre_postar)    
-        ui.btn_postar.clicked.connect(inicia_postagem)
-
+        ui.btn_postar.clicked.connect(on_abre_postar)    
+        
         m = Messages()
 
         lista_notas = []

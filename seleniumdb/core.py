@@ -185,7 +185,7 @@ class SeleniumDB(Publisher):
     self.driver = self.attach_to_browser(start_config, False)
 
    
- async def run_steps(self, values, values_on_expression, step_id, steps_to_skip ):
+ def run_steps(self, values, values_on_expression, step_id, steps_to_skip ):
    
      lista_steps = self.lista_steps
      script_config = self.script_config

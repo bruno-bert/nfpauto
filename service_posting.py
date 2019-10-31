@@ -26,7 +26,7 @@ class NFPPosting(SeleniumDB):
     def get_id(self, values ):
       return values['chave']
 
-    async def iniciar_postagem(self):
+    def iniciar_postagem(self):
 
       #pega primeira step 
       index = 0
@@ -39,15 +39,18 @@ class NFPPosting(SeleniumDB):
       
       for chave in self.chaves:        
         
-        values = { "chave": chave, "cnpj": self.cnpj}      
-        run_result = await self.run_steps(values, values_on_expression, step_id, steps_to_skip_on_next_run)
+        try:
+
+          values = { "chave": chave, "cnpj": self.cnpj}      
+          run_result = self.run_steps(values, values_on_expression, step_id, steps_to_skip_on_next_run)
 
 
-        # com base no retorno do ciclo anterior, 
-        # determina o step inicial e se precisa pular algum step no ciclo seguinte
-        step_id = run_result['step_id']
-        steps_to_skip_on_next_run = run_result['steps_to_skip_on_next_run']
-
+          # com base no retorno do ciclo anterior, 
+          # determina o step inicial e se precisa pular algum step no ciclo seguinte
+          step_id = run_result['step_id']
+          steps_to_skip_on_next_run = run_result['steps_to_skip_on_next_run']
+        except Exception as err:
+          print(err)
      
       self.quit_browser()
 

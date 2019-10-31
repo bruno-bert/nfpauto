@@ -4,20 +4,24 @@ import ui_dialog_postar
 import messages
 import constant
 from database import busca_chaves_banco
-from service_posting import NFPPosting
 from seleniumdb.observer import Subscriber
 from database import  busca_script_padrao
+from task import Task
 
 
 class Posting(Subscriber):
-
-#listener
+ 
+ 
+ #signal
  def show_log(self, message):
    self.adiciona_log_lista(message)
 
- #listener 
- def save_result(self, result):
-   self.atualiza_status_nota(result)
+ #signal 
+ def save_result(self, id_nota):   
+   self.atualiza_status_nota_tela(id_nota)
+
+ def atualiza_status_nota_tela(self, id_nota):
+     print('atualizando status da nota na tela {}'.format(id_nota))  
 
  def __init__(self):
 
@@ -28,8 +32,8 @@ class Posting(Subscriber):
      self.dialog_postar.setupUi(self.DialogPostar)
      self.DialogPostar.setModal(True)
      
-
      self.dialog_postar.btn_iniciar_postagem.clicked.connect(self.inicia_postagem)
+     
      self.dialog_postar.btn_limpar.clicked.connect(self.limpar_log)
      self.dialog_postar.btn_fechar.clicked.connect(self.DialogPostar.reject)
      
@@ -79,38 +83,10 @@ class Posting(Subscriber):
      else:
         return False 
  
- def atualiza_status_nota(self, result):
-   print('atualizando status da nota')
-
-
- 
- 
  def inicia_postagem(self):
-      
-      script_id = self.get_script_id() 
-      chaves = self.seleciona_chaves()
-      cnpj = self.seleciona_cnpj()
-      
-      descricao_entidade = self.seleciona_descricao_entidade()
-      
-      service = NFPPosting(script_id, cnpj, descricao_entidade, chaves)
-      service.register(self)
-      
-      service.iniciar_postagem()
+      self.task_postagem = Task()
+      self.task_postagem.sig_log.connect(self.show_log)
+      self.task_postagem.sig_result.connect(self.atualiza_status_nota_tela)
+      self.task_postagem.start()
 
- def get_script_id(self):      
-      result = busca_script_padrao()
-      return int(result['script_id'])
 
- def seleciona_chaves(self):
-   chaveIndex = 1
-   return [elt[chaveIndex] for elt in self.rows]
-        
-
- def seleciona_cnpj(self):
-   return '01.146.603/0001-69'
-
- def seleciona_descricao_entidade(self):
-   return "GACC GRUPO DE ASSISTENCIA A CRIANCA COM CANCER"     
-
-   
