@@ -20,9 +20,9 @@ from seleniumdb import constant
 from seleniumdb.steps_from_database import busca_steps, busca_script, busca_start_config
 from seleniumdb.models import Script, Step, Start_Config
 from seleniumdb.cycle_result import CycleResult
+from seleniumdb.observer import Publisher
 
-
-class SeleniumDB:
+class SeleniumDB(Publisher):
  
  
  def log(self, message):
@@ -42,7 +42,8 @@ class SeleniumDB:
 
  def __init__(self, script_id):    
 
-     
+     super().__init__()
+      
      self.driver = None
      self.list_result = []
      self.script_id = script_id
@@ -184,7 +185,7 @@ class SeleniumDB:
     self.driver = self.attach_to_browser(start_config, False)
 
    
- def run_steps(self, values, values_on_expression, step_id, steps_to_skip ):
+ async def run_steps(self, values, values_on_expression, step_id, steps_to_skip ):
    
      lista_steps = self.lista_steps
      script_config = self.script_config

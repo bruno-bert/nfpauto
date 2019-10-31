@@ -34,7 +34,17 @@ def busca_config_arquivo_padrao():
  cur.execute(query)
  rows = cur.fetchone()
  conn.close()
- return rows 
+ return rows
+
+def busca_script_padrao():
+ conn = sqlite3.connect('notas.db')
+ query = constant.QUERY_SELECT_SCRIPT_PADRAO
+ conn.row_factory = sqlite3.Row
+ cur = conn.cursor()
+ cur.execute(query)
+ rows = cur.fetchone()
+ conn.close()
+ return rows   
 
 def busca_cnpj_padrao_valor():
  rows = busca_cnpj_padrao()

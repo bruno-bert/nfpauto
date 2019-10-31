@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>871</width>
-    <height>420</height>
+    <height>772</height>
    </rect>
   </property>
   <property name="font">
@@ -26,8 +26,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>691</width>
-     <height>391</height>
+     <width>591</width>
+     <height>261</height>
     </rect>
    </property>
    <property name="font">
@@ -49,7 +49,7 @@
    <property name="geometry">
     <rect>
      <x>720</x>
-     <y>310</y>
+     <y>670</y>
      <width>131</width>
      <height>91</height>
     </rect>
@@ -103,6 +103,47 @@
    </property>
    <property name="text">
     <string>Fechar</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_log">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>290</y>
+     <width>581</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Log de Atividades</string>
+   </property>
+  </widget>
+  <widget class="QListView" name="list_log">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>330</y>
+     <width>701</width>
+     <height>431</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_limpar">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>300</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Limpar Log</string>
    </property>
   </widget>
  </widget>

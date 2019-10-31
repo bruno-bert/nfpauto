@@ -13,10 +13,11 @@ class NFPPosting(SeleniumDB):
       self.chaves = chaves
 
     def log(self, message):
-        print(message)
+      print(message)
+      self.show_log(message)
 
-    def save_result(self, result):
-      self.log(result.value_to_show + ' - ' + str(result.success) + ' - ' + result.message) 
+    def on_save_result(self, result):     
+      self.save_result(result)
       
 
     def get_id_to_show(self, values ):
@@ -25,7 +26,7 @@ class NFPPosting(SeleniumDB):
     def get_id(self, values ):
       return values['chave']
 
-    def iniciar_postagem(self):
+    async def iniciar_postagem(self):
 
       #pega primeira step 
       index = 0
@@ -39,7 +40,7 @@ class NFPPosting(SeleniumDB):
       for chave in self.chaves:        
         
         values = { "chave": chave, "cnpj": self.cnpj}      
-        run_result = self.run_steps(values, values_on_expression, step_id, steps_to_skip_on_next_run)
+        run_result = await self.run_steps(values, values_on_expression, step_id, steps_to_skip_on_next_run)
 
 
         # com base no retorno do ciclo anterior, 
@@ -47,7 +48,7 @@ class NFPPosting(SeleniumDB):
         step_id = run_result['step_id']
         steps_to_skip_on_next_run = run_result['steps_to_skip_on_next_run']
 
-      #self.show_results()  
+     
       self.quit_browser()
 
 

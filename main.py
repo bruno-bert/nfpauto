@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QTableWidgetItem, QListWidgetItem
 from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
 from bradocs4py.cnpj import  ValidadorCnpj 
 
+
 #native libs
 import sqlite3
 import re
@@ -11,6 +12,7 @@ from datetime import date, datetime, timedelta
 from calendar import monthrange
 import dateutil.relativedelta
 import os.path
+
 
 
 #internal modules
@@ -31,6 +33,9 @@ import ui_cnpj_padrao_dialog
 
 from api import ApiPortal, ApiResult
 
+from service_posting import NFPPosting
+import asyncio
+from asyncqt import QEventLoop, QThreadExecutor
 
 
 def carrega_lista_empresas(rows):
@@ -640,10 +645,55 @@ def on_abre_login():
   if (servico_login.mostra_login()):
     atualiza_botao_login()
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def show_log( message):
+  'grava log'
+
+#listener 
+def save_result( result):
+  'salva resultado'
+
+
+async def inicia_postagem():
+      
+      script_id = 2
+      chaves = ['1111111111111111111111111111','222222222222222222222222222']
+      cnpj = '01.146.603/0001-69'   
+      descricao_entidade = 'GACC GRUPO DE ASSISTENCIA A CRIANCA COM CANCER'
+      
+      service = NFPPosting(script_id, cnpj, descricao_entidade, chaves)
+      #service.register(app)
+      
+     # with QThreadExecutor(1) as exec:
+     #   await loop.run_in_executor(exec, service.iniciar_postagem())
+      asyncio.create_task( service.iniciar_postagem())
+      
+      
+
 if __name__ == "__main__":
         import sys    
     
         app = QtWidgets.QApplication(sys.argv)
+        
+        #loop = QEventLoop(app)
+        #asyncio.set_event_loop(loop)
+      
 
         MainWindow = QtWidgets.QMainWindow()
         ui = ui_list.Ui_MainWindow()
@@ -695,7 +745,9 @@ if __name__ == "__main__":
         ui.txt_cnpj_estab.setText(constant.EMPTY_STR)
         
         servico_posting = Posting() 
-        ui.btn_postar.clicked.connect(on_abre_postar)    
+
+        #ui.btn_postar.clicked.connect(on_abre_postar)    
+        ui.btn_postar.clicked.connect(inicia_postagem)
 
         m = Messages()
 
@@ -729,6 +781,8 @@ if __name__ == "__main__":
         modo_leitor()
 
         sys.exit(app.exec_())
+        #with loop:
+        #  loop.run_until_complete(app.exec_())
 
     
 

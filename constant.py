@@ -14,6 +14,7 @@ QUERY_SELECT_CNPJ_PADRAO="select cnpj from cnpj_padrao"
 QUERY_SELECT_CONFIG_ARQUIVO="select * from config_arquivo where id_text = '{}'"
 QUERY_SELECT_CONFIG_ARQUIVO_PADRAO="select id_text from config_arquivo_padrao"
 QUERY_SELECT_SCRIPTS="select * from scripts"
+QUERY_SELECT_SCRIPT_PADRAO="select script_id from script_padrao"
 
 VALIDA_CHAVE_PELO_DIGITO=True
 SALVA_NOTA_EXPIRADA=True
