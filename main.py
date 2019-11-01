@@ -187,8 +187,10 @@ def get_chave_parcial():
 
 def mostra_mensagem(text):
     ui.lbl_message.setText(text)
+    ui.lbl_message.show()
 def limpa_mensagem():
     ui.lbl_message.setText("")
+    ui.lbl_message.hide()
 
 def atualiza_contagem_digitos(text):
     ui.lblDigitos.setText("{num_digitos} dígitos".format(num_digitos=len(text)))
@@ -723,7 +725,7 @@ if __name__ == "__main__":
         ui.btn_importar.clicked.connect(on_importar_arquivo)    
         ui.btn_portal.clicked.connect(on_baixar_portal) 
         
-        
+        ui.lbl_message.hide()
         
 
         dialog_cnpj_padrao.txt_cnpj_padrao.textChanged.connect(on_cnpj_padrao_alterado )

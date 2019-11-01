@@ -7,45 +7,118 @@
     <x>0</x>
     <y>0</y>
     <width>1630</width>
-    <height>845</height>
+    <height>788</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton {
-	box-shadow:inset 0px 1px 0px 0px #ffffff;
-	background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
-	background-color:#f9f9f9;
+   <string notr="true">#centralwidget {
+ background-color: #fffafa
+}
+
+QPushButton {
+	box-shadow:inset 0px 1px 0px 0px #dcecfb;
+	background:linear-gradient(to bottom, #bddbfa 5%, #80b5ea 100%);
+	background-color:#bddbfa;
 	border-radius:6px;
-	border:1px solid #dcdcdc;
+	border:1px solid #84bbf3;
 	display:inline-block;
 	cursor:pointer;
-	color:#666666;
+	color:#555;
 	font-family:Arial;
 	font-size:15px;
 	font-weight:bold;
 	padding:6px 24px;
 	text-decoration:none;
-	text-shadow:0px 1px 0px #ffffff;
+	text-shadow:0px 1px 0px #528ecc;
 }
 QPushButton:hover {
-  background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
-	background-color:#e9e9e9;
+	background:linear-gradient(to bottom, #80b5ea 5%, #bddbfa 100%);
+	background-color:#80b5ea;
 }
 QPushButton:active {
-  position:relative;
+	position:relative;
 	top:1px;
-}</string>
+}
+
+
+#btn_postar {
+	box-shadow: 0px 1px 0px 0px #f0f7fa;
+	background:linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+	background-color:#33bdef;
+	border-radius:6px;
+	border:1px solid #057fd0;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family: Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #5b6178;
+}
+#btn_postar:hover {
+	background:linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
+	background-color:#019ad2;
+}
+#btn_postar:active {
+	position:relative;
+	top:1px;
+}
+
+
+QPlainTextEdit, QLineEdit
+{
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	background: #fff;
+	margin-bottom: 4%;
+	border: 1px solid #ccc;
+	padding: 8%;
+	color: #555;
+	font: 95% Arial, Helvetica, sans-serif;
+}
+
+QPlainTextEdit:focus, QLineEdit:focus
+{
+	box-shadow: 0 0 5px #84bbf3;
+	padding: 3%;
+	border: 2px solid #84bbf3;
+}
+
+#txt_chave:focus{
+	box-shadow: 0 0 5px #84bbf3;
+	padding: 3%;
+	border: 2px solid #84bbf3;
+}
+
+
+
+</string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>24</width>
+    <height>24</height>
+   </size>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="lbTitulo">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>0</y>
-      <width>241</width>
+      <x>630</x>
+      <y>30</y>
+      <width>281</width>
       <height>41</height>
      </rect>
     </property>
@@ -58,16 +131,16 @@ QPushButton:active {
      </font>
     </property>
     <property name="text">
-     <string>Lista de Cupons</string>
+     <string>Cupons disponíveis</string>
     </property>
    </widget>
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>50</y>
+      <y>80</y>
       <width>1601</width>
-      <height>281</height>
+      <height>251</height>
      </rect>
     </property>
     <property name="font">
@@ -80,6 +153,9 @@ QPushButton:active {
     </property>
     <property name="selectionMode">
      <enum>QAbstractItemView::NoSelection</enum>
+    </property>
+    <property name="gridStyle">
+     <enum>Qt::DotLine</enum>
     </property>
     <property name="rowCount">
      <number>0</number>
@@ -112,10 +188,10 @@ QPushButton:active {
    <widget class="QLabel" name="lbl_message">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>340</y>
+      <x>20</x>
+      <y>700</y>
       <width>921</width>
-      <height>41</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
@@ -130,7 +206,19 @@ QPushButton:active {
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">#lbl_message {
+margin: 10px 0px;
+padding:12px;
+ 
+}
+#lbl_message {
+    color: #9F6000;
+    background-color: #ffffcc;
+  margin:10px 22px;
+    font-size:2em;
+    vertical-align:middle;
+border-style: dashed
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -139,15 +227,16 @@ QPushButton:active {
    <widget class="QGroupBox" name="grupo_atalhos">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>410</y>
+      <x>980</x>
+      <y>350</y>
       <width>631</width>
-      <height>361</height>
+      <height>351</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Montserrat Alternates SemiBold</family>
+      <pointsize>10</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -167,7 +256,7 @@ QPushButton:active {
      <property name="font">
       <font>
        <family>Montserrat Alternates SemiBold</family>
-       <pointsize>14</pointsize>
+       <pointsize>12</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -188,7 +277,7 @@ QPushButton:active {
      <property name="font">
       <font>
        <family>Montserrat Alternates SemiBold</family>
-       <pointsize>14</pointsize>
+       <pointsize>12</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -209,7 +298,7 @@ QPushButton:active {
      <property name="font">
       <font>
        <family>Montserrat Alternates SemiBold</family>
-       <pointsize>14</pointsize>
+       <pointsize>12</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -230,7 +319,7 @@ QPushButton:active {
      <property name="font">
       <font>
        <family>Montserrat Alternates SemiBold</family>
-       <pointsize>14</pointsize>
+       <pointsize>12</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -251,7 +340,7 @@ QPushButton:active {
      <property name="font">
       <font>
        <family>Montserrat Alternates SemiBold</family>
-       <pointsize>14</pointsize>
+       <pointsize>12</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -272,7 +361,7 @@ QPushButton:active {
      <property name="font">
       <font>
        <family>Montserrat Alternates SemiBold</family>
-       <pointsize>14</pointsize>
+       <pointsize>12</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -293,7 +382,7 @@ QPushButton:active {
      <property name="font">
       <font>
        <family>Montserrat Alternates SemiBold</family>
-       <pointsize>14</pointsize>
+       <pointsize>12</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -314,7 +403,7 @@ QPushButton:active {
      <property name="font">
       <font>
        <family>Montserrat Alternates SemiBold</family>
-       <pointsize>14</pointsize>
+       <pointsize>12</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -328,7 +417,7 @@ QPushButton:active {
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>390</y>
+      <y>430</y>
       <width>921</width>
       <height>261</height>
      </rect>
@@ -342,10 +431,14 @@ QPushButton:active {
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">selection-background-color: rgb(249, 255, 229);</string>
+     <string notr="true">QTabWidget{
+ background-color: #fffafa;
+box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+
+}</string>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -374,7 +467,7 @@ QPushButton:active {
       <widget class="QPlainTextEdit" name="txtChave">
        <property name="geometry">
         <rect>
-         <x>200</x>
+         <x>190</x>
          <y>30</y>
          <width>591</width>
          <height>41</height>
@@ -383,7 +476,6 @@ QPushButton:active {
        <property name="font">
         <font>
          <family>Montserrat Alternates SemiBold</family>
-         <pointsize>-1</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -391,8 +483,14 @@ QPushButton:active {
        <property name="toolTip">
         <string>Digite a Chave de Acesso Aqui</string>
        </property>
+       <property name="toolTipDuration">
+        <number>3</number>
+       </property>
        <property name="autoFillBackground">
         <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
        </property>
        <property name="plainText">
         <string/>
@@ -490,7 +588,6 @@ QPushButton:active {
        <property name="font">
         <font>
          <family>Montserrat Alternates SemiBold</family>
-         <pointsize>-1</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -568,7 +665,6 @@ QPushButton:active {
        <property name="font">
         <font>
          <family>Montserrat Alternates SemiBold</family>
-         <pointsize>-1</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -626,14 +722,13 @@ QPushButton:active {
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>671</width>
+         <width>601</width>
          <height>41</height>
         </rect>
        </property>
        <property name="font">
         <font>
          <family>Montserrat Alternates SemiBold</family>
-         <pointsize>-1</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -681,15 +776,15 @@ QPushButton:active {
       <widget class="QPushButton" name="btn_arquivo">
        <property name="geometry">
         <rect>
-         <x>700</x>
+         <x>640</x>
          <y>30</y>
-         <width>161</width>
+         <width>221</width>
          <height>41</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
+         <family>Montserrat</family>
          <pointsize>-1</pointsize>
          <weight>75</weight>
          <bold>true</bold>
@@ -698,7 +793,17 @@ QPushButton:active {
         </font>
        </property>
        <property name="text">
-        <string>Buscar Arquivo</string>
+        <string>   Buscar Arquivo</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>assets/icons/folder.png</normaloff>assets/icons/folder.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
        </property>
       </widget>
       <widget class="QPushButton" name="btn_importar">
@@ -707,12 +812,12 @@ QPushButton:active {
          <x>10</x>
          <y>80</y>
          <width>851</width>
-         <height>41</height>
+         <height>51</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
+         <family>Montserrat</family>
          <pointsize>-1</pointsize>
          <weight>75</weight>
          <bold>true</bold>
@@ -721,7 +826,17 @@ QPushButton:active {
         </font>
        </property>
        <property name="text">
-        <string>Importar</string>
+        <string>     Importar</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>assets/icons/up.png</normaloff>assets/icons/up.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
        </property>
       </widget>
      </widget>
@@ -782,7 +897,7 @@ QPushButton:active {
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
+         <family>Montserrat</family>
          <pointsize>-1</pointsize>
          <weight>75</weight>
          <bold>true</bold>
@@ -791,7 +906,17 @@ QPushButton:active {
         </font>
        </property>
        <property name="text">
-        <string>Baixar Chaves de Acesso</string>
+        <string>      Baixar Chaves de Acesso</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>assets/icons/refresh.png</normaloff>assets/icons/refresh.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
        </property>
       </widget>
       <widget class="QProgressBar" name="barra_progresso_portal">
@@ -825,7 +950,7 @@ QPushButton:active {
         <rect>
          <x>20</x>
          <y>40</y>
-         <width>181</width>
+         <width>221</width>
          <height>41</height>
         </rect>
        </property>
@@ -844,7 +969,7 @@ QPushButton:active {
       <widget class="QLabel" name="lbl_qtde_notas">
        <property name="geometry">
         <rect>
-         <x>610</x>
+         <x>580</x>
          <y>40</y>
          <width>181</width>
          <height>41</height>
@@ -865,7 +990,7 @@ QPushButton:active {
       <widget class="QLineEdit" name="txt_cnpj_estab">
        <property name="geometry">
         <rect>
-         <x>210</x>
+         <x>240</x>
          <y>40</y>
          <width>261</width>
          <height>41</height>
@@ -900,6 +1025,15 @@ QPushButton:active {
        <property name="text">
         <string/>
        </property>
+       <property name="maxLength">
+        <number>3</number>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="placeholderText">
+        <string/>
+       </property>
       </widget>
      </widget>
     </widget>
@@ -907,10 +1041,10 @@ QPushButton:active {
    <widget class="QPushButton" name="btn_cnpj">
     <property name="geometry">
      <rect>
-      <x>250</x>
-      <y>740</y>
-      <width>221</width>
-      <height>71</height>
+      <x>290</x>
+      <y>30</y>
+      <width>271</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -924,7 +1058,17 @@ QPushButton:active {
      </font>
     </property>
     <property name="text">
-     <string>Atualizar Meu CNPJ</string>
+     <string>      Atualizar Meu CNPJ</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>assets/icons/cnpj.png</normaloff>assets/icons/cnpj.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
     </property>
     <property name="checkable">
      <bool>false</bool>
@@ -946,9 +1090,9 @@ QPushButton:active {
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
-      <width>221</width>
-      <height>31</height>
+      <y>30</y>
+      <width>271</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -962,79 +1106,132 @@ QPushButton:active {
      </font>
     </property>
     <property name="text">
-     <string>Login no Portal do Bem</string>
+     <string>     Login no Portal do Bem</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>assets/icons/login.png</normaloff>assets/icons/login.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_limpa_banco">
+    <property name="geometry">
+     <rect>
+      <x>1340</x>
+      <y>30</y>
+      <width>271</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>-1</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
+     </font>
+    </property>
+    <property name="text">
+     <string>  Limpar Banco de Dados</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>assets/icons/database.png</normaloff>assets/icons/database.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_postar">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>740</y>
-      <width>221</width>
-      <height>71</height>
+      <y>340</y>
+      <width>391</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
+      <family>Montserrat</family>
       <pointsize>-1</pointsize>
       <weight>75</weight>
       <bold>true</bold>
       <underline>false</underline>
       <strikeout>false</strikeout>
      </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>&lt;H2&gt;
+  Clique aqui para iniciar a postagem automática no site da Nota Fiscal Paulista
+&lt;/H2&gt;</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>3</number>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton {
-	box-shadow:inset 0px 1px 0px 0px #ffffff;
-	background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
-	background-color:#f9f9f9;
-	border-radius:6px;
-	border:1px solid #dcdcdc;
-	display:inline-block;
-	cursor:pointer;
-	color:#666666;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #ffffff;
+     <string notr="true">#btn_postar{
+font-size: 16px;
+font-family: Montserrat
 }
-QPushButton:hover {
-	background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
-	background-color:#e9e9e9;
-}
-QPushButton:active {
-	position:relative;
-	top:1px;
-}</string>
+</string>
     </property>
     <property name="text">
-     <string>Postar Notas</string>
+     <string>      Iniciar Postagem de Notas</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>assets/icons/ai.png</normaloff>assets/icons/ai.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>40</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_limpa_banco">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>1350</x>
-      <y>10</y>
+      <x>20</x>
+      <y>760</y>
       <width>261</width>
-      <height>31</height>
+      <height>16</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Arial</family>
-      <pointsize>-1</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-      <underline>false</underline>
-      <strikeout>false</strikeout>
-     </font>
-    </property>
     <property name="text">
-     <string>Limpar Banco de Dados</string>
+     <string>&lt;div&gt;Icons made by &lt;a href=&quot;https://www.flaticon.com/authors/icongeek26&quot; title=&quot;Icongeek26&quot;&gt;Icongeek26&lt;/a&gt; from &lt;a href=&quot;https://www.flaticon.com/&quot;             title=&quot;Flaticon&quot;&gt;www.flaticon.com&lt;/a&gt;&lt;/div&gt;</string>
     </property>
    </widget>
   </widget>

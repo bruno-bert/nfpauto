@@ -1,4 +1,5 @@
 - [] no save result, atualizar status da nota no banco para postado e mudar o ui (deletar a nota da lista)
+- [] na api do portal, tratar erro - quando nao tem servidor ativo, o app esta caindo
 - [] modificar ui no modo postagem, e voltar quando cancelar
   - [] no modo postagem, explicitar a nota que estiver sendo processada, selecionar a nota na lista tambem
 - [] permitir usuario cancelar a postagem - vai fechar o navegador
