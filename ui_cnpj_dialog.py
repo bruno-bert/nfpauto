@@ -17,16 +17,47 @@ class Ui_Dialog(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         Dialog.setFont(font)
+        Dialog.setStyleSheet("QPushButton {\n"
+"    box-shadow:inset 0px 1px 0px 0px #ffffff;\n"
+"    background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);\n"
+"    background-color:#f9f9f9;\n"
+"    border-radius:6px;\n"
+"    border:1px solid #dcdcdc;\n"
+"    display:inline-block;\n"
+"    cursor:pointer;\n"
+"    color:#666666;\n"
+"    font-family:Arial;\n"
+"    font-size:15px;\n"
+"    font-weight:bold;\n"
+"    padding:6px 24px;\n"
+"    text-decoration:none;\n"
+"    text-shadow:0px 1px 0px #ffffff;\n"
+"}\n"
+"QPushButton:hover {\n"
+"  background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);\n"
+"    background-color:#e9e9e9;\n"
+"}\n"
+"QPushButton:active {\n"
+"  position:relative;\n"
+"    top:1px;\n"
+"}")
         self.dialog_buttons = QtWidgets.QDialogButtonBox(Dialog)
-        self.dialog_buttons.setGeometry(QtCore.QRect(720, 10, 81, 61))
+        self.dialog_buttons.setGeometry(QtCore.QRect(710, 10, 101, 61))
+        font = QtGui.QFont()
+        font.setFamily("Montserrat Alternates SemiBold")
+        font.setBold(True)
+        font.setWeight(75)
+        self.dialog_buttons.setFont(font)
         self.dialog_buttons.setOrientation(QtCore.Qt.Vertical)
         self.dialog_buttons.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.dialog_buttons.setCenterButtons(False)
         self.dialog_buttons.setObjectName("dialog_buttons")
         self.lista_empresas = QtWidgets.QTableWidget(Dialog)
         self.lista_empresas.setEnabled(True)
         self.lista_empresas.setGeometry(QtCore.QRect(10, 10, 691, 271))
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setFamily("Montserrat")
+        font.setPointSize(14)
         self.lista_empresas.setFont(font)
         self.lista_empresas.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.lista_empresas.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
@@ -35,42 +66,54 @@ class Ui_Dialog(object):
         self.lista_empresas.setColumnCount(0)
         self.lista_empresas.setRowCount(0)
         self.grupo_atalhos = QtWidgets.QGroupBox(Dialog)
-        self.grupo_atalhos.setGeometry(QtCore.QRect(20, 290, 361, 151))
+        self.grupo_atalhos.setGeometry(QtCore.QRect(10, 290, 471, 151))
+        font = QtGui.QFont()
+        font.setFamily("Montserrat Alternates SemiBold")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.grupo_atalhos.setFont(font)
         self.grupo_atalhos.setObjectName("grupo_atalhos")
         self.lbl_atalho1 = QtWidgets.QLabel(self.grupo_atalhos)
         self.lbl_atalho1.setGeometry(QtCore.QRect(30, 100, 211, 41))
         font = QtGui.QFont()
-        font.setFamily("Tahoma")
-        font.setPointSize(10)
+        font.setFamily("Montserrat")
+        font.setPointSize(12)
         font.setBold(False)
         font.setWeight(50)
         self.lbl_atalho1.setFont(font)
         self.lbl_atalho1.setObjectName("lbl_atalho1")
         self.lbl_atalho1_3 = QtWidgets.QLabel(self.grupo_atalhos)
-        self.lbl_atalho1_3.setGeometry(QtCore.QRect(30, 60, 221, 41))
+        self.lbl_atalho1_3.setGeometry(QtCore.QRect(30, 60, 411, 41))
         font = QtGui.QFont()
-        font.setFamily("Tahoma")
-        font.setPointSize(10)
+        font.setFamily("Montserrat")
+        font.setPointSize(12)
         font.setBold(False)
         font.setWeight(50)
         self.lbl_atalho1_3.setFont(font)
         self.lbl_atalho1_3.setObjectName("lbl_atalho1_3")
         self.lbl_atalho1_4 = QtWidgets.QLabel(self.grupo_atalhos)
-        self.lbl_atalho1_4.setGeometry(QtCore.QRect(30, 20, 321, 41))
+        self.lbl_atalho1_4.setGeometry(QtCore.QRect(30, 20, 481, 41))
         font = QtGui.QFont()
-        font.setFamily("Tahoma")
-        font.setPointSize(10)
+        font.setFamily("Montserrat")
+        font.setPointSize(12)
         font.setBold(False)
         font.setWeight(50)
         self.lbl_atalho1_4.setFont(font)
         self.lbl_atalho1_4.setObjectName("lbl_atalho1_4")
         self.grupo_atalhos_2 = QtWidgets.QGroupBox(Dialog)
-        self.grupo_atalhos_2.setGeometry(QtCore.QRect(400, 290, 301, 151))
+        self.grupo_atalhos_2.setGeometry(QtCore.QRect(500, 290, 301, 151))
+        font = QtGui.QFont()
+        font.setFamily("Montserrat Alternates SemiBold")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.grupo_atalhos_2.setFont(font)
         self.grupo_atalhos_2.setObjectName("grupo_atalhos_2")
         self.lbl_mes_atual = QtWidgets.QLabel(self.grupo_atalhos_2)
         self.lbl_mes_atual.setGeometry(QtCore.QRect(20, 80, 271, 41))
         font = QtGui.QFont()
-        font.setFamily("Tahoma")
+        font.setFamily("Montserrat")
         font.setPointSize(12)
         font.setBold(False)
         font.setWeight(50)
@@ -81,8 +124,8 @@ class Ui_Dialog(object):
         self.lbl_mes = QtWidgets.QLabel(self.grupo_atalhos_2)
         self.lbl_mes.setGeometry(QtCore.QRect(10, 30, 271, 41))
         font = QtGui.QFont()
-        font.setFamily("Tahoma")
-        font.setPointSize(14)
+        font.setFamily("Montserrat")
+        font.setPointSize(12)
         font.setBold(False)
         font.setWeight(50)
         self.lbl_mes.setFont(font)
@@ -100,8 +143,8 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "Lista de Empresas Pre Cadastradas"))
         self.grupo_atalhos.setTitle(_translate("Dialog", "Teclas de Atalhos"))
         self.lbl_atalho1.setText(_translate("Dialog", "ESC - Sair"))
-        self.lbl_atalho1_3.setText(_translate("Dialog", "ENTER - Confirmar estabelecimento"))
-        self.lbl_atalho1_4.setText(_translate("Dialog", "Setas para Cima / Baixo - selecionar estabelecimento"))
+        self.lbl_atalho1_3.setText(_translate("Dialog", "ENTER - Confirmar Estabelecimento"))
+        self.lbl_atalho1_4.setText(_translate("Dialog", "Setas para Cima / Baixo - Selecionar Estabelecimento"))
         self.grupo_atalhos_2.setTitle(_translate("Dialog", "Qual mês e ano da nota?"))
         self.lbl_mes_atual.setText(_translate("Dialog", "Pressione a tecla ESPAÇO no teclado para trocar o mês da nota"))
         self.lbl_mes.setText(_translate("Dialog", "Mes Nota"))

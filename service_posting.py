@@ -16,7 +16,7 @@ class NFPPosting(SeleniumDB):
       print(message)
       self.show_log(message)
 
-    def on_save_result(self, result):     
+    def on_save_result(self, result):   
       self.save_result(result)
       
 

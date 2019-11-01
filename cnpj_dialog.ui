@@ -18,20 +18,56 @@
   <property name="windowTitle">
    <string>Lista de Empresas Pre Cadastradas</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
+	background-color:#f9f9f9;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+QPushButton:hover {
+  background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
+	background-color:#e9e9e9;
+}
+QPushButton:active {
+  position:relative;
+	top:1px;
+}</string>
+  </property>
   <widget class="QDialogButtonBox" name="dialog_buttons">
    <property name="geometry">
     <rect>
-     <x>720</x>
+     <x>710</x>
      <y>10</y>
-     <width>81</width>
+     <width>101</width>
      <height>61</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Montserrat Alternates SemiBold</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="orientation">
     <enum>Qt::Vertical</enum>
    </property>
    <property name="standardButtons">
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+   <property name="centerButtons">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QTableWidget" name="lista_empresas">
@@ -48,7 +84,8 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <family>Montserrat</family>
+     <pointsize>14</pointsize>
     </font>
    </property>
    <property name="editTriggers">
@@ -64,11 +101,19 @@
   <widget class="QGroupBox" name="grupo_atalhos">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>290</y>
-     <width>361</width>
+     <width>471</width>
      <height>151</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Montserrat Alternates SemiBold</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="title">
     <string>Teclas de Atalhos</string>
@@ -84,8 +129,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Tahoma</family>
-      <pointsize>10</pointsize>
+      <family>Montserrat</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -99,20 +144,20 @@
      <rect>
       <x>30</x>
       <y>60</y>
-      <width>221</width>
+      <width>411</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Tahoma</family>
-      <pointsize>10</pointsize>
+      <family>Montserrat</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
     </property>
     <property name="text">
-     <string>ENTER - Confirmar estabelecimento</string>
+     <string>ENTER - Confirmar Estabelecimento</string>
     </property>
    </widget>
    <widget class="QLabel" name="lbl_atalho1_4">
@@ -120,31 +165,39 @@
      <rect>
       <x>30</x>
       <y>20</y>
-      <width>321</width>
+      <width>481</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Tahoma</family>
-      <pointsize>10</pointsize>
+      <family>Montserrat</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
     </property>
     <property name="text">
-     <string>Setas para Cima / Baixo - selecionar estabelecimento</string>
+     <string>Setas para Cima / Baixo - Selecionar Estabelecimento</string>
     </property>
    </widget>
   </widget>
   <widget class="QGroupBox" name="grupo_atalhos_2">
    <property name="geometry">
     <rect>
-     <x>400</x>
+     <x>500</x>
      <y>290</y>
      <width>301</width>
      <height>151</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Montserrat Alternates SemiBold</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="title">
     <string>Qual mês e ano da nota?</string>
@@ -160,7 +213,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Tahoma</family>
+      <family>Montserrat</family>
       <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
@@ -187,8 +240,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Tahoma</family>
-      <pointsize>14</pointsize>
+      <family>Montserrat</family>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>

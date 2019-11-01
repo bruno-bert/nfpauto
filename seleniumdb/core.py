@@ -31,10 +31,7 @@ class SeleniumDB(Publisher):
     raise Exception('get_id must be implemented by super class')
  def get_id_to_show(self, values):
     raise Exception('get_id_to_show must be implemented by super class') 
- def show_results(self):
-    for res in self.list_result:
-      self.log(res.value + ' - ' + str(res.success) + ' - ' + res.message) 
- def save_result(self, cycle_result):
+ def on_save_result(self, cycle_result):
     raise Exception('save_result must be implemented by super class')
 
  def clear_results(self):
@@ -267,7 +264,7 @@ class SeleniumDB(Publisher):
                   result.value_to_show = self.get_id_to_show(values)
                   result.success = step.success
                   result.message = step.resulted_success_message or step.resulted_error_message
-                  self.save_result(result)
+                  self.on_save_result(result)
                   self.list_result.append(result)   
 
             else:
@@ -278,7 +275,10 @@ class SeleniumDB(Publisher):
 
          except Exception as err:
             if (step.show_error_log == "1"):
-              self.log('Step {} - Error: {}'.format(step.id_tela, err))
+              if (not err.message):                
+                self.log('Step {} - Error: {}'.format(step.id_tela,repr(err)))
+              else:   
+                self.log('Step {} - Error: {}'.format(step.id_tela,err))
             success = False
          finally:
             

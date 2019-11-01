@@ -7,7 +7,7 @@ from database import busca_chaves_banco
 from seleniumdb.observer import Subscriber
 from database import  busca_script_padrao
 from task import Task
-
+from datetime import datetime
 
 class Posting(Subscriber):
  
@@ -45,11 +45,17 @@ class Posting(Subscriber):
  
  def limpar_log(self):
     self.model.clear()
+ 
+ def format_log(self, message):
+   dt = datetime.now()
+   timestamp = '{:%d/%m/%Y %H:%M:%S}'.format(dt)
+   return '{} - {}'.format(timestamp, message)
 
  def adiciona_log_lista(self, message):
     if (message):
+      message = self.format_log(message)
       item = QtGui.QStandardItem(message)
-      self.model.appendRow(item)
+      self.model.insertRow(0, item)
     
    
  def carrega_lista_chaves(self, rows):
@@ -87,6 +93,7 @@ class Posting(Subscriber):
       self.task_postagem = Task()
       self.task_postagem.sig_log.connect(self.show_log)
       self.task_postagem.sig_result.connect(self.atualiza_status_nota_tela)
+      self.dialog_postar.btn_iniciar_postagem.setEnabled(False)
       self.task_postagem.start()
 
 

@@ -14,8 +14,9 @@ class Task(QtSubscriber):
     def show_log(self, message):
         self.sig_log.emit(message)
     
-    def save_result(self, message):
-       self.sig_result.emit(message)
+    def save_result(self, result):
+      #TODO - atualiza status da nota no banco, de acordo com o retorno do resultado da postagem 
+       self.sig_result.emit(result.value)
 
     def run(self):
         script_id = self.get_script_id() 

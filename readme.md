@@ -1,5 +1,6 @@
-- [x] refatoração do código - retirar a parte específica do posting de nota de dentro da classe Selenium_Through_DB
-- [] integrar servico de posting com interface grafica
-- []
-- []
+- [] no save result, atualizar status da nota no banco para postado e mudar o ui (deletar a nota da lista)
+- [] modificar ui no modo postagem, e voltar quando cancelar
+  - [] no modo postagem, explicitar a nota que estiver sendo processada, selecionar a nota na lista tambem
+- [] permitir usuario cancelar a postagem - vai fechar o navegador
+- [] criar signal de conclusao da tarefa (quando terminar de postar todas as notas)
 - [] refatoração do código - isolar sqlite db para parte generica (tabelas script, start_config, steps) em db separado

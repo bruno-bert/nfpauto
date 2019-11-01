@@ -13,22 +13,48 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
+	background-color:#f9f9f9;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+QPushButton:hover {
+  background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
+	background-color:#e9e9e9;
+}
+QPushButton:active {
+  position:relative;
+	top:1px;
+}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="lbTitulo">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>50</y>
-      <width>201</width>
+      <x>660</x>
+      <y>0</y>
+      <width>241</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Tahoma</family>
+      <family>Montserrat Alternates SemiBold</family>
       <pointsize>20</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="text">
@@ -39,15 +65,17 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>90</y>
+      <y>50</y>
       <width>1601</width>
-      <height>351</height>
+      <height>281</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Segoe MDL2 Assets</family>
+      <family>Montserrat Alternates SemiBold</family>
       <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="selectionMode">
@@ -84,51 +112,45 @@
    <widget class="QLabel" name="lbl_message">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>450</y>
+      <x>10</x>
+      <y>340</y>
       <width>921</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Tahoma</family>
+      <family>Montserrat Alternates SemiBold</family>
       <pointsize>16</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(253, 255, 226);</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_limpa_banco">
-    <property name="geometry">
-     <rect>
-      <x>1460</x>
-      <y>20</y>
-      <width>151</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Limpar Banco de Dados</string>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="grupo_atalhos">
     <property name="geometry">
      <rect>
-      <x>980</x>
-      <y>460</y>
+      <x>970</x>
+      <y>410</y>
       <width>631</width>
       <height>361</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Montserrat Alternates SemiBold</family>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="title">
      <string>Teclas de Atalhos</string>
@@ -144,10 +166,10 @@
      </property>
      <property name="font">
       <font>
-       <family>Tahoma</family>
-       <pointsize>16</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
+       <family>Montserrat Alternates SemiBold</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -165,10 +187,10 @@
      </property>
      <property name="font">
       <font>
-       <family>Tahoma</family>
-       <pointsize>16</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
+       <family>Montserrat Alternates SemiBold</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -186,10 +208,10 @@
      </property>
      <property name="font">
       <font>
-       <family>Tahoma</family>
-       <pointsize>16</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
+       <family>Montserrat Alternates SemiBold</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -207,10 +229,10 @@
      </property>
      <property name="font">
       <font>
-       <family>Tahoma</family>
-       <pointsize>16</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
+       <family>Montserrat Alternates SemiBold</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -228,10 +250,10 @@
      </property>
      <property name="font">
       <font>
-       <family>Tahoma</family>
-       <pointsize>16</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
+       <family>Montserrat Alternates SemiBold</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -249,10 +271,10 @@
      </property>
      <property name="font">
       <font>
-       <family>Tahoma</family>
-       <pointsize>16</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
+       <family>Montserrat Alternates SemiBold</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -270,10 +292,10 @@
      </property>
      <property name="font">
       <font>
-       <family>Tahoma</family>
-       <pointsize>16</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
+       <family>Montserrat Alternates SemiBold</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -291,10 +313,10 @@
      </property>
      <property name="font">
       <font>
-       <family>Tahoma</family>
-       <pointsize>16</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
+       <family>Montserrat Alternates SemiBold</family>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -306,14 +328,17 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>510</y>
+      <y>390</y>
       <width>921</width>
       <height>261</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <family>Montserrat Alternates SemiBold</family>
       <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -335,6 +360,14 @@
         <height>121</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>Montserrat Alternates SemiBold</family>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="title">
        <string>Carga Pela Chave Completa</string>
       </property>
@@ -349,7 +382,10 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>14</pointsize>
+         <family>Montserrat Alternates SemiBold</family>
+         <pointsize>-1</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="toolTip">
@@ -382,10 +418,10 @@
        </property>
        <property name="font">
         <font>
-         <family>Tahoma</family>
-         <pointsize>16</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <family>Montserrat Alternates SemiBold</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -428,6 +464,14 @@
         <height>121</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>Montserrat Alternates SemiBold</family>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="title">
        <string>Digitar 5 ultimos subgrupos</string>
       </property>
@@ -445,7 +489,10 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>14</pointsize>
+         <family>Montserrat Alternates SemiBold</family>
+         <pointsize>-1</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="toolTip">
@@ -478,10 +525,10 @@
        </property>
        <property name="font">
         <font>
-         <family>Tahoma</family>
-         <pointsize>16</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <family>Montserrat Alternates SemiBold</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -520,7 +567,10 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>14</pointsize>
+         <family>Montserrat Alternates SemiBold</family>
+         <pointsize>-1</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="toolTip">
@@ -557,6 +607,14 @@
         <height>141</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>Montserrat Alternates SemiBold</family>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="title">
        <string>Buscar Arquivo</string>
       </property>
@@ -568,13 +626,16 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>701</width>
+         <width>671</width>
          <height>41</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <pointsize>14</pointsize>
+         <family>Montserrat Alternates SemiBold</family>
+         <pointsize>-1</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="toolTip">
@@ -607,10 +668,10 @@
        </property>
        <property name="font">
         <font>
-         <family>Tahoma</family>
+         <family>Montserrat Alternates SemiBold</family>
          <pointsize>10</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -620,11 +681,21 @@
       <widget class="QPushButton" name="btn_arquivo">
        <property name="geometry">
         <rect>
-         <x>730</x>
+         <x>700</x>
          <y>30</y>
-         <width>131</width>
+         <width>161</width>
          <height>41</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>-1</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+         <underline>false</underline>
+         <strikeout>false</strikeout>
+        </font>
        </property>
        <property name="text">
         <string>Buscar Arquivo</string>
@@ -635,9 +706,19 @@
         <rect>
          <x>10</x>
          <y>80</y>
-         <width>841</width>
+         <width>851</width>
          <height>41</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>-1</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+         <underline>false</underline>
+         <strikeout>false</strikeout>
+        </font>
        </property>
        <property name="text">
         <string>Importar</string>
@@ -647,15 +728,18 @@
      <widget class="QCheckBox" name="check_dir">
       <property name="geometry">
        <rect>
-        <x>690</x>
+        <x>650</x>
         <y>30</y>
-        <width>201</width>
-        <height>17</height>
+        <width>241</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="font">
        <font>
+        <family>Montserrat Alternates SemiBold</family>
         <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="text">
@@ -678,7 +762,10 @@
       </property>
       <property name="font">
        <font>
+        <family>Montserrat Alternates SemiBold</family>
         <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="title">
@@ -695,7 +782,12 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>14</pointsize>
+         <family>Arial</family>
+         <pointsize>-1</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+         <underline>false</underline>
+         <strikeout>false</strikeout>
         </font>
        </property>
        <property name="text">
@@ -710,6 +802,13 @@
          <width>821</width>
          <height>23</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Montserrat Alternates SemiBold</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
        </property>
        <property name="value">
         <number>0</number>
@@ -732,10 +831,10 @@
        </property>
        <property name="font">
         <font>
-         <family>Tahoma</family>
+         <family>Montserrat Alternates SemiBold</family>
          <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -753,10 +852,10 @@
        </property>
        <property name="font">
         <font>
-         <family>Tahoma</family>
+         <family>Montserrat Alternates SemiBold</family>
          <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -774,7 +873,10 @@
        </property>
        <property name="font">
         <font>
+         <family>Montserrat Alternates SemiBold</family>
          <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
       </widget>
@@ -789,7 +891,10 @@
        </property>
        <property name="font">
         <font>
+         <family>Montserrat Alternates SemiBold</family>
          <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -802,19 +907,39 @@
    <widget class="QPushButton" name="btn_cnpj">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>10</y>
-      <width>271</width>
-      <height>41</height>
+      <x>250</x>
+      <y>740</y>
+      <width>221</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <family>Arial</family>
+      <pointsize>-1</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
      </font>
     </property>
     <property name="text">
-     <string>Atualizar CNPJ da Instituição</string>
+     <string>Atualizar Meu CNPJ</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_login">
@@ -822,39 +947,97 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>241</width>
-      <height>41</height>
+      <width>221</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>10</pointsize>
+      <family>Arial</family>
+      <pointsize>-1</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
      </font>
     </property>
     <property name="text">
-     <string>Fazer Login no Portal</string>
+     <string>Login no Portal do Bem</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_postar">
     <property name="geometry">
      <rect>
-      <x>1030</x>
-      <y>10</y>
-      <width>411</width>
-      <height>41</height>
+      <x>10</x>
+      <y>740</y>
+      <width>221</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <family>Arial</family>
+      <pointsize>-1</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
+	background-color:#f9f9f9;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+QPushButton:hover {
+	background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
+	background-color:#e9e9e9;
+}
+QPushButton:active {
+	position:relative;
+	top:1px;
+}</string>
+    </property>
+    <property name="text">
+     <string>Postar Notas</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_limpa_banco">
+    <property name="geometry">
+     <rect>
+      <x>1350</x>
+      <y>10</y>
+      <width>261</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>-1</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
      </font>
     </property>
     <property name="text">
-     <string>Postar no Ambiente do Governo</string>
+     <string>Limpar Banco de Dados</string>
     </property>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
