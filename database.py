@@ -4,7 +4,21 @@ import constant
 import messages
 
 
+def atualiza_status_nota(chave, status):
+ conn = sqlite3.connect('notas.db')
+ query = constant.QUERY_UPDATE_STATUS_NOTA.format(status, chave)
+ cursor = conn.cursor()
+ cursor.execute(query)
+ conn.commit()
+ conn.close()
 
+def atualiza_status_message_nota(chave, status, message):
+ conn = sqlite3.connect('notas.db')
+ query = constant.QUERY_UPDATE_STATUS_MESSAGE_NOTA.format(status, message, chave)
+ cursor = conn.cursor()
+ cursor.execute(query)
+ conn.commit()
+ conn.close()
 
 def busca_cnpj_padrao():
  conn = sqlite3.connect('notas.db')
@@ -76,6 +90,18 @@ def busca_chaves_banco():
  rows = cur.fetchall()
  conn.close()
  return rows
+
+def busca_chaves_por_status(status):
+ conn = sqlite3.connect('notas.db')
+ query = "select * from notas where status = {}".format(status)
+ conn.row_factory = sqlite3.Row
+ cur = conn.cursor()
+ cur.execute(query)
+ rows = cur.fetchall()
+ conn.close()
+ return rows
+
+
 
 def busca_cnpj_banco():
  conn = sqlite3.connect('notas.db')

@@ -5,7 +5,7 @@ import messages
 import constant
 from database import busca_chaves_banco
 from seleniumdb.observer import Subscriber
-from database import  busca_script_padrao
+from database import  busca_script_padrao, busca_chaves_por_status, atualiza_status_nota, atualiza_status_message_nota
 from task import Task
 from datetime import datetime
 
@@ -17,11 +17,37 @@ class Posting(Subscriber):
    self.adiciona_log_lista(message)
 
  #signal 
- def save_result(self, id_nota):   
-   self.atualiza_status_nota_tela(id_nota)
+ def save_result(self, result):   
+   self.atualiza_status_nota_processada(result)
 
- def atualiza_status_nota_tela(self, id_nota):
-     print('atualizando status da nota na tela {}'.format(id_nota))  
+ def define_status(self, result):
+
+   if (result.success):
+     status = 2
+   else:
+     status = 3
+
+   return status   
+ 
+ def atualiza_lista(self, result):
+    items = self.dialog_postar.lista_notas.findItems(result.value, QtCore.Qt.MatchExactly)
+    if ( len(items) > 0 ):
+      for item in items:
+        try:
+         index = self.dialog_postar.lista_notas.indexFromItem(item).row()
+         self.dialog_postar.lista_notas.removeRow(index)
+        except Exception as err:
+         print(err) 
+
+ def atualiza_status_nota_processada(self, result):
+     
+     #atualiza status da nota no banco
+     status = self.define_status(result)
+     atualiza_status_message_nota(result.value, status, result.message)
+
+     #atualiza lista no ui
+     self.atualiza_lista(result)
+     
 
  def __init__(self):
 
@@ -81,7 +107,10 @@ class Posting(Subscriber):
  def mostra_posting(self):   
      
      self.cria_tabela_notas()
-     self.rows = busca_chaves_banco()
+
+     #apenas as pendentes de postagem
+     self.rows = busca_chaves_por_status(1) 
+
      self.carrega_lista_chaves(self.rows)
      
      if  (self.DialogPostar.exec_()):
@@ -92,7 +121,7 @@ class Posting(Subscriber):
  def inicia_postagem(self):
       self.task_postagem = Task()
       self.task_postagem.sig_log.connect(self.show_log)
-      self.task_postagem.sig_result.connect(self.atualiza_status_nota_tela)
+      self.task_postagem.sig_result.connect(self.save_result)
       self.dialog_postar.btn_iniciar_postagem.setEnabled(False)
       self.task_postagem.start()
 

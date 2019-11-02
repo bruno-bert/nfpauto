@@ -132,7 +132,7 @@ def separa_campos_pela_chave(chave):
 def adiciona_empresas_na_lista(new_nota):
 
     dialog.lista_empresas.insertRow(0)
-    dialog.lista_empresas.setItem(0, 0, QTableWidgetItem("new") )
+    dialog.lista_empresas.setItem(0, 0, QTableWidgetItem("") )
     dialog.lista_empresas.setItem(0, 1, QTableWidgetItem("") )
     dialog.lista_empresas.setItem(0, 2, QTableWidgetItem(new_nota.cnpj) )    
     dialog.lista_empresas.setItem(0, 3, QTableWidgetItem(new_nota.uf) )
@@ -143,7 +143,7 @@ def adiciona_empresas_na_lista(new_nota):
 def adiciona_chave_na_lista(new_nota, expirada):
 
     ui.tableWidget.insertRow(0)
-    ui.tableWidget.setItem(0, 0, QTableWidgetItem("new") )
+    ui.tableWidget.setItem(0, 0, QTableWidgetItem("") )
     ui.tableWidget.setItem(0, 1, QTableWidgetItem(new_nota.chave) )
     ui.tableWidget.setItem(0, 2, QTableWidgetItem(new_nota.cnpj) )
     ui.tableWidget.setItem(0, 3, QTableWidgetItem(new_nota.data) )
@@ -642,45 +642,6 @@ def on_abre_login():
   if (servico_login.mostra_login()):
     atualiza_botao_login()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def show_log( message):
-  'grava log'
-
-#listener 
-def save_result( result):
-  'salva resultado'
-
-
-async def inicia_postagem():
-      
-      script_id = 2
-      chaves = ['1111111111111111111111111111','222222222222222222222222222']
-      cnpj = '01.146.603/0001-69'   
-      descricao_entidade = 'GACC GRUPO DE ASSISTENCIA A CRIANCA COM CANCER'
-      
-      service = NFPPosting(script_id, cnpj, descricao_entidade, chaves)
-      #service.register(app)
-      
-     # with QThreadExecutor(1) as exec:
-     #   await loop.run_in_executor(exec, service.iniciar_postagem())
-      asyncio.create_task( service.iniciar_postagem())
-      
       
 
 if __name__ == "__main__":
