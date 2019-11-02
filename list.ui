@@ -6,9 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1630</width>
-    <height>788</height>
+    <width>1920</width>
+    <height>949</height>
    </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1920</width>
+    <height>1080</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Montserrat Light</family>
+   </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -86,7 +97,7 @@ QPlainTextEdit, QLineEdit
 	border: 1px solid #ccc;
 	padding: 8%;
 	color: #555;
-	font: 95% Arial, Helvetica, sans-serif;
+	font: 95% Montserrat Semi Bold;
 }
 
 QPlainTextEdit:focus, QLineEdit:focus
@@ -99,8 +110,11 @@ QPlainTextEdit:focus, QLineEdit:focus
 #txt_chave:focus{
 	box-shadow: 0 0 5px #84bbf3;
 	padding: 3%;
-	border: 2px solid #84bbf3;
+	border: 5px solid #84bbf3;
 }
+
+QHeaderView { font-size: 14pt; }
+QTableWidgetItem { font-size: 12pt; padding: 10px; }
 
 
 
@@ -116,8 +130,8 @@ QPlainTextEdit:focus, QLineEdit:focus
    <widget class="QLabel" name="lbTitulo">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>30</y>
+      <x>790</x>
+      <y>70</y>
       <width>281</width>
       <height>41</height>
      </rect>
@@ -137,19 +151,22 @@ QPlainTextEdit:focus, QLineEdit:focus
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>80</y>
-      <width>1601</width>
-      <height>251</height>
+      <x>30</x>
+      <y>130</y>
+      <width>1851</width>
+      <height>241</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Montserrat Alternates SemiBold</family>
-      <pointsize>14</pointsize>
+      <pointsize>8</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="selectionMode">
      <enum>QAbstractItemView::NoSelection</enum>
@@ -169,6 +186,9 @@ QPlainTextEdit:focus, QLineEdit:focus
     <attribute name="horizontalHeaderCascadingSectionResizes">
      <bool>false</bool>
     </attribute>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>152</number>
+    </attribute>
     <attribute name="horizontalHeaderHighlightSections">
      <bool>true</bool>
     </attribute>
@@ -179,7 +199,7 @@ QPlainTextEdit:focus, QLineEdit:focus
      <bool>false</bool>
     </attribute>
     <attribute name="verticalHeaderVisible">
-     <bool>true</bool>
+     <bool>false</bool>
     </attribute>
     <attribute name="verticalHeaderShowSortIndicator" stdset="0">
      <bool>false</bool>
@@ -188,8 +208,8 @@ QPlainTextEdit:focus, QLineEdit:focus
    <widget class="QLabel" name="lbl_message">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>700</y>
+      <x>30</x>
+      <y>810</y>
       <width>921</width>
       <height>61</height>
      </rect>
@@ -227,8 +247,8 @@ border-style: dashed
    <widget class="QGroupBox" name="grupo_atalhos">
     <property name="geometry">
      <rect>
-      <x>980</x>
-      <y>350</y>
+      <x>1190</x>
+      <y>470</y>
       <width>631</width>
       <height>351</height>
      </rect>
@@ -417,9 +437,9 @@ border-style: dashed
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>430</y>
-      <width>921</width>
-      <height>261</height>
+      <y>500</y>
+      <width>941</width>
+      <height>281</height>
      </rect>
     </property>
     <property name="font">
@@ -431,11 +451,7 @@ border-style: dashed
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">QTabWidget{
- background-color: #fffafa;
-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-
-}</string>
+     <string notr="true"/>
     </property>
     <property name="currentIndex">
      <number>0</number>
@@ -448,7 +464,7 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>60</y>
+        <y>70</y>
         <width>821</width>
         <height>121</height>
        </rect>
@@ -470,14 +486,15 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
          <x>190</x>
          <y>30</y>
          <width>591</width>
-         <height>41</height>
+         <height>51</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <family>Montserrat Alternates SemiBold</family>
-         <weight>75</weight>
-         <bold>true</bold>
+         <family>Montserrat Semi 12</family>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
         </font>
        </property>
        <property name="toolTip">
@@ -530,7 +547,7 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
        <property name="geometry">
         <rect>
          <x>200</x>
-         <y>70</y>
+         <y>90</y>
          <width>311</width>
          <height>20</height>
         </rect>
@@ -582,14 +599,15 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
          <x>280</x>
          <y>30</y>
          <width>321</width>
-         <height>41</height>
+         <height>51</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <family>Montserrat Alternates SemiBold</family>
-         <weight>75</weight>
-         <bold>true</bold>
+         <family>Montserrat Semi 12</family>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
         </font>
        </property>
        <property name="toolTip">
@@ -635,15 +653,15 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
       <widget class="QLabel" name="lblDigitos_2">
        <property name="geometry">
         <rect>
-         <x>200</x>
-         <y>70</y>
+         <x>280</x>
+         <y>90</y>
          <width>311</width>
          <height>20</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <family>Tahoma</family>
+         <family>Montserrat Alternates Medium</family>
          <pointsize>10</pointsize>
          <weight>50</weight>
          <bold>false</bold>
@@ -659,14 +677,15 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
          <x>620</x>
          <y>30</y>
          <width>211</width>
-         <height>41</height>
+         <height>51</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <family>Montserrat Alternates SemiBold</family>
-         <weight>75</weight>
-         <bold>true</bold>
+         <family>Montserrat Semi 12</family>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
         </font>
        </property>
        <property name="toolTip">
@@ -700,7 +719,7 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
         <x>20</x>
         <y>50</y>
         <width>871</width>
-        <height>141</height>
+        <height>151</height>
        </rect>
       </property>
       <property name="font">
@@ -723,14 +742,15 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
          <x>10</x>
          <y>30</y>
          <width>601</width>
-         <height>41</height>
+         <height>51</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <family>Montserrat Alternates SemiBold</family>
-         <weight>75</weight>
-         <bold>true</bold>
+         <family>Montserrat Semi 12</family>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
         </font>
        </property>
        <property name="toolTip">
@@ -776,7 +796,7 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
       <widget class="QPushButton" name="btn_arquivo">
        <property name="geometry">
         <rect>
-         <x>640</x>
+         <x>620</x>
          <y>30</y>
          <width>221</width>
          <height>41</height>
@@ -784,7 +804,7 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
        </property>
        <property name="font">
         <font>
-         <family>Montserrat</family>
+         <family>Arial</family>
          <pointsize>-1</pointsize>
          <weight>75</weight>
          <bold>true</bold>
@@ -810,14 +830,14 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>80</y>
+         <y>90</y>
          <width>851</width>
          <height>51</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <family>Montserrat</family>
+         <family>Arial</family>
          <pointsize>-1</pointsize>
          <weight>75</weight>
          <bold>true</bold>
@@ -897,7 +917,7 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
        </property>
        <property name="font">
         <font>
-         <family>Montserrat</family>
+         <family>Arial</family>
          <pointsize>-1</pointsize>
          <weight>75</weight>
          <bold>true</bold>
@@ -993,15 +1013,16 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
          <x>240</x>
          <y>40</y>
          <width>261</width>
-         <height>41</height>
+         <height>51</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <family>Montserrat Alternates SemiBold</family>
+         <family>Montserrat Semi 12</family>
          <pointsize>14</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
         </font>
        </property>
       </widget>
@@ -1011,15 +1032,16 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
          <x>780</x>
          <y>40</y>
          <width>61</width>
-         <height>41</height>
+         <height>51</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <family>Montserrat Alternates SemiBold</family>
+         <family>Montserrat Semi 12</family>
          <pointsize>14</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
         </font>
        </property>
        <property name="text">
@@ -1041,10 +1063,10 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
    <widget class="QPushButton" name="btn_cnpj">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>30</y>
+      <x>330</x>
+      <y>20</y>
       <width>271</width>
-      <height>41</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="font">
@@ -1089,10 +1111,10 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
    <widget class="QPushButton" name="btn_login">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>30</y>
+      <x>30</x>
+      <y>20</y>
       <width>271</width>
-      <height>41</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="font">
@@ -1122,8 +1144,8 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
    <widget class="QPushButton" name="btn_limpa_banco">
     <property name="geometry">
      <rect>
-      <x>1340</x>
-      <y>30</y>
+      <x>1610</x>
+      <y>80</y>
       <width>271</width>
       <height>41</height>
      </rect>
@@ -1137,6 +1159,9 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
       <underline>false</underline>
       <strikeout>false</strikeout>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">hidden: hidden</string>
     </property>
     <property name="text">
      <string>  Limpar Banco de Dados</string>
@@ -1155,10 +1180,10 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
    <widget class="QPushButton" name="btn_postar">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>340</y>
+      <x>30</x>
+      <y>400</y>
       <width>391</width>
-      <height>61</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="font">
@@ -1225,7 +1250,7 @@ font-family: Montserrat
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>760</y>
+      <y>920</y>
       <width>261</width>
       <height>16</height>
      </rect>

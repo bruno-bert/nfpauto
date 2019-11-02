@@ -3,9 +3,10 @@ TEST_USER="test@test.com"
 TEST_PASSWORD="test"
 
 NUM_CHAVE=44
-DEFAULT_STATUS="1"
+DEFAULT_STATUS="Aguardando postagem no site"
 EMPTY_STR=""
 
+QUERY_SELECT_NOTAS_PRINCIPAL="select x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message from notas x, status y where x.status = y.codigo"
 QUERY_SAVE="INSERT INTO notas (chave, cnpj, data, uf, numero, codigo, modelo, serie, tipo_emissao, status, message)  VALUES (?,?,?,?,?,?,?,?,?,?,?)"
 QUERY_SAVE_CNPJ="INSERT INTO cnpj (cnpj, uf, modelo, serie)  VALUES (?,?,?,?)"
 QUERY_INSERT_CNPJ_PADRAO="INSERT INTO cnpj_padrao ('cnpj') VALUES ('{}')"

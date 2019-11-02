@@ -83,7 +83,7 @@ def salva_cnpj_padrao_banco(cnpj):
 
 def busca_chaves_banco():
  conn = sqlite3.connect('notas.db')
- query = "select * from notas"
+ query = constant.QUERY_SELECT_NOTAS_PRINCIPAL
  conn.row_factory = sqlite3.Row
  cur = conn.cursor()
  cur.execute(query)
@@ -125,7 +125,7 @@ def salva_chave_banco(new_nota):
                      new_nota.codigo, 
                      new_nota.modelo, 
                      new_nota.serie, 
-                     new_nota.tipo_emissao, 
+                     #new_nota.tipo_emissao, 
                      constant.DEFAULT_STATUS, 
                      messages.Messages().aguardando_postagem) )
     conn.commit()

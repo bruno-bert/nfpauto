@@ -75,20 +75,45 @@ def carrega_lista_chaves(rows):
         ui.tableWidget.setItem(row_num, 11, QTableWidgetItem(row['message']))
         lista_notas.append(row['chave'])
 
- 
+ header = ui.tableWidget.horizontalHeader()       
+ header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+ header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+ header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents) 
+ header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents) 
+ header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents) 
+ header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeToContents) 
+ header.setSectionResizeMode(6, QtWidgets.QHeaderView.ResizeToContents) 
+ header.setSectionResizeMode(7, QtWidgets.QHeaderView.ResizeToContents) 
+ header.setSectionResizeMode(8, QtWidgets.QHeaderView.ResizeToContents) 
+ header.setSectionResizeMode(9, QtWidgets.QHeaderView.ResizeToContents) 
+ header.setSectionResizeMode(10, QtWidgets.QHeaderView.ResizeToContents) 
+ header.setSectionResizeMode(11, QtWidgets.QHeaderView.ResizeToContents) 
+    
 
 
 def cria_tabela_notas():
     ui.tableWidget.setColumnCount(12)
     ui.tableWidget.setRowCount(1)
- 
+    ui.tableWidget.hideColumn(0) #esconde coluna de id
+    ui.tableWidget.hideColumn(10) #esconde coluna de tipo_emissao
+
+    ui.tableWidget.setStyleSheet("""   
+    QTableView {font-size: 12pt; }
+    QTableView::item {padding: 20px; }
+    """)
+
+    ui.tableWidget.horizontalHeader().setStyleSheet("""
+    QHeaderView::section {font-size: 10pt; font-family: Montserrat; padding: 5px; border: 0px}
+    """)
+
+    
     ui.tableWidget.setHorizontalHeaderLabels(
                                       ['ID', 'Chave', 
                                        'CNPJ', 
                                        'Data', 'Status', 
                                        'UF', 'Numero', 
                                        'Codigo', 'Modelo', 
-                                       'Serie', 'Tipo Emissao', 'Mensagem'])
+                                       'Serie', 'Tipo Emissao', 'Mensagem'])                                       
 
 def cria_tabela_empresas():
     dialog.lista_empresas.setColumnCount(6)
@@ -658,6 +683,8 @@ if __name__ == "__main__":
         ui.setupUi(MainWindow)
         MainWindow.show()
 
+        MainWindow.setWindowState(QtCore.Qt.WindowMaximized)
+
         ui.txtChave.setFocus()
 
         Dialog = QtWidgets.QDialog()
@@ -687,6 +714,7 @@ if __name__ == "__main__":
         ui.btn_portal.clicked.connect(on_baixar_portal) 
         
         ui.lbl_message.hide()
+        ui.btn_limpa_banco.hide()
         
 
         dialog_cnpj_padrao.txt_cnpj_padrao.textChanged.connect(on_cnpj_padrao_alterado )
@@ -734,6 +762,7 @@ if __name__ == "__main__":
         #carrega cnpjs na memoria
         rows = busca_cnpj_banco()
         carrega_lista_empresas(rows)
+        
 
         modo_leitor()
 
