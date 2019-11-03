@@ -93,7 +93,7 @@ def busca_chaves_banco():
 
 def busca_chaves_por_status(status):
  conn = sqlite3.connect('notas.db')
- query = "select * from notas where status = {}".format(status)
+ query = constant.QUERY_SELECT_NOTAS_PRINCIPAL_POR_STATUS.format(status)
  conn.row_factory = sqlite3.Row
  cur = conn.cursor()
  cur.execute(query)

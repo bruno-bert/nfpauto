@@ -15,3 +15,4 @@ class Messages:
    self.cnpj_estabelecimento_invalido = "CNPJ do Estabelecimento é inválido"
    self.numero_notas_fora_range = "Número de notas está fora do permitido"
    self.nenhuma_nota = "Nenhuma nota encontrada"
+   self.portal_indisponivel = "O portal nota do bem parece estar indisponível"

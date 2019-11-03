@@ -601,10 +601,12 @@ def lista_empresas_keyPressEvent(e):
          return QtWidgets.QTableWidget.keyPressEvent(dialog.lista_empresas, e)
 
 def on_abre_postar():
- if (servico_posting.mostra_posting()):
-   print('ok')
- else:
-   print('nok')  
+ servico_posting = Posting() 
+ servico_posting.mostra_posting()
+ #if (servico_posting.mostra_posting()):
+ #  print('Form de postagem fechado')
+ #else:
+ #  print('Form de postagem fechado')  
 
 def txtChave_keyPressEvent(e):
    if (e.key() == QtCore.Qt.Key_Escape ):
@@ -729,7 +731,7 @@ if __name__ == "__main__":
         
         ui.txt_cnpj_estab.setText(constant.EMPTY_STR)
         
-        servico_posting = Posting() 
+        
 
         ui.btn_postar.clicked.connect(on_abre_postar)    
         

@@ -41,10 +41,15 @@ class ApiPortal:
             result.status = request.status_code
             return result    
        except requests.RequestException as e:
-         result.err = e.strerror
+         
+         if ((repr(e).find('MaxRetryError')) != -1):
+           result.err =  self.m.portal_indisponivel
+         else:    
+           result.err = repr(e)
+
          result.success = False
-         result.data = None
-         result.status = request.status_code
+         result.data = None       
+         result.status = 500  
          return result
 
     def register(self):
@@ -100,8 +105,12 @@ class ApiPortal:
             result.status = request.status_code
             return result    
        except requests.RequestException as e:
-         result.err = e.strerror
+         if ((repr(e).find('MaxRetryError')) != -1):
+           result.err =  self.m.portal_indisponivel
+         else:    
+           result.err = repr(e)
+
          result.success = False
-         result.data = None
-         result.status = request.status_code
-         return result   
+         result.data = None       
+         result.status = 500  
+         return result

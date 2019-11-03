@@ -7,6 +7,10 @@ DEFAULT_STATUS="Aguardando postagem no site"
 EMPTY_STR=""
 
 QUERY_SELECT_NOTAS_PRINCIPAL="select x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message from notas x, status y where x.status = y.codigo"
+QUERY_SELECT_NOTAS_PRINCIPAL_POR_STATUS="select x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message from notas x, status y where x.status = y.codigo and x.status = {}"
+
+
+
 QUERY_SAVE="INSERT INTO notas (chave, cnpj, data, uf, numero, codigo, modelo, serie, tipo_emissao, status, message)  VALUES (?,?,?,?,?,?,?,?,?,?,?)"
 QUERY_SAVE_CNPJ="INSERT INTO cnpj (cnpj, uf, modelo, serie)  VALUES (?,?,?,?)"
 QUERY_INSERT_CNPJ_PADRAO="INSERT INTO cnpj_padrao ('cnpj') VALUES ('{}')"
@@ -18,6 +22,7 @@ QUERY_SELECT_SCRIPTS="select * from scripts"
 QUERY_SELECT_SCRIPT_PADRAO="select script_id from script_padrao"
 QUERY_UPDATE_STATUS_NOTA="UPDATE notas set status = {} where chave = '{}'"
 QUERY_UPDATE_STATUS_MESSAGE_NOTA="UPDATE notas set status = {}, message = '{}' where chave = '{}'"
+
 
 VALIDA_CHAVE_PELO_DIGITO=True
 SALVA_NOTA_EXPIRADA=True

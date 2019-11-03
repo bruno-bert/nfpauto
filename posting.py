@@ -8,10 +8,12 @@ from seleniumdb.observer import Subscriber
 from database import  busca_script_padrao, busca_chaves_por_status, atualiza_status_nota, atualiza_status_message_nota
 from task import Task
 from datetime import datetime
+from PyQt5.QtCore import  pyqtSignal
 
-class Posting(Subscriber):
+class Posting(QtWidgets.QWidget):
  
- 
+ sig_cancelar = pyqtSignal(int)
+  
  #signal
  def show_log(self, message):
    self.adiciona_log_lista(message)
@@ -57,6 +59,8 @@ class Posting(Subscriber):
 
  def __init__(self):
 
+     super().__init__()
+
      self.rows = None
 
      self.dialog_postar = ui_dialog_postar.Ui_Dialog()     
@@ -66,7 +70,7 @@ class Posting(Subscriber):
 
      self.applyStyles()
      
-     self.dialog_postar.btn_iniciar_postagem.clicked.connect(self.inicia_postagem)
+     self.dialog_postar.btn_iniciar_postagem.clicked.connect(self.trigger_postagem)
      
      self.dialog_postar.btn_limpar.clicked.connect(self.limpar_log)
      self.dialog_postar.btn_fechar.clicked.connect(self.DialogPostar.reject)
@@ -75,8 +79,12 @@ class Posting(Subscriber):
      self.dialog_postar.list_log.setModel(self.model)
  
      self.messages = messages.Messages()
+     
+     self.modo_parado()
 
- 
+
+
+
  def limpar_log(self):
     self.model.clear()
  
@@ -114,7 +122,7 @@ class Posting(Subscriber):
                                       'Mensagem'])
     
     self.dialog_postar.lista_notas.hideColumn(0)
-    
+
     header = self.dialog_postar.lista_notas.horizontalHeader()       
     header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
     header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
@@ -135,12 +143,36 @@ class Posting(Subscriber):
         return True
      else:
         return False 
- 
- def inicia_postagem(self):
+
+
+  
+
+
+ def modo_postagem(self):
+   self.dialog_postar.btn_iniciar_postagem.setText("Parar Postagem")
+   self.modo_atual = 'postando'
+   
+
+ def modo_parado(self):
+   self.dialog_postar.btn_iniciar_postagem.setText("Iniciar Postagem")
+   self.modo_atual = 'parado'  
+
+ def trigger_postagem(self):
+
+    if (self.modo_atual == 'parado') :
       self.task_postagem = Task()
+     
+      try:
+       self.sig_cancelar.connect(self.task_postagem.cancel_posting)
+       self.sig_cancelar.emit(0)
+      except Exception as e:
+        print(repr(e)) 
       self.task_postagem.sig_log.connect(self.show_log)
-      self.task_postagem.sig_result.connect(self.save_result)
-      self.dialog_postar.btn_iniciar_postagem.setEnabled(False)
+      self.task_postagem.sig_result.connect(self.save_result) 
+      self.modo_postagem()
       self.task_postagem.start()
-
-
+    else:
+      if (self.modo_atual == 'postando'):
+         self.sig_cancelar.emit(1)
+         self.modo_parado()
+         
