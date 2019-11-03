@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>887</width>
-    <height>772</height>
+    <width>1004</width>
+    <height>932</height>
    </rect>
   </property>
   <property name="font">
@@ -16,33 +16,17 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Notas fiscais a serem postadas</string>
+   <string>Notas fiscais disponíveis</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>assets/icons/ai.png</normaloff>assets/icons/ai.png</iconset>
+  </property>
+  <property name="windowOpacity">
+   <double>0.950000000000000</double>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton {
-	box-shadow:inset 0px 1px 0px 0px #ffffff;
-	background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
-	background-color:#f9f9f9;
-	border-radius:6px;
-	border:1px solid #dcdcdc;
-	display:inline-block;
-	cursor:pointer;
-	color:#666666;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #ffffff;
-}
-QPushButton:hover {
-  background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
-	background-color:#e9e9e9;
-}
-QPushButton:active {
-  position:relative;
-	top:1px;
-}</string>
+   <string notr="true"/>
   </property>
   <widget class="QTableWidget" name="lista_notas">
    <property name="enabled">
@@ -50,10 +34,10 @@ QPushButton:active {
    </property>
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>681</width>
-     <height>261</height>
+     <x>30</x>
+     <y>50</y>
+     <width>941</width>
+     <height>281</height>
     </rect>
    </property>
    <property name="font">
@@ -77,73 +61,30 @@ QPushButton:active {
     <enum>QAbstractItemView::SelectRows</enum>
    </property>
    <property name="gridStyle">
-    <enum>Qt::SolidLine</enum>
+    <enum>Qt::DotLine</enum>
    </property>
    <attribute name="horizontalHeaderStretchLastSection">
     <bool>false</bool>
    </attribute>
+   <attribute name="verticalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="verticalHeaderHighlightSections">
+    <bool>false</bool>
+   </attribute>
   </widget>
-  <widget class="QGroupBox" name="grupo_atalhos">
+  <widget class="QPushButton" name="btn_iniciar_postagem">
    <property name="geometry">
     <rect>
-     <x>710</x>
-     <y>150</y>
-     <width>171</width>
+     <x>30</x>
+     <y>340</y>
+     <width>941</width>
      <height>91</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <family>Montserrat</family>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(45, 45, 45);</string>
-   </property>
-   <property name="title">
-    <string>Teclas de Atalhos</string>
-   </property>
-   <widget class="QLabel" name="lbl_atalho1">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>30</y>
-      <width>81</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Montserrat</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string>color: rgb(45, 45, 45);</string>
-    </property>
-    <property name="text">
-     <string>ESC - Sair</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QPushButton" name="btn_iniciar_postagem">
-   <property name="geometry">
-    <rect>
-     <x>700</x>
-     <y>10</y>
-     <width>181</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
      <family>Arial</family>
-     <pointsize>-1</pointsize>
      <weight>75</weight>
      <bold>true</bold>
      <underline>false</underline>
@@ -154,14 +95,24 @@ QPushButton:active {
     <string notr="true">color: rgb(45, 45, 45);</string>
    </property>
    <property name="text">
-    <string>Iniciar Postagem</string>
+    <string>         Iniciar Postagem</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>assets/icons/ai.png</normaloff>assets/icons/ai.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>64</width>
+     <height>64</height>
+    </size>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_fechar">
    <property name="geometry">
     <rect>
-     <x>700</x>
-     <y>70</y>
+     <x>780</x>
+     <y>840</y>
      <width>181</width>
      <height>51</height>
     </rect>
@@ -169,7 +120,6 @@ QPushButton:active {
    <property name="font">
     <font>
      <family>Arial</family>
-     <pointsize>-1</pointsize>
      <weight>75</weight>
      <bold>true</bold>
      <underline>false</underline>
@@ -180,15 +130,15 @@ QPushButton:active {
     <string notr="true">color: rgb(45, 45, 45);</string>
    </property>
    <property name="text">
-    <string>Fechar</string>
+    <string>Fechar (ESC)</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_log">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>290</y>
-     <width>281</width>
+     <x>390</x>
+     <y>480</y>
+     <width>211</width>
      <height>31</height>
     </rect>
    </property>
@@ -210,10 +160,10 @@ QPushButton:active {
   <widget class="QListView" name="list_log">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>330</y>
-     <width>861</width>
-     <height>431</height>
+     <x>30</x>
+     <y>520</y>
+     <width>931</width>
+     <height>311</height>
     </rect>
    </property>
    <property name="font">
@@ -229,16 +179,15 @@ QPushButton:active {
   <widget class="QPushButton" name="btn_limpar">
    <property name="geometry">
     <rect>
-     <x>640</x>
-     <y>290</y>
-     <width>231</width>
+     <x>750</x>
+     <y>480</y>
+     <width>201</width>
      <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Arial</family>
-     <pointsize>-1</pointsize>
      <weight>75</weight>
      <bold>true</bold>
      <underline>false</underline>
@@ -250,6 +199,30 @@ QPushButton:active {
    </property>
    <property name="text">
     <string>Limpar Log</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_log_2">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>10</y>
+     <width>391</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Montserrat</family>
+     <pointsize>16</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(45, 45, 45);</string>
+   </property>
+   <property name="text">
+    <string>Notas Disponíveis para Postagem</string>
    </property>
   </widget>
  </widget>

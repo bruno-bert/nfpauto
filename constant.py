@@ -36,7 +36,7 @@ MESES=('Janeiro','Fevereiro','Mar','Abril','Maio','Junho',
            'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro')
 
 
-
+STYLES_FILE="styles/main.css"
 #FEATURE_FLAGS
 VALIDA_CNPJ=True
 

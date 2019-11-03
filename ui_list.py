@@ -18,100 +18,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setFamily("Montserrat Light")
         MainWindow.setFont(font)
-        MainWindow.setStyleSheet("#centralwidget {\n"
-" background-color: #fffafa\n"
-"}\n"
-"\n"
-"QPushButton {\n"
-"    box-shadow:inset 0px 1px 0px 0px #dcecfb;\n"
-"    background:linear-gradient(to bottom, #bddbfa 5%, #80b5ea 100%);\n"
-"    background-color:#bddbfa;\n"
-"    border-radius:6px;\n"
-"    border:1px solid #84bbf3;\n"
-"    display:inline-block;\n"
-"    cursor:pointer;\n"
-"    color:#555;\n"
-"    font-family:Arial;\n"
-"    font-size:15px;\n"
-"    font-weight:bold;\n"
-"    padding:6px 24px;\n"
-"    text-decoration:none;\n"
-"    text-shadow:0px 1px 0px #528ecc;\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background:linear-gradient(to bottom, #80b5ea 5%, #bddbfa 100%);\n"
-"    background-color:#80b5ea;\n"
-"}\n"
-"QPushButton:active {\n"
-"    position:relative;\n"
-"    top:1px;\n"
-"}\n"
-"\n"
-"\n"
-"#btn_postar {\n"
-"    box-shadow: 0px 1px 0px 0px #f0f7fa;\n"
-"    background:linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);\n"
-"    background-color:#33bdef;\n"
-"    border-radius:6px;\n"
-"    border:1px solid #057fd0;\n"
-"    display:inline-block;\n"
-"    cursor:pointer;\n"
-"    color:#ffffff;\n"
-"    font-family: Arial;\n"
-"    font-size:15px;\n"
-"    font-weight:bold;\n"
-"    padding:6px 24px;\n"
-"    text-decoration:none;\n"
-"    text-shadow:0px -1px 0px #5b6178;\n"
-"}\n"
-"#btn_postar:hover {\n"
-"    background:linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);\n"
-"    background-color:#019ad2;\n"
-"}\n"
-"#btn_postar:active {\n"
-"    position:relative;\n"
-"    top:1px;\n"
-"}\n"
-"\n"
-"\n"
-"QPlainTextEdit, QLineEdit\n"
-"{\n"
-"    -webkit-transition: all 0.30s ease-in-out;\n"
-"    -moz-transition: all 0.30s ease-in-out;\n"
-"    -ms-transition: all 0.30s ease-in-out;\n"
-"    -o-transition: all 0.30s ease-in-out;\n"
-"    outline: none;\n"
-"    box-sizing: border-box;\n"
-"    -webkit-box-sizing: border-box;\n"
-"    -moz-box-sizing: border-box;\n"
-"    width: 100%;\n"
-"    background: #fff;\n"
-"    margin-bottom: 4%;\n"
-"    border: 1px solid #ccc;\n"
-"    padding: 8%;\n"
-"    color: #555;\n"
-"    font: 95% Montserrat Semi Bold;\n"
-"}\n"
-"\n"
-"QPlainTextEdit:focus, QLineEdit:focus\n"
-"{\n"
-"    box-shadow: 0 0 5px #84bbf3;\n"
-"    padding: 3%;\n"
-"    border: 2px solid #84bbf3;\n"
-"}\n"
-"\n"
-"#txt_chave:focus{\n"
-"    box-shadow: 0 0 5px #84bbf3;\n"
-"    padding: 3%;\n"
-"    border: 5px solid #84bbf3;\n"
-"}\n"
-"\n"
-"QHeaderView { font-size: 14pt; }\n"
-"QTableWidgetItem { font-size: 12pt; padding: 10px; }\n"
-"\n"
-"\n"
-"\n"
-"")
+        MainWindow.setStyleSheet("")
         MainWindow.setIconSize(QtCore.QSize(24, 24))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -275,7 +182,7 @@ class Ui_MainWindow(object):
         self.txtChave = QtWidgets.QPlainTextEdit(self.grupo_chave_completa)
         self.txtChave.setGeometry(QtCore.QRect(190, 30, 591, 51))
         font = QtGui.QFont()
-        font.setFamily("Montserrat Semi 12")
+        font.setFamily("Montserrat Alternates SemiBold")
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
@@ -323,7 +230,7 @@ class Ui_MainWindow(object):
         self.txtChave_2.setEnabled(False)
         self.txtChave_2.setGeometry(QtCore.QRect(280, 30, 321, 51))
         font = QtGui.QFont()
-        font.setFamily("Montserrat Semi 12")
+        font.setFamily("Montserrat Alternates SemiBold")
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
@@ -356,7 +263,7 @@ class Ui_MainWindow(object):
         self.txtChave_3 = QtWidgets.QPlainTextEdit(self.grupo_chave_completa_2)
         self.txtChave_3.setGeometry(QtCore.QRect(620, 30, 211, 51))
         font = QtGui.QFont()
-        font.setFamily("Montserrat Semi 12")
+        font.setFamily("Montserrat SemiBold")
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
@@ -383,10 +290,9 @@ class Ui_MainWindow(object):
         self.txt_arquivo.setEnabled(False)
         self.txt_arquivo.setGeometry(QtCore.QRect(10, 30, 601, 51))
         font = QtGui.QFont()
-        font.setFamily("Montserrat Semi 12")
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
+        font.setFamily("Montserrat Alternates SemiBold")
+        font.setBold(True)
+        font.setWeight(75)
         self.txt_arquivo.setFont(font)
         self.txt_arquivo.setAutoFillBackground(False)
         self.txt_arquivo.setPlainText("")
@@ -502,7 +408,7 @@ class Ui_MainWindow(object):
         self.txt_cnpj_estab = QtWidgets.QLineEdit(self.grupo_chave_completa_4)
         self.txt_cnpj_estab.setGeometry(QtCore.QRect(240, 40, 261, 51))
         font = QtGui.QFont()
-        font.setFamily("Montserrat Semi 12")
+        font.setFamily("Arial")
         font.setPointSize(14)
         font.setBold(False)
         font.setItalic(False)
@@ -512,7 +418,7 @@ class Ui_MainWindow(object):
         self.txt_num_notas = QtWidgets.QLineEdit(self.grupo_chave_completa_4)
         self.txt_num_notas.setGeometry(QtCore.QRect(780, 40, 61, 51))
         font = QtGui.QFont()
-        font.setFamily("Montserrat Semi 12")
+        font.setFamily("Arial")
         font.setPointSize(14)
         font.setBold(False)
         font.setItalic(False)
@@ -525,10 +431,9 @@ class Ui_MainWindow(object):
         self.txt_num_notas.setObjectName("txt_num_notas")
         self.tab_opcao.addTab(self.tab_4, "")
         self.btn_cnpj = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_cnpj.setGeometry(QtCore.QRect(330, 20, 271, 71))
+        self.btn_cnpj.setGeometry(QtCore.QRect(1330, 10, 271, 71))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(-1)
         font.setBold(True)
         font.setUnderline(False)
         font.setWeight(75)
@@ -545,10 +450,9 @@ class Ui_MainWindow(object):
         self.btn_cnpj.setDefault(False)
         self.btn_cnpj.setObjectName("btn_cnpj")
         self.btn_login = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_login.setGeometry(QtCore.QRect(30, 20, 271, 71))
+        self.btn_login.setGeometry(QtCore.QRect(1610, 10, 271, 71))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(-1)
         font.setBold(True)
         font.setUnderline(False)
         font.setWeight(75)
@@ -560,10 +464,9 @@ class Ui_MainWindow(object):
         self.btn_login.setIconSize(QtCore.QSize(32, 32))
         self.btn_login.setObjectName("btn_login")
         self.btn_limpa_banco = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_limpa_banco.setGeometry(QtCore.QRect(1610, 80, 271, 41))
+        self.btn_limpa_banco.setGeometry(QtCore.QRect(1610, 380, 271, 41))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(-1)
         font.setBold(True)
         font.setUnderline(False)
         font.setWeight(75)
@@ -579,7 +482,6 @@ class Ui_MainWindow(object):
         self.btn_postar.setGeometry(QtCore.QRect(30, 400, 391, 71))
         font = QtGui.QFont()
         font.setFamily("Montserrat")
-        font.setPointSize(-1)
         font.setBold(True)
         font.setUnderline(False)
         font.setWeight(75)
@@ -587,11 +489,7 @@ class Ui_MainWindow(object):
         self.btn_postar.setFont(font)
         self.btn_postar.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.btn_postar.setToolTipDuration(3)
-        self.btn_postar.setStyleSheet("#btn_postar{\n"
-"font-size: 16px;\n"
-"font-family: Montserrat\n"
-"}\n"
-"")
+        self.btn_postar.setStyleSheet("")
         icon6 = QtGui.QIcon()
         icon6.addPixmap(QtGui.QPixmap("assets/icons/ai.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_postar.setIcon(icon6)
@@ -609,12 +507,12 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.tab_opcao.setCurrentIndex(0)
+        self.tab_opcao.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Nota do Bem - Aplicação do Cliente"))
         self.lbTitulo.setText(_translate("MainWindow", "Cupons disponíveis"))
         self.grupo_atalhos.setTitle(_translate("MainWindow", "Teclas de Atalhos"))
         self.lbl_atalho1.setText(_translate("MainWindow", "ESC - limpa campo de chave"))
@@ -645,7 +543,7 @@ class Ui_MainWindow(object):
         self.lbl_cnpj_estab.setText(_translate("MainWindow", "CNPJ do Estabelecimento"))
         self.lbl_qtde_notas.setText(_translate("MainWindow", "Quantidade de Notas"))
         self.tab_opcao.setTabText(self.tab_opcao.indexOf(self.tab_4), _translate("MainWindow", "Baixar notas do Portal"))
-        self.btn_cnpj.setText(_translate("MainWindow", "      Atualizar Meu CNPJ"))
+        self.btn_cnpj.setText(_translate("MainWindow", "     Atualizar Entidade"))
         self.btn_login.setText(_translate("MainWindow", "     Login no Portal do Bem"))
         self.btn_limpa_banco.setText(_translate("MainWindow", "  Limpar Banco de Dados"))
         self.btn_postar.setToolTip(_translate("MainWindow", "<H2>\n"

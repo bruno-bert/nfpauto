@@ -47,7 +47,13 @@ class Posting(Subscriber):
 
      #atualiza lista no ui
      self.atualiza_lista(result)
-     
+
+
+ def applyStyles(self):
+  sshFile = constant.STYLES_FILE
+  #TODO - pegar style de uma classe singleton, carregada uma unica vez
+  with open(sshFile,"r") as fh:
+       self.DialogPostar.setStyleSheet(fh.read())      
 
  def __init__(self):
 
@@ -57,6 +63,8 @@ class Posting(Subscriber):
      self.DialogPostar = QtWidgets.QDialog()
      self.dialog_postar.setupUi(self.DialogPostar)
      self.DialogPostar.setModal(True)
+
+     self.applyStyles()
      
      self.dialog_postar.btn_iniciar_postagem.clicked.connect(self.inicia_postagem)
      
@@ -103,7 +111,17 @@ class Posting(Subscriber):
     self.dialog_postar.lista_notas.setHorizontalHeaderLabels(
                                       ['ID', 'Chave', 
                                        'Status', 
-                                      'Mensagem'])       
+                                      'Mensagem'])
+    
+    self.dialog_postar.lista_notas.hideColumn(0)
+    
+    header = self.dialog_postar.lista_notas.horizontalHeader()       
+    header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+    header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
+    
+
  def mostra_posting(self):   
      
      self.cria_tabela_notas()

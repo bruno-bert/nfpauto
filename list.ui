@@ -22,103 +22,10 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Nota do Bem - Aplicação do Cliente</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#centralwidget {
- background-color: #fffafa
-}
-
-QPushButton {
-	box-shadow:inset 0px 1px 0px 0px #dcecfb;
-	background:linear-gradient(to bottom, #bddbfa 5%, #80b5ea 100%);
-	background-color:#bddbfa;
-	border-radius:6px;
-	border:1px solid #84bbf3;
-	display:inline-block;
-	cursor:pointer;
-	color:#555;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #528ecc;
-}
-QPushButton:hover {
-	background:linear-gradient(to bottom, #80b5ea 5%, #bddbfa 100%);
-	background-color:#80b5ea;
-}
-QPushButton:active {
-	position:relative;
-	top:1px;
-}
-
-
-#btn_postar {
-	box-shadow: 0px 1px 0px 0px #f0f7fa;
-	background:linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
-	background-color:#33bdef;
-	border-radius:6px;
-	border:1px solid #057fd0;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family: Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #5b6178;
-}
-#btn_postar:hover {
-	background:linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
-	background-color:#019ad2;
-}
-#btn_postar:active {
-	position:relative;
-	top:1px;
-}
-
-
-QPlainTextEdit, QLineEdit
-{
-	-webkit-transition: all 0.30s ease-in-out;
-	-moz-transition: all 0.30s ease-in-out;
-	-ms-transition: all 0.30s ease-in-out;
-	-o-transition: all 0.30s ease-in-out;
-	outline: none;
-	box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	width: 100%;
-	background: #fff;
-	margin-bottom: 4%;
-	border: 1px solid #ccc;
-	padding: 8%;
-	color: #555;
-	font: 95% Montserrat Semi Bold;
-}
-
-QPlainTextEdit:focus, QLineEdit:focus
-{
-	box-shadow: 0 0 5px #84bbf3;
-	padding: 3%;
-	border: 2px solid #84bbf3;
-}
-
-#txt_chave:focus{
-	box-shadow: 0 0 5px #84bbf3;
-	padding: 3%;
-	border: 5px solid #84bbf3;
-}
-
-QHeaderView { font-size: 14pt; }
-QTableWidgetItem { font-size: 12pt; padding: 10px; }
-
-
-
-</string>
+   <string notr="true"/>
   </property>
   <property name="iconSize">
    <size>
@@ -130,8 +37,8 @@ QTableWidgetItem { font-size: 12pt; padding: 10px; }
    <widget class="QLabel" name="lbTitulo">
     <property name="geometry">
      <rect>
-      <x>790</x>
-      <y>70</y>
+      <x>770</x>
+      <y>40</y>
       <width>281</width>
       <height>41</height>
      </rect>
@@ -152,9 +59,9 @@ QTableWidgetItem { font-size: 12pt; padding: 10px; }
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>130</y>
+      <y>100</y>
       <width>1851</width>
-      <height>241</height>
+      <height>271</height>
      </rect>
     </property>
     <property name="font">
@@ -454,7 +361,7 @@ border-style: dashed
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -491,7 +398,7 @@ border-style: dashed
        </property>
        <property name="font">
         <font>
-         <family>Montserrat Semi 12</family>
+         <family>Montserrat Alternates SemiBold</family>
          <weight>50</weight>
          <italic>false</italic>
          <bold>false</bold>
@@ -604,7 +511,7 @@ border-style: dashed
        </property>
        <property name="font">
         <font>
-         <family>Montserrat Semi 12</family>
+         <family>Montserrat Alternates SemiBold</family>
          <weight>50</weight>
          <italic>false</italic>
          <bold>false</bold>
@@ -682,7 +589,7 @@ border-style: dashed
        </property>
        <property name="font">
         <font>
-         <family>Montserrat Semi 12</family>
+         <family>Montserrat SemiBold</family>
          <weight>50</weight>
          <italic>false</italic>
          <bold>false</bold>
@@ -747,10 +654,9 @@ border-style: dashed
        </property>
        <property name="font">
         <font>
-         <family>Montserrat Semi 12</family>
-         <weight>50</weight>
-         <italic>false</italic>
-         <bold>false</bold>
+         <family>Montserrat Alternates SemiBold</family>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="toolTip">
@@ -805,7 +711,6 @@ border-style: dashed
        <property name="font">
         <font>
          <family>Arial</family>
-         <pointsize>-1</pointsize>
          <weight>75</weight>
          <bold>true</bold>
          <underline>false</underline>
@@ -838,7 +743,6 @@ border-style: dashed
        <property name="font">
         <font>
          <family>Arial</family>
-         <pointsize>-1</pointsize>
          <weight>75</weight>
          <bold>true</bold>
          <underline>false</underline>
@@ -918,7 +822,6 @@ border-style: dashed
        <property name="font">
         <font>
          <family>Arial</family>
-         <pointsize>-1</pointsize>
          <weight>75</weight>
          <bold>true</bold>
          <underline>false</underline>
@@ -1018,7 +921,7 @@ border-style: dashed
        </property>
        <property name="font">
         <font>
-         <family>Montserrat Semi 12</family>
+         <family>Arial</family>
          <pointsize>14</pointsize>
          <weight>50</weight>
          <italic>false</italic>
@@ -1037,7 +940,7 @@ border-style: dashed
        </property>
        <property name="font">
         <font>
-         <family>Montserrat Semi 12</family>
+         <family>Arial</family>
          <pointsize>14</pointsize>
          <weight>50</weight>
          <italic>false</italic>
@@ -1063,8 +966,8 @@ border-style: dashed
    <widget class="QPushButton" name="btn_cnpj">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>20</y>
+      <x>1330</x>
+      <y>10</y>
       <width>271</width>
       <height>71</height>
      </rect>
@@ -1072,7 +975,6 @@ border-style: dashed
     <property name="font">
      <font>
       <family>Arial</family>
-      <pointsize>-1</pointsize>
       <weight>75</weight>
       <bold>true</bold>
       <underline>false</underline>
@@ -1080,7 +982,7 @@ border-style: dashed
      </font>
     </property>
     <property name="text">
-     <string>      Atualizar Meu CNPJ</string>
+     <string>     Atualizar Entidade</string>
     </property>
     <property name="icon">
      <iconset>
@@ -1111,8 +1013,8 @@ border-style: dashed
    <widget class="QPushButton" name="btn_login">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>20</y>
+      <x>1610</x>
+      <y>10</y>
       <width>271</width>
       <height>71</height>
      </rect>
@@ -1120,7 +1022,6 @@ border-style: dashed
     <property name="font">
      <font>
       <family>Arial</family>
-      <pointsize>-1</pointsize>
       <weight>75</weight>
       <bold>true</bold>
       <underline>false</underline>
@@ -1145,7 +1046,7 @@ border-style: dashed
     <property name="geometry">
      <rect>
       <x>1610</x>
-      <y>80</y>
+      <y>380</y>
       <width>271</width>
       <height>41</height>
      </rect>
@@ -1153,7 +1054,6 @@ border-style: dashed
     <property name="font">
      <font>
       <family>Arial</family>
-      <pointsize>-1</pointsize>
       <weight>75</weight>
       <bold>true</bold>
       <underline>false</underline>
@@ -1189,7 +1089,6 @@ border-style: dashed
     <property name="font">
      <font>
       <family>Montserrat</family>
-      <pointsize>-1</pointsize>
       <weight>75</weight>
       <bold>true</bold>
       <underline>false</underline>
@@ -1208,11 +1107,7 @@ border-style: dashed
      <number>3</number>
     </property>
     <property name="styleSheet">
-     <string notr="true">#btn_postar{
-font-size: 16px;
-font-family: Montserrat
-}
-</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>      Iniciar Postagem de Notas</string>

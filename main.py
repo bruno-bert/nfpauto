@@ -55,40 +55,40 @@ def carrega_lista_empresas(rows):
 
 def carrega_lista_chaves(rows):
 
- ui.tableWidget.setRowCount(0) 
+    ui.tableWidget.setRowCount(0) 
 
- if (rows):
-    for row_num, row_data in enumerate(rows):
-        row = dict(row_data)
-        ui.tableWidget.insertRow(row_num)
-        ui.tableWidget.setItem(row_num, 0, QTableWidgetItem(str(row['id']))) 
-        ui.tableWidget.setItem(row_num, 1, QTableWidgetItem(row['chave']))
-        ui.tableWidget.setItem(row_num, 2, QTableWidgetItem(row['cnpj']))
-        ui.tableWidget.setItem(row_num, 3, QTableWidgetItem(row['data']))
-        ui.tableWidget.setItem(row_num, 4, QTableWidgetItem(row['status']))
-        ui.tableWidget.setItem(row_num, 5, QTableWidgetItem(row['uf']))
-        ui.tableWidget.setItem(row_num, 6, QTableWidgetItem(row['numero']))
-        ui.tableWidget.setItem(row_num, 7, QTableWidgetItem(row['codigo']))
-        ui.tableWidget.setItem(row_num, 8, QTableWidgetItem(row['modelo']))
-        ui.tableWidget.setItem(row_num, 9, QTableWidgetItem(row['serie']))
-        ui.tableWidget.setItem(row_num, 10, QTableWidgetItem(row['tipo_emissao']))
-        ui.tableWidget.setItem(row_num, 11, QTableWidgetItem(row['message']))
-        lista_notas.append(row['chave'])
+    if (rows):
+        for row_num, row_data in enumerate(rows):
+            row = dict(row_data)
+            ui.tableWidget.insertRow(row_num)
+            ui.tableWidget.setItem(row_num, 0, QTableWidgetItem(str(row['id']))) 
+            ui.tableWidget.setItem(row_num, 1, QTableWidgetItem(row['chave']))
+            ui.tableWidget.setItem(row_num, 2, QTableWidgetItem(row['cnpj']))
+            ui.tableWidget.setItem(row_num, 3, QTableWidgetItem(row['data']))
+            ui.tableWidget.setItem(row_num, 4, QTableWidgetItem(row['status']))
+            ui.tableWidget.setItem(row_num, 5, QTableWidgetItem(row['uf']))
+            ui.tableWidget.setItem(row_num, 6, QTableWidgetItem(row['numero']))
+            ui.tableWidget.setItem(row_num, 7, QTableWidgetItem(row['codigo']))
+            ui.tableWidget.setItem(row_num, 8, QTableWidgetItem(row['modelo']))
+            ui.tableWidget.setItem(row_num, 9, QTableWidgetItem(row['serie']))
+            ui.tableWidget.setItem(row_num, 10, QTableWidgetItem(row['tipo_emissao']))
+            ui.tableWidget.setItem(row_num, 11, QTableWidgetItem(row['message']))
+            lista_notas.append(row['chave'])
 
- header = ui.tableWidget.horizontalHeader()       
- header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
- header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
- header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents) 
- header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents) 
- header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents) 
- header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeToContents) 
- header.setSectionResizeMode(6, QtWidgets.QHeaderView.ResizeToContents) 
- header.setSectionResizeMode(7, QtWidgets.QHeaderView.ResizeToContents) 
- header.setSectionResizeMode(8, QtWidgets.QHeaderView.ResizeToContents) 
- header.setSectionResizeMode(9, QtWidgets.QHeaderView.ResizeToContents) 
- header.setSectionResizeMode(10, QtWidgets.QHeaderView.ResizeToContents) 
- header.setSectionResizeMode(11, QtWidgets.QHeaderView.ResizeToContents) 
-    
+    header = ui.tableWidget.horizontalHeader()       
+    header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+    header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents) 
+    header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents) 
+    header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents) 
+    header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeToContents) 
+    header.setSectionResizeMode(6, QtWidgets.QHeaderView.ResizeToContents) 
+    header.setSectionResizeMode(7, QtWidgets.QHeaderView.ResizeToContents) 
+    header.setSectionResizeMode(8, QtWidgets.QHeaderView.ResizeToContents) 
+    header.setSectionResizeMode(9, QtWidgets.QHeaderView.ResizeToContents) 
+    header.setSectionResizeMode(10, QtWidgets.QHeaderView.ResizeToContents) 
+    header.setSectionResizeMode(11, QtWidgets.QHeaderView.ResizeToContents) 
+        
 
 
 def cria_tabela_notas():
@@ -96,15 +96,6 @@ def cria_tabela_notas():
     ui.tableWidget.setRowCount(1)
     ui.tableWidget.hideColumn(0) #esconde coluna de id
     ui.tableWidget.hideColumn(10) #esconde coluna de tipo_emissao
-
-    ui.tableWidget.setStyleSheet("""   
-    QTableView {font-size: 12pt; }
-    QTableView::item {padding: 20px; }
-    """)
-
-    ui.tableWidget.horizontalHeader().setStyleSheet("""
-    QHeaderView::section {font-size: 10pt; font-family: Montserrat; padding: 5px; border: 0px}
-    """)
 
     
     ui.tableWidget.setHorizontalHeaderLabels(
@@ -667,7 +658,11 @@ def on_abre_login():
   if (servico_login.mostra_login()):
     atualiza_botao_login()
 
-      
+def applyStyles():
+   #TODO - pegar style de uma classe singleton, carregada uma unica vez"styles/main.css"
+  sshFile = constant.STYLES_FILE
+  with open(sshFile,"r") as fh:
+    MainWindow.setStyleSheet(fh.read())      
 
 if __name__ == "__main__":
         import sys    
@@ -681,9 +676,13 @@ if __name__ == "__main__":
         MainWindow = QtWidgets.QMainWindow()
         ui = ui_list.Ui_MainWindow()
         ui.setupUi(MainWindow)
+
+        applyStyles()
+
         MainWindow.show()
 
         MainWindow.setWindowState(QtCore.Qt.WindowMaximized)
+
 
         ui.txtChave.setFocus()
 
@@ -766,10 +765,11 @@ if __name__ == "__main__":
 
         modo_leitor()
 
-        sys.exit(app.exec_())
-        #with loop:
-        #  loop.run_until_complete(app.exec_())
+        
 
+        sys.exit(app.exec_())
+
+        
     
 
     
