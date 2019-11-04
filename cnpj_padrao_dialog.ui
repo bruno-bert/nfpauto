@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>702</width>
-    <height>164</height>
+    <width>884</width>
+    <height>265</height>
    </rect>
   </property>
   <property name="font">
@@ -17,6 +17,9 @@
   </property>
   <property name="windowTitle">
    <string>CNPJ Padrão</string>
+  </property>
+  <property name="windowOpacity">
+   <double>0.950000000000000</double>
   </property>
   <property name="styleSheet">
    <string notr="true">QPushButton {
@@ -49,13 +52,13 @@ QPushButton:active {
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>511</width>
-     <height>131</height>
+     <width>691</width>
+     <height>231</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <family>Montserrat</family>
+     <family>Montserrat Alternates SemiBold</family>
      <pointsize>14</pointsize>
      <weight>75</weight>
      <bold>true</bold>
@@ -67,10 +70,10 @@ QPushButton:active {
    <widget class="QPlainTextEdit" name="txt_cnpj_padrao">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>20</x>
       <y>40</y>
-      <width>441</width>
-      <height>51</height>
+      <width>451</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
@@ -86,9 +89,9 @@ QPushButton:active {
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>100</y>
-      <width>331</width>
-      <height>16</height>
+      <y>190</y>
+      <width>451</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -103,13 +106,59 @@ QPushButton:active {
      <string/>
     </property>
    </widget>
+   <widget class="QPlainTextEdit" name="txt_descricao_entidade">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>110</y>
+      <width>461</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Montserrat</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="toolTip">
+     <string>&lt;H2&gt;Este nome deve ser idêntico a descrição da entidade no site da nota fiscal paulista
+ &lt;/H2&gt;
+&lt;p&gt;
+&lt;img alt=&quot;entidade&quot; src=&quot;assets/entidade.jpg&quot; /&gt;
+&lt;/p&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_descricao_entidade">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>130</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Montserrat SemiBold</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Nome da Entidade</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QPushButton" name="btn_ok">
    <property name="geometry">
     <rect>
-     <x>550</x>
-     <y>30</y>
-     <width>131</width>
+     <x>730</x>
+     <y>40</y>
+     <width>141</width>
      <height>41</height>
     </rect>
    </property>
@@ -126,13 +175,17 @@ QPushButton:active {
    <property name="text">
     <string>Confirmar</string>
    </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>assets/icons/checked.png</normaloff>assets/icons/checked.png</iconset>
+   </property>
   </widget>
   <widget class="QPushButton" name="btn_cancel">
    <property name="geometry">
     <rect>
-     <x>550</x>
-     <y>90</y>
-     <width>131</width>
+     <x>730</x>
+     <y>100</y>
+     <width>141</width>
      <height>41</height>
     </rect>
    </property>
@@ -149,7 +202,61 @@ QPushButton:active {
    <property name="text">
     <string>Cancelar</string>
    </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>assets/icons/cancel.png</normaloff>assets/icons/cancel.png</iconset>
+   </property>
   </widget>
+  <widget class="QPlainTextEdit" name="txt_palavras_chave">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>200</y>
+     <width>461</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Montserrat</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="toolTip">
+    <string>&lt;H2&gt;Caso não seja possível encontrar a entidade pela descrição, estas palavras-chave ajudarão a encontrar a entidade na lista de entidades no site da Nota Fiscal Paulista &lt;/H2&gt;
+&lt;p&gt;
+&lt;img alt=&quot;entidade&quot; src=&quot;assets/entidade.jpg&quot; /&gt;
+&lt;/p&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_palavras_chave">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>170</y>
+     <width>161</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Montserrat SemiBold</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Palavras-Chave</string>
+   </property>
+  </widget>
+  <zorder>btn_ok</zorder>
+  <zorder>btn_cancel</zorder>
+  <zorder>grupo_atalhos_2</zorder>
+  <zorder>txt_palavras_chave</zorder>
+  <zorder>lbl_palavras_chave</zorder>
  </widget>
  <resources/>
  <connections/>

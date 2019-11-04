@@ -26,9 +26,9 @@ def busca_cnpj_padrao():
  conn.row_factory = sqlite3.Row
  cur = conn.cursor()
  cur.execute(query)
- rows = cur.fetchone()
+ row = cur.fetchone()
  conn.close()
- return rows
+ return row
 
 def busca_config_arquivo(id):
  conn = sqlite3.connect('notas.db')
@@ -61,22 +61,26 @@ def busca_script_padrao():
  return rows   
 
 def busca_cnpj_padrao_valor():
- rows = busca_cnpj_padrao()
- if (rows):
-  for row_data in rows:    
-   cnpj = row_data  
+ row = busca_cnpj_padrao()
+ if (row):
+  cnpj = dict(row)['cnpj']
   return cnpj
  else:
   return constant.EMPTY_STR
 
+def limpa_notas_db():
+ conn = sqlite3.connect('notas.db')
+ cursor = conn.cursor()
+ cursor.execute(constant.QUERY_DELETA_NOTAS_PROCESSADAS)
+ conn.commit()
+ conn.close()
 
-def salva_cnpj_padrao_banco(cnpj):
+def salva_cnpj_padrao_banco(cnpj, descricao, palavras):
  conn = sqlite3.connect('notas.db')
  existe_cnpj = busca_cnpj_padrao_valor()
  query = constant.QUERY_UPDATE_CNPJ_PADRAO if existe_cnpj else constant.QUERY_INSERT_CNPJ_PADRAO
  cursor = conn.cursor()
- query = query.format(cnpj)
- print("query: {}".format(query))
+ query = query.format(cnpj, descricao, palavras )
  cursor.execute(query )
  conn.commit() 
  conn.close()
@@ -91,6 +95,18 @@ def busca_chaves_banco():
  conn.close()
  return rows
 
+def busca_status_banco():
+ conn = sqlite3.connect('notas.db')
+ query = constant.QUERY_LISTA_STATUS
+ conn.row_factory = sqlite3.Row
+ cur = conn.cursor()
+ cur.execute(query)
+ rows = cur.fetchall()
+ conn.close()
+ return rows
+
+
+
 def busca_chaves_por_status(status):
  conn = sqlite3.connect('notas.db')
  query = constant.QUERY_SELECT_NOTAS_PRINCIPAL_POR_STATUS.format(status)
@@ -102,7 +118,16 @@ def busca_chaves_por_status(status):
  return rows
 
 
-
+def busca_uf_banco():
+ conn = sqlite3.connect('notas.db')
+ query = constant.QUERY_LISTA_UF
+ conn.row_factory = sqlite3.Row
+ cur = conn.cursor()
+ cur.execute(query)
+ rows = cur.fetchall()
+ conn.close()
+ return rows 
+ 
 def busca_cnpj_banco():
  conn = sqlite3.connect('notas.db')
  query = "select * from cnpj"
@@ -113,7 +138,7 @@ def busca_cnpj_banco():
  conn.close()
  return rows 
 
-def salva_chave_banco(new_nota):
+def salva_chave_banco(new_nota, expirada):
     conn = sqlite3.connect('notas.db')
     cursor = conn.cursor()
     cursor.execute(constant.QUERY_SAVE,  
@@ -125,9 +150,10 @@ def salva_chave_banco(new_nota):
                      new_nota.codigo, 
                      new_nota.modelo, 
                      new_nota.serie, 
-                     #new_nota.tipo_emissao, 
-                     constant.DEFAULT_STATUS, 
-                     messages.Messages().aguardando_postagem) )
+                     new_nota.tipo_emissao, 
+                     constant.DEFAULT_STATUS_CODIGO, 
+                     messages.Messages().aguardando_postagem if not expirada else messages.Messages().data_expirada_doacao ))
+                   
     conn.commit()
     conn.close()
 

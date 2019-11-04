@@ -16,7 +16,7 @@ import os.path
 
 
 #internal modules
-from db.initdb import init_db, limpa_notas_db
+from db.initdb import init_db
 import constant
 from nota import Nota
 from messages import Messages
@@ -31,6 +31,24 @@ import ui_cnpj_dialog
 import ui_cnpj_padrao_dialog
 
 from api import ApiPortal, ApiResult
+
+def combo_status_changed(index):
+   status = int(ui.combo_status.currentText().split(' - ')[0])
+   if (status == 0):
+    rows = busca_chaves_banco() 
+   else: 
+    rows = busca_chaves_por_status(status)
+   carrega_lista_chaves(rows)
+
+def carrega_lista_status(rows):
+   ui.combo_status.clear()
+   ui.combo_status.addItem('0 - Todas as Notas')
+   for row_data in rows:
+     row = dict(row_data)
+     ui.combo_status.addItem(str(row['codigo']) + ' - ' + row['descricao'])
+   ui.combo_status.setCurrentIndex(1)
+   ui.combo_status.currentIndexChanged.connect(combo_status_changed)
+   
 
 
 def carrega_lista_empresas(rows):
@@ -199,7 +217,13 @@ def get_chave_parcial():
     return ui.txtChave_2.toPlainText() + ui.txtChave_3.toPlainText()
 
 
-
+def valida_uf(uf):
+   result = False
+   for row_data in lista_ufs:
+      row = dict(row_data)
+      if (row['codigo'] == uf): 
+        result = True
+   return result 
 
 def mostra_mensagem(text):
     ui.lbl_message.setText(text)
@@ -214,8 +238,10 @@ def atualiza_contagem_digitos(text):
 def on_limpa_banco_clickado():
     limpa_notas_db()
     lista_notas.clear()
-    carrega_lista_chaves(None)
+    rows = busca_chaves_banco()
+    carrega_lista_chaves(rows)
 
+    
 def chave_ja_existe(chave):
  return chave in lista_notas
 
@@ -371,21 +397,24 @@ def sequencia_adiciona_nota(chave):
   if (not chave_ja_existe(chave)):
 
     nota_separada = separa_campos_pela_chave(chave)     
-    nota_expirou = verifica_data_expirada(nota_separada.data)   
+    nota_expirou = verifica_data_expirada(nota_separada.data)
 
-    if ( (not nota_expirou) | (constant.SALVA_NOTA_EXPIRADA) ):   
-     salva_chave_banco(nota_separada)
-     adiciona_chave_na_lista(nota_separada, nota_expirou)
-     limpa_mensagem()
-
-     #salva cnpj na base   
-     if (constant.SALVA_CNPJ):
-        if (not cnpj_ja_existe(nota_separada.cnpj)):
-            salva_cnpj_banco(nota_separada)            
-            lista_cnpj.append(nota_separada.cnpj)
-
+    if (not valida_uf(nota_separada.uf)):    
+       mostra_mensagem(m.uf_invalida) 
     else:
-     mostra_mensagem(m.data_expirada)      
+      if ( (not nota_expirou) | (constant.SALVA_NOTA_EXPIRADA) ):   
+        salva_chave_banco(nota_separada, nota_expirou)
+        adiciona_chave_na_lista(nota_separada, nota_expirou)
+        limpa_mensagem()
+
+        #salva cnpj na base   
+        if (constant.SALVA_CNPJ):
+            if (not cnpj_ja_existe(nota_separada.cnpj)):
+                salva_cnpj_banco(nota_separada)            
+                lista_cnpj.append(nota_separada.cnpj)
+
+      else:
+        mostra_mensagem(m.data_expirada)      
 
   else:
    mostra_mensagem(m.chave_existe)
@@ -466,19 +495,33 @@ def modoportal():
     ui.txt_num_notas.text = str(constant.DEFAULT_NUMERO_NOTAS)
 
 def mostra_dialogCnpj():
+
+   #aplica tema no dialog de cnpj padrão
+   sshFile = constant.STYLES_FILE
+   with open(sshFile,"r") as fh:
+     Dialog_Cnpj.setStyleSheet(fh.read())   
+
    Dialog_Cnpj.show()
-   cnpj = busca_cnpj_padrao_valor()
+   row = busca_cnpj_padrao()
+   row = dict(row)
+   
    dialog_cnpj_padrao.txt_cnpj_padrao.setFocus()
-   dialog_cnpj_padrao.txt_cnpj_padrao.setPlainText(cnpj)
+   dialog_cnpj_padrao.txt_cnpj_padrao.setPlainText(row['cnpj'])
+   dialog_cnpj_padrao.txt_descricao_entidade.setPlainText(row['descricao'])
+   dialog_cnpj_padrao.txt_palavras_chave.setPlainText(row['palavras'])
 
 def valida_cnpj(cnpj):
     return ValidadorCnpj.validar(cnpj)
 
 def confirma_cnpj_padrao():
    cnpj = dialog_cnpj_padrao.txt_cnpj_padrao.toPlainText()  
+   descricao = dialog_cnpj_padrao.txt_descricao_entidade.toPlainText()  
+   palavras = dialog_cnpj_padrao.txt_palavras_chave.toPlainText() 
          
    if (valida_cnpj(cnpj)):
-     salva_cnpj_padrao_banco(cnpj)  
+     salva_cnpj_padrao_banco(cnpj, descricao, palavras)  
+     #atualiza botão na tela principal
+     #ui.btn_cnpj.setText(cnpj )
      Dialog_Cnpj.accept()
    else:  
      dialog_cnpj_padrao.lbl_message_cnpj_padrao.setText(m.cnpj_invalido)
@@ -671,10 +714,7 @@ if __name__ == "__main__":
     
         app = QtWidgets.QApplication(sys.argv)
         
-        #loop = QEventLoop(app)
-        #asyncio.set_event_loop(loop)
       
-
         MainWindow = QtWidgets.QMainWindow()
         ui = ui_list.Ui_MainWindow()
         ui.setupUi(MainWindow)
@@ -692,7 +732,7 @@ if __name__ == "__main__":
         dialog = ui_cnpj_dialog.Ui_Dialog()
         dialog.setupUi(Dialog)
         Dialog.setModal(True)
-
+        
         Dialog_Cnpj = QtWidgets.QDialog()
         dialog_cnpj_padrao = ui_cnpj_padrao_dialog.Ui_Dialog()
         dialog_cnpj_padrao.setupUi(Dialog_Cnpj)
@@ -715,14 +755,16 @@ if __name__ == "__main__":
         ui.btn_portal.clicked.connect(on_baixar_portal) 
         
         ui.lbl_message.hide()
-        ui.btn_limpa_banco.hide()
+        #ui.btn_limpa_banco.hide()
         
-
+           
         dialog_cnpj_padrao.txt_cnpj_padrao.textChanged.connect(on_cnpj_padrao_alterado )
         dialog_cnpj_padrao.txt_cnpj_padrao.keyPressEvent = txt_cnpj_padrao_keyPressEvent
         
         ui.btn_cnpj.clicked.connect(mostra_dialogCnpj)
-        
+        cnpj = busca_cnpj_padrao_valor()
+        #ui.btn_cnpj.setText(cnpj)
+
         dialog_cnpj_padrao.btn_ok.clicked.connect(confirma_cnpj_padrao)
         dialog_cnpj_padrao.btn_cancel.clicked.connect(Dialog_Cnpj.reject)
         
@@ -756,9 +798,15 @@ if __name__ == "__main__":
         dialog.lista_empresas.keyPressEvent = lista_empresas_keyPressEvent
 
         #carrega lista de notas do banco
-        rows = busca_chaves_banco()
+        rows = busca_chaves_por_status(constant.DEFAULT_STATUS_CODIGO)
         carrega_lista_chaves(rows)
+        
+        #lista ufs
+        lista_ufs = busca_uf_banco()
 
+        #lista status
+        rows = busca_status_banco()
+        carrega_lista_status(rows)
 
         #carrega cnpjs na memoria
         rows = busca_cnpj_banco()

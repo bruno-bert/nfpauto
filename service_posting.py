@@ -5,11 +5,12 @@ from seleniumdb.models import Step
 
 class NFPPosting(SeleniumDB):
 
-    def __init__(self, script_id, cnpj, descricao_entidade, chaves):      
+    def __init__(self, script_id, cnpj, descricao_entidade, palavras, chaves):      
       super().__init__(script_id)
 
       self.cnpj = cnpj
       self.descricao_entidade = descricao_entidade
+      self.palavras = palavras
       self.chaves = chaves
 
     def log(self, message):

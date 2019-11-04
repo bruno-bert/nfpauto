@@ -23,6 +23,12 @@ class Login:
 
      self.messages = messages.Messages()
 
+        #aplica tema no dialog de cnpj padrão
+     sshFile = constant.STYLES_FILE
+     with open(sshFile,"r") as fh:
+       self.DialogLogin.setStyleSheet(fh.read())  
+
+
  def mostra_login(self):   
       if (constant.ENV == 'DEV'):
          self.dialog_login.txt_usuario.setText(constant.TEST_USER)

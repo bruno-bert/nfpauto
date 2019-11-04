@@ -116,9 +116,9 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>810</y>
+      <y>790</y>
       <width>921</width>
-      <height>61</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="font">
@@ -155,7 +155,7 @@ border-style: dashed
     <property name="geometry">
      <rect>
       <x>1190</x>
-      <y>470</y>
+      <y>490</y>
       <width>631</width>
       <height>351</height>
      </rect>
@@ -981,6 +981,9 @@ border-style: dashed
       <strikeout>false</strikeout>
      </font>
     </property>
+    <property name="toolTip">
+     <string>&lt;h2&gt;Clique aqui para atualizar o CNPJ da entidade&lt;/h2&gt;</string>
+    </property>
     <property name="text">
      <string>     Atualizar Entidade</string>
     </property>
@@ -1045,10 +1048,10 @@ border-style: dashed
    <widget class="QPushButton" name="btn_limpa_banco">
     <property name="geometry">
      <rect>
-      <x>1610</x>
+      <x>1520</x>
       <y>380</y>
-      <width>271</width>
-      <height>41</height>
+      <width>361</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -1060,11 +1063,16 @@ border-style: dashed
       <strikeout>false</strikeout>
      </font>
     </property>
+    <property name="toolTip">
+     <string>&lt;h2&gt;
+ Este comando elimina as notas já postadas 
+&lt;/h2&gt;</string>
+    </property>
     <property name="styleSheet">
      <string notr="true">hidden: hidden</string>
     </property>
     <property name="text">
-     <string>  Limpar Banco de Dados</string>
+     <string>   Limpar Banco (Notas Já Processadas)</string>
     </property>
     <property name="icon">
      <iconset>
@@ -1152,6 +1160,37 @@ border-style: dashed
     </property>
     <property name="text">
      <string>&lt;div&gt;Icons made by &lt;a href=&quot;https://www.flaticon.com/authors/icongeek26&quot; title=&quot;Icongeek26&quot;&gt;Icongeek26&lt;/a&gt; from &lt;a href=&quot;https://www.flaticon.com/&quot;             title=&quot;Flaticon&quot;&gt;www.flaticon.com&lt;/a&gt;&lt;/div&gt;</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="combo_status">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>50</y>
+      <width>381</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_qtde_notas_2">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>50</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Montserrat Alternates SemiBold</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Filtrar por Status:</string>
     </property>
    </widget>
   </widget>

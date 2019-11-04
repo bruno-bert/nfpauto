@@ -3,19 +3,20 @@ TEST_USER="test@test.com"
 TEST_PASSWORD="test"
 
 NUM_CHAVE=44
-DEFAULT_STATUS="Aguardando postagem no site"
+DEFAULT_STATUS="Postagem Pendente"
+DEFAULT_STATUS_CODIGO=1
 EMPTY_STR=""
 
 QUERY_SELECT_NOTAS_PRINCIPAL="select x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message from notas x, status y where x.status = y.codigo"
 QUERY_SELECT_NOTAS_PRINCIPAL_POR_STATUS="select x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message from notas x, status y where x.status = y.codigo and x.status = {}"
-
-
-
+QUERY_LISTA_STATUS="select * from status"
+QUERY_LISTA_UF="select * from uf"
+QUERY_DELETA_NOTAS_PROCESSADAS="DELETE FROM notas WHERE status IN (2, 3)"
 QUERY_SAVE="INSERT INTO notas (chave, cnpj, data, uf, numero, codigo, modelo, serie, tipo_emissao, status, message)  VALUES (?,?,?,?,?,?,?,?,?,?,?)"
 QUERY_SAVE_CNPJ="INSERT INTO cnpj (cnpj, uf, modelo, serie)  VALUES (?,?,?,?)"
-QUERY_INSERT_CNPJ_PADRAO="INSERT INTO cnpj_padrao ('cnpj') VALUES ('{}')"
-QUERY_UPDATE_CNPJ_PADRAO="UPDATE cnpj_padrao set cnpj='{}'"
-QUERY_SELECT_CNPJ_PADRAO="select cnpj from cnpj_padrao"
+QUERY_INSERT_CNPJ_PADRAO="INSERT INTO cnpj_padrao ('cnpj','descricao','palavras') VALUES ('{}','{}','{}')"
+QUERY_UPDATE_CNPJ_PADRAO="UPDATE cnpj_padrao set cnpj='{}', descricao='{}', palavras = '{}'"
+QUERY_SELECT_CNPJ_PADRAO="select cnpj, descricao, palavras from cnpj_padrao"
 QUERY_SELECT_CONFIG_ARQUIVO="select * from config_arquivo where id_text = '{}'"
 QUERY_SELECT_CONFIG_ARQUIVO_PADRAO="select id_text from config_arquivo_padrao"
 QUERY_SELECT_SCRIPTS="select * from scripts"

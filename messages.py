@@ -16,3 +16,4 @@ class Messages:
    self.numero_notas_fora_range = "Número de notas está fora do permitido"
    self.nenhuma_nota = "Nenhuma nota encontrada"
    self.portal_indisponivel = "O portal nota do bem parece estar indisponível"
+   self.uf_invalida = "Unidade Federativa Inválida"
