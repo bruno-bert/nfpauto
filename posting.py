@@ -1,5 +1,6 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QTableWidgetItem, QListWidgetItem
+from PyQt5.QtGui import QIcon
 import ui_dialog_postar
 import messages
 import constant
@@ -8,7 +9,7 @@ from seleniumdb.observer import Subscriber
 from database import  busca_script_padrao, busca_chaves_por_status, atualiza_status_nota, atualiza_status_message_nota
 from task import Task
 from datetime import datetime
-from PyQt5.QtCore import  pyqtSignal
+from PyQt5.QtCore import  pyqtSignal, QSize
 
 class Posting(QtWidgets.QWidget):
  
@@ -150,11 +151,17 @@ class Posting(QtWidgets.QWidget):
 
  def modo_postagem(self):
    self.dialog_postar.btn_iniciar_postagem.setText("Parar Postagem")
+   icon = QIcon("assets/icons/stop.png")
+   self.dialog_postar.btn_iniciar_postagem.setIcon(icon)
+   self.dialog_postar.btn_iniciar_postagem.setIconSize(QSize(64,64))
    self.modo_atual = 'postando'
    
 
  def modo_parado(self):
    self.dialog_postar.btn_iniciar_postagem.setText("Iniciar Postagem")
+   icon = QIcon("assets/icons/play1.png")
+   self.dialog_postar.btn_iniciar_postagem.setIcon(icon)
+   self.dialog_postar.btn_iniciar_postagem.setIconSize(QSize(64,64))
    self.modo_atual = 'parado'  
 
  def trigger_postagem(self):

@@ -32,7 +32,9 @@ class SeleniumDB(Publisher):
  def get_id_to_show(self, values):
     raise Exception('get_id_to_show must be implemented by super class') 
  def on_save_result(self, cycle_result):
-    raise Exception('save_result must be implemented by super class')
+    raise Exception('on_save_result must be implemented by super class')
+
+ 
 
  def clear_results(self):
    self.list_result = []
@@ -44,6 +46,7 @@ class SeleniumDB(Publisher):
      self.driver = None
      self.list_result = []
      self.script_id = script_id
+     self.flag_cancelar = 0
 
      self.start_config = self.get_start_config(self.script_id)
      self.script_config = self.get_script_config(self.script_id)
@@ -197,6 +200,10 @@ class SeleniumDB(Publisher):
      driver = self.driver
 
      while (not chegou_fim):
+
+         #print('flag cancelar no while principal do run_steps: ' + str(self.flag_cancelar)    )
+         if (self.flag_cancelar == 1) :
+            return
       
          #pega step pelo step id
          step = next((x for x in lista_steps if x.step_id == step_id), None)
@@ -219,6 +226,11 @@ class SeleniumDB(Publisher):
                 #faz loop até quando determinado elemento for encontrado na tela
                 #quando não for mais encontrado, significa que houve uma ação manual na tela
                 while (True):
+                  
+                  #print('flag cancelar no while true do login: ' + str(self.flag_cancelar)) 
+                  if (self.flag_cancelar == 1):
+                      return
+
                   #show waiting message
                   self.log(step.manual_action_message)
                   time.sleep(3)
@@ -281,6 +293,11 @@ class SeleniumDB(Publisher):
                 self.log('Step {} - Error: {}'.format(step.id_tela,err))
             success = False
          finally:
+            
+            #print('flag cancelar no finally: ' + str(self.flag_cancelar) )
+            if (self.flag_cancelar == 1):
+              return
+
             
             self.log('Step {} Completed'.format(step.id_tela))
             

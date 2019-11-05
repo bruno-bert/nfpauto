@@ -345,7 +345,7 @@ border-style: dashed
      <rect>
       <x>20</x>
       <y>500</y>
-      <width>941</width>
+      <width>951</width>
       <height>281</height>
      </rect>
     </property>
@@ -361,7 +361,7 @@ border-style: dashed
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -482,7 +482,7 @@ border-style: dashed
        <rect>
         <x>30</x>
         <y>60</y>
-        <width>851</width>
+        <width>891</width>
         <height>121</height>
        </rect>
       </property>
@@ -583,7 +583,7 @@ border-style: dashed
         <rect>
          <x>620</x>
          <y>30</y>
-         <width>211</width>
+         <width>251</width>
          <height>51</height>
         </rect>
        </property>

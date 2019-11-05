@@ -12,22 +12,26 @@ class Task(QtSubscriber):
 
     def __init__(self, parent=None):
         QThread.__init__(self, parent)
-        
+        self.service = None
         self.cancelar = 0
     
     #listener
     def show_log(self, message):
         self.sig_log.emit(message)
     
+
     #listener
     def save_result(self, result):
         self.sig_result.emit(result)
-    
+
+
     def cancel_posting(self, cancelar):
         self.cancelar = cancelar
         if (cancelar == 1):
+          self.service.flag_cancelar = 1
           self.sig_log.emit('Postagem Cancelada')
 
+  
 
     def run(self):
         #chaves = self.seleciona_chaves()
@@ -57,9 +61,9 @@ class Task(QtSubscriber):
         descricao_entidade = row['descricao']    
         palavras = row['palavras']   
 
-        service = NFPPosting(script_id, cnpj, descricao_entidade, palavras, chaves)
-        service.register(self)
-        service.iniciar_postagem()
+        self.service = NFPPosting(script_id, cnpj, descricao_entidade, palavras, chaves)
+        self.service.register(self)
+        self.service.iniciar_postagem()
 
 
     def get_script_id(self):      

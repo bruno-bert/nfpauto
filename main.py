@@ -429,7 +429,10 @@ def on_campo_chave_alterado():
     text = get_chave()
     atualiza_contagem_digitos(text)
 
-    if (len(text) >= constant.NUM_CHAVE ):
+    if (len(text) > constant.NUM_CHAVE  ):
+       ui.txtChave.setPlainText(text[0:constant.NUM_CHAVE])
+
+    if (len(text) == constant.NUM_CHAVE ):
        chave_ok = valida_chave(get_chave())    
        if (chave_ok): 
          sequencia_adiciona_nota(text)
@@ -441,9 +444,12 @@ def on_campo_chave_alterado():
 
 def on_campo_chave_alterado_2():
     text = get_chave_parcial()
-    print(text)
-   
-    if (len(text) >= constant.NUM_CHAVE ):
+    
+    if (len(text) > constant.NUM_CHAVE  ):
+       atual = ui.txtChave_3.toPlainText()
+       ui.txtChave_3.setPlainText(text[0:len(atual)-1])
+
+    if (len(text) == constant.NUM_CHAVE ):
        chave_ok = valida_chave(text)    
        if (chave_ok): 
          sequencia_adiciona_nota(text)

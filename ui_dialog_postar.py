@@ -52,7 +52,9 @@ class Ui_Dialog(object):
         font.setStrikeOut(False)
         self.btn_iniciar_postagem.setFont(font)
         self.btn_iniciar_postagem.setStyleSheet("color: rgb(45, 45, 45);")
-        self.btn_iniciar_postagem.setIcon(icon)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("assets/icons/play1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_iniciar_postagem.setIcon(icon1)
         self.btn_iniciar_postagem.setIconSize(QtCore.QSize(64, 64))
         self.btn_iniciar_postagem.setObjectName("btn_iniciar_postagem")
         self.btn_fechar = QtWidgets.QPushButton(Dialog)
@@ -112,7 +114,7 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Notas fiscais disponíveis"))
-        self.btn_iniciar_postagem.setText(_translate("Dialog", "         Iniciar Postagem"))
+        self.btn_iniciar_postagem.setText(_translate("Dialog", "               Iniciar Postagem"))
         self.btn_fechar.setText(_translate("Dialog", "Fechar (ESC)"))
         self.label_log.setText(_translate("Dialog", "Log de Atividades"))
         self.btn_limpar.setText(_translate("Dialog", "Limpar Log"))

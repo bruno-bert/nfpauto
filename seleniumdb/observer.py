@@ -5,7 +5,7 @@ class Subscriber:
         raise Exception('show_log method must be implemented by super class')
     def save_result(self, result):
         raise Exception('save_result method must be implemented by super class')
-
+   
 class Publisher:
     def __init__(self):
         self.subscribers = set()
@@ -19,3 +19,4 @@ class Publisher:
     def save_result(self, result):
         for subscriber in self.subscribers:
             subscriber.save_result(result)        
+   

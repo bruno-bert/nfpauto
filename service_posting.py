@@ -12,20 +12,24 @@ class NFPPosting(SeleniumDB):
       self.descricao_entidade = descricao_entidade
       self.palavras = palavras
       self.chaves = chaves
+      
 
     def log(self, message):
       print(message)
       self.show_log(message)
-
+    
     def on_save_result(self, result):   
       self.save_result(result)
       
+   
 
     def get_id_to_show(self, values ):
       return 'CNPJ: {} - Chave de Acesso: {}'.format(values['cnpj'],values['chave'])
     
     def get_id(self, values ):
       return values['chave']
+    
+    
 
     def iniciar_postagem(self):
 
@@ -35,12 +39,15 @@ class NFPPosting(SeleniumDB):
       step = self.lista_steps[index]
       step_id = step.step_id
       steps_to_skip_on_next_run = None
-
+      self.flag_cancelar = 0 
       values_on_expression =  { "descricao_entidade": self.descricao_entidade }    
       
       for chave in self.chaves:        
         
         try:
+
+          if (self.flag_cancelar == 1):           
+            break
 
           values = { "chave": chave, "cnpj": self.cnpj}      
           run_result = self.run_steps(values, values_on_expression, step_id, steps_to_skip_on_next_run)

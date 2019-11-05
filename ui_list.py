@@ -159,7 +159,7 @@ class Ui_MainWindow(object):
         self.lbl_atalho1_8.setFont(font)
         self.lbl_atalho1_8.setObjectName("lbl_atalho1_8")
         self.tab_opcao = QtWidgets.QTabWidget(self.centralwidget)
-        self.tab_opcao.setGeometry(QtCore.QRect(20, 500, 941, 281))
+        self.tab_opcao.setGeometry(QtCore.QRect(20, 500, 951, 281))
         font = QtGui.QFont()
         font.setFamily("Montserrat Alternates SemiBold")
         font.setPointSize(12)
@@ -218,7 +218,7 @@ class Ui_MainWindow(object):
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
         self.grupo_chave_completa_2 = QtWidgets.QGroupBox(self.tab_2)
-        self.grupo_chave_completa_2.setGeometry(QtCore.QRect(30, 60, 851, 121))
+        self.grupo_chave_completa_2.setGeometry(QtCore.QRect(30, 60, 891, 121))
         font = QtGui.QFont()
         font.setFamily("Montserrat Alternates SemiBold")
         font.setPointSize(12)
@@ -261,7 +261,7 @@ class Ui_MainWindow(object):
         self.lblDigitos_2.setText("")
         self.lblDigitos_2.setObjectName("lblDigitos_2")
         self.txtChave_3 = QtWidgets.QPlainTextEdit(self.grupo_chave_completa_2)
-        self.txtChave_3.setGeometry(QtCore.QRect(620, 30, 211, 51))
+        self.txtChave_3.setGeometry(QtCore.QRect(620, 30, 251, 51))
         font = QtGui.QFont()
         font.setFamily("Montserrat SemiBold")
         font.setBold(False)
@@ -516,7 +516,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.tab_opcao.setCurrentIndex(3)
+        self.tab_opcao.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
