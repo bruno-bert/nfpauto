@@ -2,8 +2,8 @@
 - [x] na api do portal, tratar erro - quando nao tem servidor ativo, o app esta caindo
 - [x] modificar ui no modo postagem, e voltar quando cancelar
   - [] no modo postagem, explicitar a nota que estiver sendo processada, selecionar a nota na lista tambem
-- [] permitir usuario cancelar a postagem - vai fechar o navegador
-- [] criar signal de conclusao da tarefa (quando terminar de postar todas as notas)
+- [x] permitir usuario cancelar a postagem - vai fechar o navegador
+- [x] criar signal de conclusao da tarefa (quando terminar de postar todas as notas)
 - [] refatoração do código - isolar sqlite db para parte generica (tabelas script, start_config, steps) em db separado
 
 # modo postagem

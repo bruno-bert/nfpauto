@@ -17,3 +17,4 @@ class Messages:
    self.nenhuma_nota = "Nenhuma nota encontrada"
    self.portal_indisponivel = "O portal nota do bem parece estar indisponível"
    self.uf_invalida = "Unidade Federativa Inválida"
+   self.gravada_sucesso = "Nota {} gravada com sucesso"

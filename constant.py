@@ -7,12 +7,12 @@ DEFAULT_STATUS="Postagem Pendente"
 DEFAULT_STATUS_CODIGO=1
 EMPTY_STR=""
 
-QUERY_SELECT_NOTAS_PRINCIPAL="select x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message from notas x, status y where x.status = y.codigo"
-QUERY_SELECT_NOTAS_PRINCIPAL_POR_STATUS="select x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message from notas x, status y where x.status = y.codigo and x.status = {}"
+QUERY_SELECT_NOTAS_PRINCIPAL="select datahora, x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message from notas x, status y where x.status = y.codigo ORDER BY datahora DESC"
+QUERY_SELECT_NOTAS_PRINCIPAL_POR_STATUS="select datahora, x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message from notas x, status y where x.status = y.codigo and x.status = {}  ORDER BY datahora DESC"
 QUERY_LISTA_STATUS="select * from status"
 QUERY_LISTA_UF="select * from uf"
 QUERY_DELETA_NOTAS_PROCESSADAS="DELETE FROM notas WHERE status IN (2, 3)"
-QUERY_SAVE="INSERT INTO notas (chave, cnpj, data, uf, numero, codigo, modelo, serie, tipo_emissao, status, message)  VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+QUERY_SAVE="INSERT INTO notas (chave, cnpj, data, uf, numero, codigo, modelo, serie, tipo_emissao, status, message, datahora)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
 QUERY_SAVE_CNPJ="INSERT INTO cnpj (cnpj, uf, modelo, serie)  VALUES (?,?,?,?)"
 QUERY_INSERT_CNPJ_PADRAO="INSERT INTO cnpj_padrao ('cnpj','descricao','palavras') VALUES ('{}','{}','{}')"
 QUERY_UPDATE_CNPJ_PADRAO="UPDATE cnpj_padrao set cnpj='{}', descricao='{}', palavras = '{}'"
@@ -26,8 +26,8 @@ QUERY_UPDATE_STATUS_MESSAGE_NOTA="UPDATE notas set status = {}, message = '{}' w
 
 
 VALIDA_CHAVE_PELO_DIGITO=True
-SALVA_NOTA_EXPIRADA=True
-LIMPA_CAMPO_QUANDO_INVALIDA=False
+SALVA_NOTA_EXPIRADA=False
+LIMPA_CAMPO_QUANDO_INVALIDA=True
 MESES_EXPIRACAO=1
 DIA_EXPIRA=20
 DEFAULT_NUMERO_NOTAS=50

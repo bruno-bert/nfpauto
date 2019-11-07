@@ -150,7 +150,7 @@ class Posting(QtWidgets.QWidget):
 
 
  def modo_postagem(self):
-   self.dialog_postar.btn_iniciar_postagem.setText("Parar Postagem")
+   self.dialog_postar.btn_iniciar_postagem.setText("               Parar Postagem")
    icon = QIcon("assets/icons/stop.png")
    self.dialog_postar.btn_iniciar_postagem.setIcon(icon)
    self.dialog_postar.btn_iniciar_postagem.setIconSize(QSize(64,64))
@@ -158,7 +158,7 @@ class Posting(QtWidgets.QWidget):
    
 
  def modo_parado(self):
-   self.dialog_postar.btn_iniciar_postagem.setText("Iniciar Postagem")
+   self.dialog_postar.btn_iniciar_postagem.setText("               Iniciar Postagem")
    icon = QIcon("assets/icons/play1.png")
    self.dialog_postar.btn_iniciar_postagem.setIcon(icon)
    self.dialog_postar.btn_iniciar_postagem.setIconSize(QSize(64,64))

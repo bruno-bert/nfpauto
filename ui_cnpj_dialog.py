@@ -65,6 +65,7 @@ class Ui_Dialog(object):
         self.lista_empresas.setObjectName("lista_empresas")
         self.lista_empresas.setColumnCount(0)
         self.lista_empresas.setRowCount(0)
+        self.lista_empresas.verticalHeader().setVisible(False)
         self.grupo_atalhos = QtWidgets.QGroupBox(Dialog)
         self.grupo_atalhos.setGeometry(QtCore.QRect(10, 290, 471, 151))
         font = QtGui.QFont()

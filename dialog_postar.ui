@@ -95,7 +95,7 @@
     <string notr="true">color: rgb(45, 45, 45);</string>
    </property>
    <property name="text">
-    <string>               Iniciar Postagem</string>
+    <string>                              Iniciar Postagem</string>
    </property>
    <property name="icon">
     <iconset>

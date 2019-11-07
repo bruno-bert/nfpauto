@@ -69,6 +69,15 @@ def carrega_lista_empresas(rows):
     dialog.lista_empresas.setFocus()
     dialog.lista_empresas.selectRow(0)
 
+    header = dialog.lista_empresas.horizontalHeader()       
+    header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+    header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeToContents)
+   
+
 
 
 def carrega_lista_chaves(rows):
@@ -91,6 +100,14 @@ def carrega_lista_chaves(rows):
             ui.tableWidget.setItem(row_num, 9, QTableWidgetItem(row['serie']))
             ui.tableWidget.setItem(row_num, 10, QTableWidgetItem(row['tipo_emissao']))
             ui.tableWidget.setItem(row_num, 11, QTableWidgetItem(row['message']))
+
+            try:
+             datetime_object = datetime.strptime(row['datahora'], '%Y-%m-%d %H:%M:%S')
+             ui.tableWidget.setItem(row_num, 12, QTableWidgetItem(datetime_object.strftime('%d-%m-%Y %H:%M:%S')))
+            except Exception as err:
+             print(repr(err))
+             ui.tableWidget.setItem(row_num, 12, QTableWidgetItem(row['datahora']))
+
             lista_notas.append(row['chave'])
 
     header = ui.tableWidget.horizontalHeader()       
@@ -106,11 +123,12 @@ def carrega_lista_chaves(rows):
     header.setSectionResizeMode(9, QtWidgets.QHeaderView.ResizeToContents) 
     header.setSectionResizeMode(10, QtWidgets.QHeaderView.ResizeToContents) 
     header.setSectionResizeMode(11, QtWidgets.QHeaderView.ResizeToContents) 
+    header.setSectionResizeMode(12, QtWidgets.QHeaderView.ResizeToContents) 
         
 
 
 def cria_tabela_notas():
-    ui.tableWidget.setColumnCount(12)
+    ui.tableWidget.setColumnCount(13)
     ui.tableWidget.setRowCount(1)
     ui.tableWidget.hideColumn(0) #esconde coluna de id
     ui.tableWidget.hideColumn(10) #esconde coluna de tipo_emissao
@@ -122,12 +140,12 @@ def cria_tabela_notas():
                                        'Data', 'Status', 
                                        'UF', 'Numero', 
                                        'Codigo', 'Modelo', 
-                                       'Serie', 'Tipo Emissao', 'Mensagem'])                                       
+                                       'Serie', 'Tipo Emissao', 'Mensagem','Data-Hora'])                                       
 
 def cria_tabela_empresas():
     dialog.lista_empresas.setColumnCount(6)
     dialog.lista_empresas.setRowCount(1)
- 
+    dialog.lista_empresas.hideColumn(0)
     dialog.lista_empresas.setHorizontalHeaderLabels(
                                       ['ID', 
                                        'Empresa', 
@@ -174,7 +192,14 @@ def adiciona_empresas_na_lista(new_nota):
     dialog.lista_empresas.setItem(0, 5, QTableWidgetItem(new_nota.serie) )
     lista_cnpj.append(new_nota.cnpj)
 
+def setColortoRow(table, rowIndex, color):
+    for j in range(table.columnCount()):
+        table.item(rowIndex, j).setBackground(color)
+
 def adiciona_chave_na_lista(new_nota, expirada):
+    
+    white = QtGui.QColor(255,255,255)
+    highlighted = QtGui.QColor(132,186,91)
 
     ui.tableWidget.insertRow(0)
     ui.tableWidget.setItem(0, 0, QTableWidgetItem("") )
@@ -189,6 +214,14 @@ def adiciona_chave_na_lista(new_nota, expirada):
     ui.tableWidget.setItem(0, 9, QTableWidgetItem(new_nota.serie) )
     ui.tableWidget.setItem(0, 10, QTableWidgetItem(new_nota.tipo_emissao) )
     ui.tableWidget.setItem(0, 11, QTableWidgetItem(m.aguardando_postagem if not expirada else m.data_expirada_doacao ) )
+    ui.tableWidget.setItem(0, 12, QTableWidgetItem(datetime.now().strftime('%d-%m-%Y %H:%M:%S')))
+
+    setColortoRow(ui.tableWidget,0,highlighted)
+
+    if( ui.tableWidget.rowCount() > 1):
+      setColortoRow(ui.tableWidget,1,white)
+    
+
 
     lista_notas.append(new_nota.chave)
 
@@ -228,9 +261,18 @@ def valida_uf(uf):
 def mostra_mensagem(text):
     ui.lbl_message.setText(text)
     ui.lbl_message.show()
+    limpa_mensagem_sucesso()
 def limpa_mensagem():
     ui.lbl_message.setText("")
     ui.lbl_message.hide()
+
+def mostra_mensagem_sucesso(text):
+    ui.lbl_info.setText(text)
+    ui.lbl_info.show()
+    limpa_mensagem()
+def limpa_mensagem_sucesso():
+    ui.lbl_info.setText("")
+    ui.lbl_info.hide()
 
 def atualiza_contagem_digitos(text):
     ui.lblDigitos.setText("{num_digitos} dígitos".format(num_digitos=len(text)))
@@ -405,7 +447,9 @@ def sequencia_adiciona_nota(chave):
       if ( (not nota_expirou) | (constant.SALVA_NOTA_EXPIRADA) ):   
         salva_chave_banco(nota_separada, nota_expirou)
         adiciona_chave_na_lista(nota_separada, nota_expirou)
-        limpa_mensagem()
+        #limpa_mensagem()
+        mostra_mensagem_sucesso(messages.Messages().gravada_sucesso.format(chave))
+        
 
         #salva cnpj na base   
         if (constant.SALVA_CNPJ):
@@ -479,13 +523,7 @@ def define_mes_anterior():
 
 def modo_digitacao():
     ui.tab_opcao.setCurrentIndex (1)
-    ui.txtChave_3.setFocus()
-    Dialog.show()
-    ui.txtChave_2.setPlainText(constant.EMPTY_STR)
-    ui.txtChave_3.setPlainText(constant.EMPTY_STR)
-    mostra_data_nota()
-    rows = busca_cnpj_banco()
-    carrega_lista_empresas(rows)
+   
 
 def modo_leitor():
     ui.tab_opcao.setCurrentIndex (0)
@@ -652,10 +690,6 @@ def lista_empresas_keyPressEvent(e):
 def on_abre_postar():
  servico_posting = Posting() 
  servico_posting.mostra_posting()
- #if (servico_posting.mostra_posting()):
- #  print('Form de postagem fechado')
- #else:
- #  print('Form de postagem fechado')  
 
 def txtChave_keyPressEvent(e):
    if (e.key() == QtCore.Qt.Key_Escape ):
@@ -715,6 +749,33 @@ def applyStyles():
   with open(sshFile,"r") as fh:
     MainWindow.setStyleSheet(fh.read())      
 
+def mostra_tela_estab():
+  
+  #Dialog.show()
+
+  sshFile = constant.STYLES_FILE
+  with open(sshFile,"r") as fh:
+    Dialog.setStyleSheet(fh.read()) 
+
+  mostra_data_nota()
+  rows = busca_cnpj_banco()
+  carrega_lista_empresas(rows)
+
+  if  (Dialog.exec_()):
+      if dialog.lista_empresas.selectionModel().hasSelection():
+       row = dialog.lista_empresas.currentRow()
+       atualiza_campo_parcial_nota(row)
+  
+
+
+def tab_changed(index):
+  if (index == 1):
+    ui.txtChave_3.setFocus()
+    ui.txtChave_2.setPlainText(constant.EMPTY_STR)
+    ui.txtChave_3.setPlainText(constant.EMPTY_STR)
+    mostra_tela_estab()
+    
+
 if __name__ == "__main__":
         import sys    
     
@@ -760,8 +821,8 @@ if __name__ == "__main__":
         ui.btn_importar.clicked.connect(on_importar_arquivo)    
         ui.btn_portal.clicked.connect(on_baixar_portal) 
         
-        ui.lbl_message.hide()
-        #ui.btn_limpa_banco.hide()
+        limpa_mensagem()
+        limpa_mensagem_sucesso()
         
            
         dialog_cnpj_padrao.txt_cnpj_padrao.textChanged.connect(on_cnpj_padrao_alterado )
@@ -779,6 +840,8 @@ if __name__ == "__main__":
         
         ui.txt_cnpj_estab.setText(constant.EMPTY_STR)
         
+        ui.tab_opcao.currentChanged.connect(tab_changed)
+        ui.btn_estab.clicked.connect(mostra_tela_estab)
         
 
         ui.btn_postar.clicked.connect(on_abre_postar)    

@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 
 import constant
 import messages
@@ -152,7 +153,8 @@ def salva_chave_banco(new_nota, expirada):
                      new_nota.serie, 
                      new_nota.tipo_emissao, 
                      constant.DEFAULT_STATUS_CODIGO, 
-                     messages.Messages().aguardando_postagem if not expirada else messages.Messages().data_expirada_doacao ))
+                     messages.Messages().aguardando_postagem if not expirada else messages.Messages().data_expirada_doacao,
+                     datetime.now().strftime('%Y-%m-%d %H:%M:%S') ) )
                    
     conn.commit()
     conn.close()

@@ -133,19 +133,7 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">#lbl_message {
-margin: 10px 0px;
-padding:12px;
- 
-}
-#lbl_message {
-    color: #9F6000;
-    background-color: #ffffcc;
-  margin:10px 22px;
-    font-size:2em;
-    vertical-align:middle;
-border-style: dashed
-}</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
@@ -361,7 +349,7 @@ border-style: dashed
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -483,7 +471,7 @@ border-style: dashed
         <x>30</x>
         <y>60</y>
         <width>891</width>
-        <height>121</height>
+        <height>171</height>
        </rect>
       </property>
       <property name="font">
@@ -612,6 +600,38 @@ border-style: dashed
        </property>
        <property name="placeholderText">
         <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btn_estab">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>120</y>
+         <width>311</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Montserrat Alternates SemiBold</family>
+         <weight>75</weight>
+         <bold>true</bold>
+         <underline>false</underline>
+         <strikeout>false</strikeout>
+        </font>
+       </property>
+       <property name="text">
+        <string>   Selecionar Estabelecimentos</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>assets/icons/shop.png</normaloff>assets/icons/shop.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
        </property>
       </widget>
      </widget>
@@ -1191,6 +1211,33 @@ border-style: dashed
     </property>
     <property name="text">
      <string>Filtrar por Status:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_info">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>790</y>
+      <width>921</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Montserrat Alternates SemiBold</family>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
