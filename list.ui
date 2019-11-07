@@ -37,9 +37,9 @@
    <widget class="QLabel" name="lbTitulo">
     <property name="geometry">
      <rect>
-      <x>770</x>
-      <y>40</y>
-      <width>281</width>
+      <x>730</x>
+      <y>50</y>
+      <width>441</width>
       <height>41</height>
      </rect>
     </property>

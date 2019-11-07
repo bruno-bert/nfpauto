@@ -3,6 +3,7 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QTableWidgetItem, QListWidgetItem
 from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
 from bradocs4py.cnpj import  ValidadorCnpj 
+from playsound import playsound
 
 
 #native libs
@@ -434,21 +435,24 @@ def verifica_data_expirada(data):
  else:
     return True   
 
- 
+def atualiza_titulo_total():
+  ui.lbTitulo.setText(m.titulo_lista_principal.format(ui.tableWidget.rowCount()))
+
 def sequencia_adiciona_nota(chave):
   if (not chave_ja_existe(chave)):
 
     nota_separada = separa_campos_pela_chave(chave)     
     nota_expirou = verifica_data_expirada(nota_separada.data)
-
+  
     if (not valida_uf(nota_separada.uf)):    
-       mostra_mensagem(m.uf_invalida) 
+       mostra_mensagem(m.uf_invalida)
+       emitir_som_erro() 
     else:
       if ( (not nota_expirou) | (constant.SALVA_NOTA_EXPIRADA) ):   
         salva_chave_banco(nota_separada, nota_expirou)
         adiciona_chave_na_lista(nota_separada, nota_expirou)
-        #limpa_mensagem()
         mostra_mensagem_sucesso(messages.Messages().gravada_sucesso.format(chave))
+        atualiza_titulo_total()
         
 
         #salva cnpj na base   
@@ -459,10 +463,11 @@ def sequencia_adiciona_nota(chave):
 
       else:
         mostra_mensagem(m.data_expirada)      
-
+        emitir_som_erro()
   else:
    mostra_mensagem(m.chave_existe)
-   print("Chave {} já existe".format(chave))     
+   emitir_som_erro()
+   #print("Chave {} já existe".format(chave))     
 
 def on_cnpj_padrao_alterado():
     print('cnpj padrao alterado')
@@ -482,6 +487,7 @@ def on_campo_chave_alterado():
          sequencia_adiciona_nota(text)
          limpa_campo_chave() 
        else:
+         emitir_som_erro()
          mostra_mensagem(m.chave_invalida)
          if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
            limpa_campo_chave() 
@@ -499,6 +505,7 @@ def on_campo_chave_alterado_2():
          sequencia_adiciona_nota(text)
          limpa_campo_chave() 
        else:
+         emitir_som_erro()
          mostra_mensagem(m.chave_invalida)
          if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
            limpa_campo_chave() 
@@ -581,6 +588,9 @@ def txt_cnpj_padrao_keyPressEvent(e):
        else: 
          return QtWidgets.QPlainTextEdit.keyPressEvent(dialog_cnpj_padrao.txt_cnpj_padrao, e)     
 
+def emitir_som_erro():
+  if (constant.EMITIR_SOM_ERRO):
+   playsound(constant.SOM_ERRO_FILE)
 
 def txtChave_3_keyPressEvent(e):
      if (e.key() == QtCore.Qt.Key_Escape ):
@@ -621,6 +631,7 @@ def txtChave_3_keyPressEvent(e):
        if (chave_ok): 
           sequencia_adiciona_nota(text) 
        else:
+          emitir_som_erro()
           mostra_mensagem(m.chave_invalida)
           if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
             limpa_campo_chave()
@@ -731,6 +742,7 @@ def txtChave_keyPressEvent(e):
        if (chave_ok): 
           sequencia_adiciona_nota(text) 
        else:
+          emitir_som_erro()
           mostra_mensagem(m.chave_invalida)
           if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
             limpa_campo_chave()
@@ -869,6 +881,7 @@ if __name__ == "__main__":
         #carrega lista de notas do banco
         rows = busca_chaves_por_status(constant.DEFAULT_STATUS_CODIGO)
         carrega_lista_chaves(rows)
+        atualiza_titulo_total()
         
         #lista ufs
         lista_ufs = busca_uf_banco()

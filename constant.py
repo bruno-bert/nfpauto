@@ -7,6 +7,9 @@ DEFAULT_STATUS="Postagem Pendente"
 DEFAULT_STATUS_CODIGO=1
 EMPTY_STR=""
 
+EMITIR_SOM_ERRO=True
+SOM_ERRO_FILE="assets/sounds/error.mp3"
+
 QUERY_SELECT_NOTAS_PRINCIPAL="select datahora, x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message from notas x, status y where x.status = y.codigo ORDER BY datahora DESC"
 QUERY_SELECT_NOTAS_PRINCIPAL_POR_STATUS="select datahora, x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message from notas x, status y where x.status = y.codigo and x.status = {}  ORDER BY datahora DESC"
 QUERY_LISTA_STATUS="select * from status"

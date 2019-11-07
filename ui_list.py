@@ -23,7 +23,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.lbTitulo = QtWidgets.QLabel(self.centralwidget)
-        self.lbTitulo.setGeometry(QtCore.QRect(770, 40, 281, 41))
+        self.lbTitulo.setGeometry(QtCore.QRect(730, 50, 441, 41))
         font = QtGui.QFont()
         font.setFamily("Montserrat Alternates SemiBold")
         font.setPointSize(20)
