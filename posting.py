@@ -21,8 +21,12 @@ class Posting(QtWidgets.QWidget):
    self.adiciona_log_lista(message)
 
  #signal 
- def save_result(self, result):   
-   self.atualiza_status_nota_processada(result)
+ def save_result(self, result): 
+    status = self.define_status(result) 
+    if (status == 2):
+       print('sucesso')
+
+    self.atualiza_status_nota_processada(result)
    
  #signal
  def init_value(self, value):
@@ -74,6 +78,9 @@ class Posting(QtWidgets.QWidget):
      #atualiza status da nota no banco
      status = self.define_status(result)
      atualiza_status_message_nota(result.value, status, result.message)
+
+     if (status == 2):
+       print('sucesso')
 
      #atualiza lista no ui
      self.atualiza_lista(result.value)
