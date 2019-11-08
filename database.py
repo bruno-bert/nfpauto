@@ -15,7 +15,7 @@ def atualiza_status_nota(chave, status):
 
 def atualiza_status_message_nota(chave, status, message):
  conn = sqlite3.connect('notas.db')
- query = constant.QUERY_UPDATE_STATUS_MESSAGE_NOTA.format(status, message, chave)
+ query = constant.QUERY_UPDATE_STATUS_MESSAGE_NOTA.format(status, message, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), chave)
  cursor = conn.cursor()
  cursor.execute(query)
  conn.commit()
@@ -70,11 +70,17 @@ def busca_cnpj_padrao_valor():
   return constant.EMPTY_STR
 
 def limpa_notas_db():
- conn = sqlite3.connect('notas.db')
- cursor = conn.cursor()
- cursor.execute(constant.QUERY_DELETA_NOTAS_PROCESSADAS)
- conn.commit()
- conn.close()
+    conn = sqlite3.connect('notas.db')
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute(constant.QUERY_DELETA_NOTAS_PROCESSADAS)
+        conn.commit()
+        conn.close()
+    except Exception as err:
+        print(repr(err)) 
+    finally:
+        conn.close()       
 
 def salva_cnpj_padrao_banco(cnpj, descricao, palavras):
  conn = sqlite3.connect('notas.db')
@@ -108,9 +114,9 @@ def busca_status_banco():
 
 
 
-def busca_chaves_por_status(status):
+def busca_chaves_por_status(status, sort = 'ASC'):
  conn = sqlite3.connect('notas.db')
- query = constant.QUERY_SELECT_NOTAS_PRINCIPAL_POR_STATUS.format(status)
+ query = constant.QUERY_SELECT_NOTAS_PRINCIPAL_POR_STATUS.format(status, sort)
  conn.row_factory = sqlite3.Row
  cur = conn.cursor()
  cur.execute(query)

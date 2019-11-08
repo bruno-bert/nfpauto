@@ -6,4 +6,5 @@ class QtSubscriber(QThread):
         raise Exception('show_log method must be implemented by super class')
     def save_result(self, result):
         raise Exception('save_result method must be implemented by super class')
-  
+    def init_value(self, value):
+        raise Exception('init_value method must be implemented by super class')

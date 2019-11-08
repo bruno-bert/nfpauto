@@ -2,7 +2,6 @@ from seleniumdb.core import SeleniumDB
 from seleniumdb.models import Step
 
 
-
 class NFPPosting(SeleniumDB):
 
     def __init__(self, script_id, cnpj, descricao_entidade, palavras, chaves):      
@@ -18,7 +17,7 @@ class NFPPosting(SeleniumDB):
       print(message)
       self.show_log(message)
     
-    def on_save_result(self, result):   
+    def on_save_result(self, result): 
       self.save_result(result)
       
    
@@ -48,6 +47,9 @@ class NFPPosting(SeleniumDB):
 
           if (self.flag_cancelar == 1):           
             break
+
+          #trigger for external listeners  
+          self.init_value(chave)
 
           values = { "chave": chave, "cnpj": self.cnpj}      
           run_result = self.run_steps(values, values_on_expression, step_id, steps_to_skip_on_next_run)

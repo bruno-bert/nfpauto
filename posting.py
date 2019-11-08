@@ -10,6 +10,7 @@ from database import  busca_script_padrao, busca_chaves_por_status, atualiza_sta
 from task import Task
 from datetime import datetime
 from PyQt5.QtCore import  pyqtSignal, QSize
+from PyQt5.Qt import Qt
 
 class Posting(QtWidgets.QWidget):
  
@@ -22,7 +23,31 @@ class Posting(QtWidgets.QWidget):
  #signal 
  def save_result(self, result):   
    self.atualiza_status_nota_processada(result)
+   
+ #signal
+ def init_value(self, value):
+   self.destaca_chave_sendo_processada(value)  
 
+ def setColortoRow(self, table, rowIndex, color):
+    for j in range(table.columnCount()):
+        table.item(rowIndex, j).setBackground(color)
+
+ def destaca_chave_sendo_processada(self, value):
+
+    items = self.dialog_postar.lista_notas.findItems(value, QtCore.Qt.MatchExactly)
+    if ( len(items) > 0 ):
+      for item in items:
+        try:
+         index = self.dialog_postar.lista_notas.indexFromItem(item).row()
+         highlighted = QtGui.QColor(192,247,224)
+         self.setColortoRow(self.dialog_postar.lista_notas,index,highlighted)
+       
+        except Exception as err:
+         print(err) 
+
+   
+    
+    
  def define_status(self, result):
 
    if (result.success):
@@ -32,15 +57,17 @@ class Posting(QtWidgets.QWidget):
 
    return status   
  
- def atualiza_lista(self, result):
-    items = self.dialog_postar.lista_notas.findItems(result.value, QtCore.Qt.MatchExactly)
+ 
+ def atualiza_lista(self, value):
+    items = self.dialog_postar.lista_notas.findItems(value, QtCore.Qt.MatchExactly)
     if ( len(items) > 0 ):
       for item in items:
-        try:
-         index = self.dialog_postar.lista_notas.indexFromItem(item).row()
-         self.dialog_postar.lista_notas.removeRow(index)
-        except Exception as err:
-         print(err) 
+        #try:
+        index = self.dialog_postar.lista_notas.indexFromItem(item).row()
+        print('removendo linha {}'.format(str(index)))
+        self.dialog_postar.lista_notas.removeRow(index)
+        #except Exception as err:
+        # print(err) 
 
  def atualiza_status_nota_processada(self, result):
      
@@ -49,8 +76,8 @@ class Posting(QtWidgets.QWidget):
      atualiza_status_message_nota(result.value, status, result.message)
 
      #atualiza lista no ui
-     self.atualiza_lista(result)
-
+     self.atualiza_lista(result.value)
+    
 
  def applyStyles(self):
   sshFile = constant.STYLES_FILE
@@ -58,23 +85,24 @@ class Posting(QtWidgets.QWidget):
   with open(sshFile,"r") as fh:
        self.DialogPostar.setStyleSheet(fh.read())      
 
- def __init__(self):
+ def __init__(self, parent):
 
      super().__init__()
 
      self.rows = None
-
-     self.dialog_postar = ui_dialog_postar.Ui_Dialog()     
+      
+     #self.DialogPostar = QtWidgets.QDialog(parent)
      self.DialogPostar = QtWidgets.QDialog()
+     self.dialog_postar = ui_dialog_postar.Ui_Dialog()   
      self.dialog_postar.setupUi(self.DialogPostar)
-     self.DialogPostar.setModal(True)
-
+     self.DialogPostar.setWindowFlags(self.DialogPostar.windowFlags() | Qt.WindowMinimizeButtonHint)
+     
      self.applyStyles()
      
      self.dialog_postar.btn_iniciar_postagem.clicked.connect(self.trigger_postagem)
      
      self.dialog_postar.btn_limpar.clicked.connect(self.limpar_log)
-     self.dialog_postar.btn_fechar.clicked.connect(self.DialogPostar.reject)
+     self.dialog_postar.btn_fechar.clicked.connect(self.fechar_dialog)
      
      self.model = QtGui.QStandardItemModel()
      self.dialog_postar.list_log.setModel(self.model)
@@ -84,8 +112,13 @@ class Posting(QtWidgets.QWidget):
      self.modo_parado()
 
 
-
-
+ def fechar_dialog(self):
+    if (self.modo_atual == 'postando'):
+        self.sig_cancelar.emit(1)
+        self.modo_parado() 
+    self.DialogPostar.reject()
+    
+ 
  def limpar_log(self):
     self.model.clear()
  
@@ -136,14 +169,12 @@ class Posting(QtWidgets.QWidget):
      self.cria_tabela_notas()
 
      #apenas as pendentes de postagem
-     self.rows = busca_chaves_por_status(1) 
+     self.rows = busca_chaves_por_status(1, 'ASC') 
 
      self.carrega_lista_chaves(self.rows)
-     
-     if  (self.DialogPostar.exec_()):
-        return True
-     else:
-        return False 
+     self.DialogPostar.exec_()
+  
+
 
 
   
@@ -176,6 +207,7 @@ class Posting(QtWidgets.QWidget):
         print(repr(e)) 
       self.task_postagem.sig_log.connect(self.show_log)
       self.task_postagem.sig_result.connect(self.save_result) 
+      self.task_postagem.sig_chave.connect(self.init_value) 
       self.modo_postagem()
       self.task_postagem.start()
     else:

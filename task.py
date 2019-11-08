@@ -9,6 +9,7 @@ class Task(QtSubscriber):
 
     sig_log = pyqtSignal(str)
     sig_result = pyqtSignal(CycleResult)
+    sig_chave = pyqtSignal(str)
 
     def __init__(self, parent=None):
         QThread.__init__(self, parent)
@@ -24,6 +25,10 @@ class Task(QtSubscriber):
     def save_result(self, result):
         self.sig_result.emit(result)
 
+    
+    #listener
+    def init_value(self, value):
+        self.sig_chave.emit(value)
 
     def cancel_posting(self, cancelar):
         self.cancelar = cancelar
@@ -72,7 +77,7 @@ class Task(QtSubscriber):
 
     def seleciona_chaves(self):
       rows = busca_chaves_por_status(1)
-      return [col[1] for col in rows]
+      return [col['chave'] for col in rows]
             
 
  

@@ -273,7 +273,7 @@ class SeleniumDB(Publisher):
                if (save_result):                 
                   result = CycleResult()  
                   result.value = self.get_id(values)
-                  result.value_to_show = self.get_id_to_show(values)
+                  #result.value_to_show = self.get_id_to_show(values)
                   result.success = step.success
                   result.message = step.resulted_success_message or step.resulted_error_message
                   self.on_save_result(result)
@@ -287,10 +287,10 @@ class SeleniumDB(Publisher):
 
          except Exception as err:
             if (step.show_error_log == "1"):
-              if (not err.message):                
-                self.log('Step {} - Error: {}'.format(step.id_tela,repr(err)))
-              else:   
-                self.log('Step {} - Error: {}'.format(step.id_tela,err))
+              #if (not err):                
+              self.log('Step {} - Error: {}'.format(step.id_tela,repr(err)))
+              #else:   
+              #  self.log('Step {} - Error: {}'.format(step.id_tela,err))
             success = False
          finally:
             

@@ -80,6 +80,13 @@ def carrega_lista_empresas(rows):
    
 
 
+def resizeColumns(table, cols):
+   header = table.horizontalHeader()       
+   header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+   current_col = 1
+   while (current_col < cols-1):
+    header.setSectionResizeMode(current_col, QtWidgets.QHeaderView.ResizeToContents)
+    current_col+=1
 
 def carrega_lista_chaves(rows):
 
@@ -102,34 +109,23 @@ def carrega_lista_chaves(rows):
             ui.tableWidget.setItem(row_num, 10, QTableWidgetItem(row['tipo_emissao']))
             ui.tableWidget.setItem(row_num, 11, QTableWidgetItem(row['message']))
 
-            try:
-             datetime_object = datetime.strptime(row['datahora'], '%Y-%m-%d %H:%M:%S')
-             ui.tableWidget.setItem(row_num, 12, QTableWidgetItem(datetime_object.strftime('%d-%m-%Y %H:%M:%S')))
-            except Exception as err:
-             print(repr(err))
-             ui.tableWidget.setItem(row_num, 12, QTableWidgetItem(row['datahora']))
+           
+            datetime_object = datetime.strptime(row['datahora'], '%Y-%m-%d %H:%M:%S')
+            ui.tableWidget.setItem(row_num, 12, QTableWidgetItem(datetime_object.strftime('%d-%m-%Y %H:%M:%S')))
+            
+            if (row['datapostagem']):
+              datetime_object = datetime.strptime(row['datapostagem'], '%Y-%m-%d %H:%M:%S')
+              ui.tableWidget.setItem(row_num, 13, QTableWidgetItem(datetime_object.strftime('%d-%m-%Y %H:%M:%S')))
 
+        
             lista_notas.append(row['chave'])
 
-    header = ui.tableWidget.horizontalHeader()       
-    header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
-    header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
-    header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents) 
-    header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents) 
-    header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents) 
-    header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeToContents) 
-    header.setSectionResizeMode(6, QtWidgets.QHeaderView.ResizeToContents) 
-    header.setSectionResizeMode(7, QtWidgets.QHeaderView.ResizeToContents) 
-    header.setSectionResizeMode(8, QtWidgets.QHeaderView.ResizeToContents) 
-    header.setSectionResizeMode(9, QtWidgets.QHeaderView.ResizeToContents) 
-    header.setSectionResizeMode(10, QtWidgets.QHeaderView.ResizeToContents) 
-    header.setSectionResizeMode(11, QtWidgets.QHeaderView.ResizeToContents) 
-    header.setSectionResizeMode(12, QtWidgets.QHeaderView.ResizeToContents) 
+    resizeColumns(ui.tableWidget, ui.tableWidget.columnCount())
         
 
 
 def cria_tabela_notas():
-    ui.tableWidget.setColumnCount(13)
+    ui.tableWidget.setColumnCount(14)
     ui.tableWidget.setRowCount(1)
     ui.tableWidget.hideColumn(0) #esconde coluna de id
     ui.tableWidget.hideColumn(10) #esconde coluna de tipo_emissao
@@ -141,7 +137,7 @@ def cria_tabela_notas():
                                        'Data', 'Status', 
                                        'UF', 'Numero', 
                                        'Codigo', 'Modelo', 
-                                       'Serie', 'Tipo Emissao', 'Mensagem','Data-Hora'])                                       
+                                       'Serie', 'Tipo Emissao', 'Mensagem','Data-Hora','Data-Postagem'])                                       
 
 def cria_tabela_empresas():
     dialog.lista_empresas.setColumnCount(6)
@@ -200,7 +196,7 @@ def setColortoRow(table, rowIndex, color):
 def adiciona_chave_na_lista(new_nota, expirada):
     
     white = QtGui.QColor(255,255,255)
-    highlighted = QtGui.QColor(132,186,91)
+    highlighted = QtGui.QColor(192,247,224)
 
     ui.tableWidget.insertRow(0)
     ui.tableWidget.setItem(0, 0, QTableWidgetItem("") )
@@ -217,6 +213,7 @@ def adiciona_chave_na_lista(new_nota, expirada):
     ui.tableWidget.setItem(0, 11, QTableWidgetItem(m.aguardando_postagem if not expirada else m.data_expirada_doacao ) )
     ui.tableWidget.setItem(0, 12, QTableWidgetItem(datetime.now().strftime('%d-%m-%Y %H:%M:%S')))
 
+   
     setColortoRow(ui.tableWidget,0,highlighted)
 
     if( ui.tableWidget.rowCount() > 1):
@@ -281,9 +278,8 @@ def atualiza_contagem_digitos(text):
 def on_limpa_banco_clickado():
     limpa_notas_db()
     lista_notas.clear()
-    rows = busca_chaves_banco()
-    carrega_lista_chaves(rows)
-
+    combo_status_changed(1)
+    
     
 def chave_ja_existe(chave):
  return chave in lista_notas
@@ -699,7 +695,7 @@ def lista_empresas_keyPressEvent(e):
          return QtWidgets.QTableWidget.keyPressEvent(dialog.lista_empresas, e)
 
 def on_abre_postar():
- servico_posting = Posting() 
+ servico_posting = Posting(MainWindow) 
  servico_posting.mostra_posting()
 
 def txtChave_keyPressEvent(e):

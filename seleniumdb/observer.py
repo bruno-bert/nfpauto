@@ -18,5 +18,8 @@ class Publisher:
             subscriber.show_log(message)
     def save_result(self, result):
         for subscriber in self.subscribers:
-            subscriber.save_result(result)        
-   
+            subscriber.save_result(result)     
+    def init_value(self, value):
+        for subscriber in self.subscribers:
+            subscriber.init_value(value)  
+            
