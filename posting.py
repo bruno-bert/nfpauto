@@ -7,18 +7,18 @@ import constant
 from database import busca_chaves_banco
 from seleniumdb.observer import Subscriber
 from database import  busca_script_padrao, busca_chaves_por_status, atualiza_status_nota, atualiza_status_message_nota
-from task import Task
+from task import Task, Log
 from datetime import datetime
 from PyQt5.QtCore import  pyqtSignal, QSize
-from PyQt5.Qt import Qt
+from PyQt5.Qt import Qt, QEvent
 
 class Posting(QtWidgets.QWidget):
  
  sig_cancelar = pyqtSignal(int)
   
  #signal
- def show_log(self, message):
-   self.adiciona_log_lista(message)
+ def show_log(self, log):
+   self.adiciona_log_lista(log.message, log.manual_action)
 
  #signal 
  def save_result(self, result): 
@@ -119,6 +119,7 @@ class Posting(QtWidgets.QWidget):
      self.modo_parado()
 
 
+
  def fechar_dialog(self):
     if (self.modo_atual == 'postando'):
         self.sig_cancelar.emit(1)
@@ -134,11 +135,18 @@ class Posting(QtWidgets.QWidget):
    timestamp = '{:%d/%m/%Y %H:%M:%S}'.format(dt)
    return '{} - {}'.format(timestamp, message)
 
- def adiciona_log_lista(self, message):
+ def adiciona_log_lista(self, message, manual_action):
     if (message):
       message = self.format_log(message)
       item = QtGui.QStandardItem(message)
-      self.model.insertRow(0, item)
+      
+
+      if (manual_action == 1):
+        brush = QtGui.QBrush ()
+        brush.setColor(QtGui.QColor(255,0,0))
+        item.setForeground(brush)
+
+      self.model.insertRow(0, item) 
     
    
  def carrega_lista_chaves(self, rows):

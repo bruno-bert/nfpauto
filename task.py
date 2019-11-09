@@ -5,9 +5,16 @@ from subscriberqt import QtSubscriber
 from seleniumdb.cycle_result import CycleResult 
 
 import time
+
+class Log:
+    def __init__(self, message, manual_action = 0 ):
+        self.message = message 
+        #print('no construtor log:{}'.format(str(manual_action)))
+        self.manual_action = manual_action
+
 class Task(QtSubscriber):
 
-    sig_log = pyqtSignal(str)
+    sig_log = pyqtSignal(Log)
     sig_result = pyqtSignal(CycleResult)
     sig_chave = pyqtSignal(str)
 
@@ -17,8 +24,9 @@ class Task(QtSubscriber):
         self.cancelar = 0
     
     #listener
-    def show_log(self, message):
-        self.sig_log.emit(message)
+    def show_log(self, message, manual_action = 0):
+        #print('no listener: {}'.format(str(manual_action)))
+        self.sig_log.emit(Log(message, manual_action))
     
 
     #listener
@@ -34,7 +42,7 @@ class Task(QtSubscriber):
         self.cancelar = cancelar
         if (cancelar == 1):
           self.service.flag_cancelar = 1
-          self.sig_log.emit('Postagem Cancelada')
+          self.sig_log.emit(Log('Postagem Cancelada'))
 
   
 

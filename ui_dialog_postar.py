@@ -85,6 +85,13 @@ class Ui_Dialog(object):
         font.setPointSize(12)
         self.list_log.setFont(font)
         self.list_log.setStyleSheet("color: rgb(45, 45, 45);")
+        self.list_log.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.list_log.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.list_log.setLineWidth(1)
+        self.list_log.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.list_log.setProperty("showDropIndicator", False)
+        self.list_log.setAlternatingRowColors(True)
+        self.list_log.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectItems)
         self.list_log.setObjectName("list_log")
         self.btn_limpar = QtWidgets.QPushButton(Dialog)
         self.btn_limpar.setGeometry(QtCore.QRect(750, 480, 201, 31))
@@ -114,7 +121,7 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Notas fiscais disponíveis"))
-        self.btn_iniciar_postagem.setText(_translate("Dialog", "               Iniciar Postagem"))
+        self.btn_iniciar_postagem.setText(_translate("Dialog", "                              Iniciar Postagem"))
         self.btn_fechar.setText(_translate("Dialog", "Fechar (ESC)"))
         self.label_log.setText(_translate("Dialog", "Log de Atividades"))
         self.btn_limpar.setText(_translate("Dialog", "Limpar Log"))

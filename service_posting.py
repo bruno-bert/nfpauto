@@ -13,9 +13,9 @@ class NFPPosting(SeleniumDB):
       self.chaves = chaves
       
 
-    def log(self, message):
-      print(message)
-      self.show_log(message)
+    def log(self, message, manual_action = 0):
+      print(message + ' - ' + str(manual_action))
+      self.show_log(message, manual_action)
     
     def on_save_result(self, result): 
       self.save_result(result)

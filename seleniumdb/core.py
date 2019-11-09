@@ -23,9 +23,11 @@ from seleniumdb.cycle_result import CycleResult
 from seleniumdb.observer import Publisher
 
 class SeleniumDB(Publisher):
+
+  
  
  
- def log(self, message):
+ def log(self, message, manual_action = 0):
     raise Exception('log must be implemented by super class')
  def get_id(self, values):
     raise Exception('get_id must be implemented by super class')
@@ -232,7 +234,8 @@ class SeleniumDB(Publisher):
                       return
 
                   #show waiting message
-                  self.log(step.manual_action_message)
+                  print('dentro {}'.format(step.manual_action_message))
+                  self.log(step.manual_action_message, 1)
                   time.sleep(3)
                   element = self.find_element(driver, step, lista_steps, values)
                   
@@ -272,8 +275,9 @@ class SeleniumDB(Publisher):
                save_result = (step.save_result == '1' )
                if (save_result):                 
                   result = CycleResult()  
-                  result.value = self.get_id(values)
-                  #result.value_to_show = self.get_id_to_show(values)
+                  #result.value = self.get_id(values)
+                  #print('result.value: + 
+                  result.value = values['chave']
                   result.success = step.success
                   result.message = step.resulted_success_message or step.resulted_error_message
                   self.on_save_result(result)

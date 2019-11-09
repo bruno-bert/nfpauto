@@ -190,8 +190,8 @@ def adiciona_empresas_na_lista(new_nota):
     lista_cnpj.append(new_nota.cnpj)
 
 def setColortoRow(table, rowIndex, color):
-    for j in range(table.columnCount()):
-        table.item(rowIndex, j).setBackground(color)
+    for j in range(ui.tableWidget.columnCount() -1):
+        ui.tableWidget.item(rowIndex, j).setBackground(color)
 
 def adiciona_chave_na_lista(new_nota, expirada):
     
@@ -799,7 +799,6 @@ if __name__ == "__main__":
         MainWindow.show()
 
         MainWindow.setWindowState(QtCore.Qt.WindowMaximized)
-
 
         ui.txtChave.setFocus()
 
