@@ -547,15 +547,27 @@ def mostra_dialogCnpj():
    sshFile = constant.STYLES_FILE
    with open(sshFile,"r") as fh:
      Dialog_Cnpj.setStyleSheet(fh.read())   
-
-   Dialog_Cnpj.show()
-   row = busca_cnpj_padrao()
-   row = dict(row)
    
-   dialog_cnpj_padrao.txt_cnpj_padrao.setFocus()
-   dialog_cnpj_padrao.txt_cnpj_padrao.setPlainText(row['cnpj'])
-   dialog_cnpj_padrao.txt_descricao_entidade.setPlainText(row['descricao'])
-   dialog_cnpj_padrao.txt_palavras_chave.setPlainText(row['palavras'])
+   dialog_cnpj_padrao.lbl_message_cnpj_padrao.setText("")
+   
+   row = busca_cnpj_padrao()
+
+   if (row):
+     row = dict(row)
+     dialog_cnpj_padrao.txt_cnpj_padrao.setFocus()
+     dialog_cnpj_padrao.txt_cnpj_padrao.setPlainText(row['cnpj'])
+     dialog_cnpj_padrao.txt_descricao_entidade.setPlainText(row['descricao'])
+     dialog_cnpj_padrao.txt_palavras_chave.setPlainText(row['palavras']) 
+   else:
+     dialog_cnpj_padrao.txt_cnpj_padrao.setFocus()
+     dialog_cnpj_padrao.txt_cnpj_padrao.setPlainText("")
+     dialog_cnpj_padrao.txt_descricao_entidade.setPlainText("")
+     dialog_cnpj_padrao.txt_palavras_chave.setPlainText("") 
+
+   if  (Dialog_Cnpj.exec_()):
+     return True
+   else:
+     return False  
 
 def valida_cnpj(cnpj):
     return ValidadorCnpj.validar(cnpj)
@@ -563,16 +575,27 @@ def valida_cnpj(cnpj):
 def confirma_cnpj_padrao():
    cnpj = dialog_cnpj_padrao.txt_cnpj_padrao.toPlainText()  
    descricao = dialog_cnpj_padrao.txt_descricao_entidade.toPlainText()  
-   palavras = dialog_cnpj_padrao.txt_palavras_chave.toPlainText() 
-         
+   palavras = dialog_cnpj_padrao.txt_palavras_chave.toPlainText()  
+
+   if (len(cnpj)==0):
+     dialog_cnpj_padrao.lbl_message_cnpj_padrao.setText(m.cnpj_invalido)
+     return
+
+   if (len(descricao)==0):
+     dialog_cnpj_padrao.lbl_message_cnpj_padrao.setText(m.descricao_requerida)
+     return
+
    if (valida_cnpj(cnpj)):
      salva_cnpj_padrao_banco(cnpj, descricao, palavras)  
-     #atualiza botão na tela principal
-     #ui.btn_cnpj.setText(cnpj )
+    #atualiza botão na tela principal
+     applyStylesToElement(ui.btn_cnpj, constant.STYLES_FILE_BUTTONS)
+     ui.btn_cnpj.setText("     " + cnpj )
      Dialog_Cnpj.accept()
    else:  
      dialog_cnpj_padrao.lbl_message_cnpj_padrao.setText(m.cnpj_invalido)
-     print(m.cnpj_invalido)
+     
+   
+   
 
 
 def txt_cnpj_padrao_keyPressEvent(e):
@@ -695,9 +718,20 @@ def lista_empresas_keyPressEvent(e):
          return QtWidgets.QTableWidget.keyPressEvent(dialog.lista_empresas, e)
 
 def on_abre_postar():
- servico_posting = Posting(MainWindow) 
- servico_posting.mostra_posting()
+  rowCnpj = busca_cnpj_padrao()
+  if (rowCnpj):
+     servico_posting = Posting(MainWindow) 
+     servico_posting.mostra_posting()
+  else:
+     
+     if (mostra_dialogCnpj()):
+       servico_posting = Posting(MainWindow) 
+       servico_posting.mostra_posting()
+      
+         
 
+  
+ 
 def txtChave_keyPressEvent(e):
    if (e.key() == QtCore.Qt.Key_Escape ):
        limpa_campo_chave()
@@ -757,6 +791,10 @@ def applyStyles():
   with open(sshFile,"r") as fh:
     MainWindow.setStyleSheet(fh.read())      
 
+def applyStylesToElement(component, cssFile):
+  with open(cssFile,"r") as fh:
+    component.setStyleSheet(fh.read())     
+
 def mostra_tela_estab():
   
   #Dialog.show()
@@ -782,7 +820,15 @@ def tab_changed(index):
     ui.txtChave_2.setPlainText(constant.EMPTY_STR)
     ui.txtChave_3.setPlainText(constant.EMPTY_STR)
     mostra_tela_estab()
-    
+
+def fechar_dialog_cnpj_padrao():
+   row = busca_cnpj_padrao()
+   if (not row):
+    applyStylesToElement(ui.btn_cnpj, constant.STYLES_FILE_BUTTONS_ALERT)   
+   else:
+    applyStylesToElement(ui.btn_cnpj, constant.STYLES_FILE_BUTTONS)     
+   
+   Dialog_Cnpj.reject()
 
 if __name__ == "__main__":
         import sys    
@@ -795,6 +841,7 @@ if __name__ == "__main__":
         ui.setupUi(MainWindow)
 
         applyStyles()
+        
 
         MainWindow.show()
 
@@ -840,7 +887,7 @@ if __name__ == "__main__":
         #ui.btn_cnpj.setText(cnpj)
 
         dialog_cnpj_padrao.btn_ok.clicked.connect(confirma_cnpj_padrao)
-        dialog_cnpj_padrao.btn_cancel.clicked.connect(Dialog_Cnpj.reject)
+        dialog_cnpj_padrao.btn_cancel.clicked.connect(fechar_dialog_cnpj_padrao)
         
         ui.txt_num_notas.setValidator(QtGui.QIntValidator(constant.MIN_NOTAS , constant.MAX_NOTAS) )
         ui.txt_num_notas.setText(str(constant.DEFAULT_NUMERO_NOTAS))
@@ -891,6 +938,18 @@ if __name__ == "__main__":
         
 
         modo_leitor()
+
+        rowCnpj = busca_cnpj_padrao()
+        if (rowCnpj):
+           cnpj = dict(rowCnpj)['cnpj']
+           ui.btn_cnpj.setText("     " + cnpj )
+           applyStylesToElement(ui.btn_cnpj, constant.STYLES_FILE_BUTTONS)
+        else:
+           ui.btn_cnpj.setText(m.cnpj_nao_informado)
+           applyStylesToElement(ui.btn_cnpj, constant.STYLES_FILE_BUTTONS_ALERT)
+           mostra_dialogCnpj()
+            
+            
 
         
 

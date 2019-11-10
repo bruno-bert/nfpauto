@@ -38,15 +38,15 @@ class SeleniumDB(Publisher):
 
  
 
- def clear_results(self):
-   self.list_result = []
+ #def clear_results(self):
+   #"self.list_result = []
 
  def __init__(self, script_id):    
 
      super().__init__()
       
      self.driver = None
-     self.list_result = []
+     #self.list_result = []
      self.script_id = script_id
      self.flag_cancelar = 0
 
@@ -188,6 +188,7 @@ class SeleniumDB(Publisher):
 
    
  def run_steps(self, values, values_on_expression, step_id, steps_to_skip ):
+     
    
      lista_steps = self.lista_steps
      script_config = self.script_config
@@ -229,14 +230,13 @@ class SeleniumDB(Publisher):
                 #quando não for mais encontrado, significa que houve uma ação manual na tela
                 while (True):
                   
-                  #print('flag cancelar no while true do login: ' + str(self.flag_cancelar)) 
+                 
                   if (self.flag_cancelar == 1):
                       return
 
                   #show waiting message
-                  print('dentro {}'.format(step.manual_action_message))
                   self.log(step.manual_action_message, 1)
-                  time.sleep(3)
+                  time.sleep(2)
                   element = self.find_element(driver, step, lista_steps, values)
                   
 
@@ -244,7 +244,7 @@ class SeleniumDB(Publisher):
                step.resulted_element = element
                
                #action
-               if (step.action == "click"):
+               if (step.action == "click"):                  
                   element.click()  
 
                elif (step.action == "type"):
@@ -257,6 +257,7 @@ class SeleniumDB(Publisher):
                elif (step.action == "show"):   
                   
                   message = str(element.text).partition('\n')[0]
+                  print('exibindo mensagem ' + message)
 
                   if (step.error_message_finder == "1"):
                     step.resulted_error_message = message
@@ -271,17 +272,31 @@ class SeleniumDB(Publisher):
                #message after
                self.log(step.log_message_after)
 
+               print('fora result: chave : {}'.format(values['chave']))
+               print('fora result: message: {}'.format('foraaaaaaaaaaaa'))
+               print('step result:  ' + step.save_result)
+
                #se deve salvar resultado do ciclo, grava o resultado
                save_result = (step.save_result == '1' )
-               if (save_result):                 
+               if (save_result):     
+                  print('id da step: ' + str(step.step_id))            
                   result = CycleResult()  
                   #result.value = self.get_id(values)
                   #print('result.value: + 
+                  #TODO - testando bug de salvar status
                   result.value = values['chave']
                   result.success = step.success
                   result.message = step.resulted_success_message or step.resulted_error_message
+                  
+                  if (step.success):
+                   print('sucesso result: chave : {}'.format(result.value))
+                   print('sucesso result: message: {}'.format(result.message))
+                  else:
+                   print('fail result: chave : {}'.format(result.value))
+                   print('fail result: message: {}'.format(result.message))
+
                   self.on_save_result(result)
-                  self.list_result.append(result)   
+                  #self.list_result.append(result)   
 
             else:
                #skipped step
@@ -291,14 +306,10 @@ class SeleniumDB(Publisher):
 
          except Exception as err:
             if (step.show_error_log == "1"):
-              #if (not err):                
-              self.log('Step {} - Error: {}'.format(step.id_tela,repr(err)))
-              #else:   
-              #  self.log('Step {} - Error: {}'.format(step.id_tela,err))
+              self.log('Step {} - Error: {}'.format(step.id_tela,repr(err)))              
             success = False
          finally:
             
-            #print('flag cancelar no finally: ' + str(self.flag_cancelar) )
             if (self.flag_cancelar == 1):
               return
 
@@ -314,7 +325,7 @@ class SeleniumDB(Publisher):
               driver.maximize_window()
             
 
-            chegou_fim = (step.is_end_step == '1' )
+            chegou_fim = (step.is_end_step == '1' and success )
            
             #se foi bem sucedido e tem um step seguinte identificado
             if ((step.on_success_goto != 0) & success):

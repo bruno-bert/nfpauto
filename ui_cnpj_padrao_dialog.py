@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(884, 265)
+        Dialog.resize(884, 281)
         font = QtGui.QFont()
         font.setPointSize(10)
         Dialog.setFont(font)
@@ -43,7 +43,7 @@ class Ui_Dialog(object):
 "    top:1px;\n"
 "}")
         self.grupo_atalhos_2 = QtWidgets.QGroupBox(Dialog)
-        self.grupo_atalhos_2.setGeometry(QtCore.QRect(20, 20, 691, 231))
+        self.grupo_atalhos_2.setGeometry(QtCore.QRect(20, 20, 691, 251))
         font = QtGui.QFont()
         font.setFamily("Montserrat Alternates SemiBold")
         font.setPointSize(14)
@@ -61,7 +61,7 @@ class Ui_Dialog(object):
         self.txt_cnpj_padrao.setFont(font)
         self.txt_cnpj_padrao.setObjectName("txt_cnpj_padrao")
         self.lbl_message_cnpj_padrao = QtWidgets.QLabel(self.grupo_atalhos_2)
-        self.lbl_message_cnpj_padrao.setGeometry(QtCore.QRect(30, 190, 451, 21))
+        self.lbl_message_cnpj_padrao.setGeometry(QtCore.QRect(30, 200, 451, 31))
         font = QtGui.QFont()
         font.setFamily("Montserrat")
         font.setPointSize(14)
@@ -71,7 +71,7 @@ class Ui_Dialog(object):
         self.lbl_message_cnpj_padrao.setText("")
         self.lbl_message_cnpj_padrao.setObjectName("lbl_message_cnpj_padrao")
         self.txt_descricao_entidade = QtWidgets.QPlainTextEdit(self.grupo_atalhos_2)
-        self.txt_descricao_entidade.setGeometry(QtCore.QRect(210, 110, 461, 61))
+        self.txt_descricao_entidade.setGeometry(QtCore.QRect(20, 130, 641, 61))
         font = QtGui.QFont()
         font.setFamily("Montserrat")
         font.setPointSize(12)
@@ -80,7 +80,7 @@ class Ui_Dialog(object):
         self.txt_descricao_entidade.setFont(font)
         self.txt_descricao_entidade.setObjectName("txt_descricao_entidade")
         self.lbl_descricao_entidade = QtWidgets.QLabel(self.grupo_atalhos_2)
-        self.lbl_descricao_entidade.setGeometry(QtCore.QRect(20, 130, 161, 16))
+        self.lbl_descricao_entidade.setGeometry(QtCore.QRect(20, 110, 651, 16))
         font = QtGui.QFont()
         font.setFamily("Montserrat SemiBold")
         font.setPointSize(12)
@@ -152,7 +152,7 @@ class Ui_Dialog(object):
 "<p>\n"
 "<img alt=\"entidade\" src=\"assets/entidade.jpg\" />\n"
 "</p>"))
-        self.lbl_descricao_entidade.setText(_translate("Dialog", "Nome da Entidade"))
+        self.lbl_descricao_entidade.setText(_translate("Dialog", "Nome da Entidade (Identico ao que aparece no site da Nota Fiscal Paulista)"))
         self.btn_ok.setText(_translate("Dialog", "Confirmar"))
         self.btn_cancel.setText(_translate("Dialog", "Cancelar"))
         self.txt_palavras_chave.setToolTip(_translate("Dialog", "<H2>Caso não seja possível encontrar a entidade pela descrição, estas palavras-chave ajudarão a encontrar a entidade na lista de entidades no site da Nota Fiscal Paulista </H2>\n"

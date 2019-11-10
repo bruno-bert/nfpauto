@@ -70,6 +70,7 @@ class Step:
         self.refresh_on_success = None
         self.minimize_after_step = None
         self.maximize_after_step = None
+        self.save_result = None
 
         #estas colunas não são do banco de dados
         self.resulted_element = None

@@ -9,6 +9,7 @@ class Messages:
    self.erro_separacao = "Erro ao tentar separar dados da nota pela chave de acesso"
    self.chave_existe = "Chave já existe na lista"
    self.cnpj_invalido = "CNPJ inválido"
+   self.descricao_requerida = "Descrição da Entidade é obrigatória"
    self.bad_login = "Falha no login"
    self.good_login = "Usuário logado com sucesso"
    self.invalid_param = "Invalid params"
@@ -19,3 +20,4 @@ class Messages:
    self.uf_invalida = "Unidade Federativa Inválida"
    self.gravada_sucesso = "Nota {} gravada com sucesso"
    self.titulo_lista_principal = "Cupons disponíveis ({})"
+   self.cnpj_nao_informado = "CNPJ Não informado"

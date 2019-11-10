@@ -25,12 +25,12 @@ class Task(QtSubscriber):
     
     #listener
     def show_log(self, message, manual_action = 0):
-        #print('no listener: {}'.format(str(manual_action)))
         self.sig_log.emit(Log(message, manual_action))
     
 
     #listener
     def save_result(self, result):
+        print('emitindo chave' + result.value)
         self.sig_result.emit(result)
 
     
@@ -47,25 +47,9 @@ class Task(QtSubscriber):
   
 
     def run(self):
-        #chaves = self.seleciona_chaves()
-        #for chave in chaves:
-
-         # if (self.cancelar == 1 ):                        
-         #   break
-            
-
-          #result = CycleResult()
-          #result.value = chave
-          #result.value_to_show = chave
-          #result.success = True
-          #result.message = 'teste'
-          #self.sig_log.emit(chave +   ' - ' +  result.message)
-          #self.save_result(result)
-          #time.sleep(5) 
-              
-
         script_id = self.get_script_id() 
         chaves = self.seleciona_chaves()
+
         
         row = busca_cnpj_padrao()
         

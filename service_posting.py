@@ -14,7 +14,7 @@ class NFPPosting(SeleniumDB):
       
 
     def log(self, message, manual_action = 0):
-      print(message + ' - ' + str(manual_action))
+      #print(message + ' - ' + str(manual_action))
       self.show_log(message, manual_action)
     
     def on_save_result(self, result): 
@@ -47,8 +47,9 @@ class NFPPosting(SeleniumDB):
 
           if (self.flag_cancelar == 1):           
             break
-
+          
           #trigger for external listeners  
+          print('iniciando chave : {}'.format(chave))
           self.init_value(chave)
 
           values = { "chave": chave, "cnpj": self.cnpj}      
@@ -62,7 +63,7 @@ class NFPPosting(SeleniumDB):
         except Exception as err:
           print(err)
      
-      self.quit_browser()
+      #self.quit_browser()
 
 
 

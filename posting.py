@@ -6,7 +6,7 @@ import messages
 import constant
 from database import busca_chaves_banco
 from seleniumdb.observer import Subscriber
-from database import  busca_script_padrao, busca_chaves_por_status, atualiza_status_nota, atualiza_status_message_nota
+from database import  busca_script_padrao, busca_chaves_por_status, atualiza_status_nota, atualiza_status_message_nota, busca_cnpj_padrao_valor
 from task import Task, Log
 from datetime import datetime
 from PyQt5.QtCore import  pyqtSignal, QSize
@@ -22,10 +22,6 @@ class Posting(QtWidgets.QWidget):
 
  #signal 
  def save_result(self, result): 
-    status = self.define_status(result) 
-    if (status == 2):
-       print('sucesso')
-
     self.atualiza_status_nota_processada(result)
    
  #signal
@@ -68,7 +64,7 @@ class Posting(QtWidgets.QWidget):
       for item in items:
         #try:
         index = self.dialog_postar.lista_notas.indexFromItem(item).row()
-        print('removendo linha {}'.format(str(index)))
+        #print('removendo linha {}'.format(str(index)))
         self.dialog_postar.lista_notas.removeRow(index)
         #except Exception as err:
         # print(err) 
@@ -77,8 +73,10 @@ class Posting(QtWidgets.QWidget):
      
      #atualiza status da nota no banco
      status = self.define_status(result)
-     atualiza_status_message_nota(result.value, status, result.message)
-
+     
+     self.adiciona_log_lista("Chave {} - Atualizando status na base de dados".format(result.value), 0)
+     atualiza_status_message_nota(result.value, status, result.message, self.cnpj_entidade)
+     
      if (status == 2):
        print('sucesso')
 
@@ -185,7 +183,7 @@ class Posting(QtWidgets.QWidget):
 
      #apenas as pendentes de postagem
      self.rows = busca_chaves_por_status(1, 'ASC') 
-
+     self.cnpj_entidade = busca_cnpj_padrao_valor()
      self.carrega_lista_chaves(self.rows)
      self.DialogPostar.exec_()
   

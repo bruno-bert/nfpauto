@@ -13,9 +13,9 @@ def atualiza_status_nota(chave, status):
  conn.commit()
  conn.close()
 
-def atualiza_status_message_nota(chave, status, message):
+def atualiza_status_message_nota(chave, status, message, cnpj_entidade):
  conn = sqlite3.connect('notas.db')
- query = constant.QUERY_UPDATE_STATUS_MESSAGE_NOTA.format(status, message.replace("'",""), datetime.now().strftime('%Y-%m-%d %H:%M:%S'), chave)
+ query = constant.QUERY_UPDATE_STATUS_MESSAGE_NOTA.format(status, message.replace("'",""), datetime.now().strftime('%Y-%m-%d %H:%M:%S'), cnpj_entidade,  chave)
  cursor = conn.cursor()
  cursor.execute(query)
  conn.commit()

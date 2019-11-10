@@ -10,8 +10,8 @@ EMPTY_STR=""
 EMITIR_SOM_ERRO=True
 SOM_ERRO_FILE="assets/sounds/error.mp3"
 
-QUERY_SELECT_NOTAS_PRINCIPAL="select datapostagem, datahora, x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message from notas x, status y where x.status = y.codigo ORDER BY datahora DESC"
-QUERY_SELECT_NOTAS_PRINCIPAL_POR_STATUS="select datapostagem, datahora, x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message from notas x, status y where x.status = y.codigo and x.status = {}  ORDER BY datahora {}"
+QUERY_SELECT_NOTAS_PRINCIPAL="select datapostagem, datahora, x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message, cnpj_entidade from notas x, status y where x.status = y.codigo ORDER BY datahora DESC"
+QUERY_SELECT_NOTAS_PRINCIPAL_POR_STATUS="select datapostagem, datahora, x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message, cnpj_entidade from notas x, status y where x.status = y.codigo and x.status = {}  ORDER BY datahora {}"
 QUERY_LISTA_STATUS="select * from status"
 QUERY_LISTA_UF="select * from uf"
 QUERY_DELETA_NOTAS_PROCESSADAS="DELETE FROM notas WHERE status IN (2, 3)"
@@ -25,7 +25,7 @@ QUERY_SELECT_CONFIG_ARQUIVO_PADRAO="select id_text from config_arquivo_padrao"
 QUERY_SELECT_SCRIPTS="select * from scripts"
 QUERY_SELECT_SCRIPT_PADRAO="select script_id from script_padrao"
 QUERY_UPDATE_STATUS_NOTA="UPDATE notas set status = {} where chave = '{}'"
-QUERY_UPDATE_STATUS_MESSAGE_NOTA="UPDATE notas set status = {}, message = '{}', datapostagem = '{}' where chave = '{}'"
+QUERY_UPDATE_STATUS_MESSAGE_NOTA="UPDATE notas set status = {}, message = '{}', datapostagem = '{}', cnpj_entidade = {} where chave = '{}'"
 
 
 VALIDA_CHAVE_PELO_DIGITO=True
@@ -46,6 +46,8 @@ MESES=('Janeiro','Fevereiro','Mar','Abril','Maio','Junho',
 
 
 STYLES_FILE="styles/main.css"
+STYLES_FILE_BUTTONS="styles/button.css"
+STYLES_FILE_BUTTONS_ALERT="styles/button_alert.css"
 #FEATURE_FLAGS
 VALIDA_CNPJ=True
 
