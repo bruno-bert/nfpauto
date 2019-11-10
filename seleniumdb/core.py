@@ -272,32 +272,21 @@ class SeleniumDB(Publisher):
                #message after
                self.log(step.log_message_after)
 
-               print('fora result: chave : {}'.format(values['chave']))
-               print('fora result: message: {}'.format('foraaaaaaaaaaaa'))
-               print('step result:  ' + step.save_result)
-
+               
                #se deve salvar resultado do ciclo, grava o resultado
                save_result = (step.save_result == '1' )
                if (save_result):     
                   print('id da step: ' + str(step.step_id))            
                   result = CycleResult()  
                   #result.value = self.get_id(values)
-                  #print('result.value: + 
                   #TODO - testando bug de salvar status
                   result.value = values['chave']
                   result.success = step.success
                   result.message = step.resulted_success_message or step.resulted_error_message
                   
-                  if (step.success):
-                   print('sucesso result: chave : {}'.format(result.value))
-                   print('sucesso result: message: {}'.format(result.message))
-                  else:
-                   print('fail result: chave : {}'.format(result.value))
-                   print('fail result: message: {}'.format(result.message))
-
+               
                   self.on_save_result(result)
-                  #self.list_result.append(result)   
-
+                 
             else:
                #skipped step
                self.log('Step {} Skipped'.format(step.id_tela))   
