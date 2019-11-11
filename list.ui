@@ -349,7 +349,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -373,7 +373,7 @@
        </font>
       </property>
       <property name="title">
-       <string>Carga Pela Chave Completa</string>
+       <string>Utilize o leitor de código de barras ou digite a chave de acesso</string>
       </property>
       <widget class="QPlainTextEdit" name="txtChave">
        <property name="geometry">

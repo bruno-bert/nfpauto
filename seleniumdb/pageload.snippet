@@ -1,9 +1,0 @@
-from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-
-caps = DesiredCapabilities().CHROME
-caps["pageLoadStrategy"] = "normal"  #  complete
-#caps["pageLoadStrategy"] = "eager"  #  interactive
-#caps["pageLoadStrategy"] = "none"
-driver = webdriver.Chrome(desired_capabilities=caps, executable_path=r'C:\path\to\chromedriver.exe')
-driver.get("http://google.com")

@@ -530,7 +530,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.tab_opcao.setCurrentIndex(1)
+        self.tab_opcao.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -546,7 +546,7 @@ class Ui_MainWindow(object):
         self.lbl_atalho1_6.setText(_translate("MainWindow", "E - Atualizar CNPJ da instituição"))
         self.lbl_atalho1_7.setText(_translate("MainWindow", "L - Fazer Login no Portal"))
         self.lbl_atalho1_8.setText(_translate("MainWindow", "P - Postar no ambiente do governo"))
-        self.grupo_chave_completa.setTitle(_translate("MainWindow", "Carga Pela Chave Completa"))
+        self.grupo_chave_completa.setTitle(_translate("MainWindow", "Utilize o leitor de código de barras ou digite a chave de acesso"))
         self.txtChave.setToolTip(_translate("MainWindow", "Digite a Chave de Acesso Aqui"))
         self.lblChave.setText(_translate("MainWindow", "Chave de Acesso"))
         self.tab_opcao.setTabText(self.tab_opcao.indexOf(self.tab), _translate("MainWindow", "&Leitor de código de Barras"))

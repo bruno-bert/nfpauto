@@ -25,6 +25,7 @@ from login import Login
 from posting import Posting
 from database import *
 from auth import Auth 
+from util import Util
 
 #ui - internal modules
 import ui_list
@@ -292,21 +293,32 @@ def on_importar_arquivo():
   importador = importa.ImportaArquivo()
   result = importa.ImportResult()
   path = ui.txt_arquivo.toPlainText()
+  
+  if (len(path)==0):
+    mostra_mensagem(messages.Messages().arquivo_diretorio_nao_informado)
+    return
+
+  if (not os.path.exists(path)) :
+    mostra_mensagem(messages.Messages().arquivo_diretorio_nao_existe)
+    return
 
   if (not os.path.isdir(path) ) :
     result = importador.importar_arquivo(path)
+    origem = constant.ORIGEM_NOTA_IMPORTA
   else: 
     result = importador.importar_dir_xml(path)
+    origem = constant.ORIGEM_NOTA_XML
      
   if (result.success): 
     
     for index, data in enumerate(result.data):
 
       if valida_chave(data):
-          sequencia_adiciona_nota(data)         
+          sequencia_adiciona_nota(data, origem)         
       else:
           print("Linha {linha} - Chave {chave} inválida".format(linha=index, chave=data))
 
+    mostra_mensagem_sucesso(messages.Messages().importacao_sucesso)  
   else:
     mostra_mensagem(result.err)
    
@@ -344,13 +356,15 @@ def valida_filtros_busca_nota():
 def buscar_portal(): 
   import json
   token = Auth.getInstance().token
-  cnpj = busca_cnpj_padrao_valor() 
+  cnpj = busca_cnpj_padrao_valor()
   estab = ui.txt_cnpj_estab.text()
   limit = int(ui.txt_num_notas.text())
 
   service = ApiPortal()
   result = ApiResult()
   
+  cnpj = Util.remove_special_chars(cnpj)
+
   if (valida_filtros_busca_nota()) :
 
     result = service.busca_notas(token, cnpj, estab, limit )
@@ -362,7 +376,7 @@ def buscar_portal():
           for index, item in enumerate(result.data):
             if (item['status']=="1"):
               if valida_chave(item['chave']):
-                sequencia_adiciona_nota(item['chave'])         
+                sequencia_adiciona_nota(item['chave'], constant.ORIGEM_NOTA_PORTAL)         
               else:
                 print("Item {item} - Chave {chave} inválida".format(item=index+1, chave=item['chave']))
             
@@ -371,7 +385,7 @@ def buscar_portal():
 
 
 def atualiza_botao_login():
-  ui.btn_login.setText("Usuário Logado: " + Auth.getInstance().user)
+  ui.btn_login.setText(Auth.getInstance().user)
 
 def on_baixar_portal():
   rows = busca_cnpj_padrao()
@@ -434,18 +448,18 @@ def verifica_data_expirada(data):
 def atualiza_titulo_total():
   ui.lbTitulo.setText(m.titulo_lista_principal.format(ui.tableWidget.rowCount()))
 
-def sequencia_adiciona_nota(chave):
+def sequencia_adiciona_nota(chave, origem):
   if (not chave_ja_existe(chave)):
 
     nota_separada = separa_campos_pela_chave(chave)     
     nota_expirou = verifica_data_expirada(nota_separada.data)
   
     if (not valida_uf(nota_separada.uf)):    
-       mostra_mensagem(m.uf_invalida)
-       emitir_som_erro() 
+       mostra_mensagem(m.uf_invalida)       
+       emitir_som_erro(origem) 
     else:
       if ( (not nota_expirou) | (constant.SALVA_NOTA_EXPIRADA) ):   
-        salva_chave_banco(nota_separada, nota_expirou)
+        salva_chave_banco(nota_separada, nota_expirou, origem)
         adiciona_chave_na_lista(nota_separada, nota_expirou)
         mostra_mensagem_sucesso(messages.Messages().gravada_sucesso.format(chave))
         atualiza_titulo_total()
@@ -459,10 +473,10 @@ def sequencia_adiciona_nota(chave):
 
       else:
         mostra_mensagem(m.data_expirada)      
-        emitir_som_erro()
+        emitir_som_erro(origem)
   else:
    mostra_mensagem(m.chave_existe)
-   emitir_som_erro()
+   emitir_som_erro(origem)
    #print("Chave {} já existe".format(chave))     
 
 def on_cnpj_padrao_alterado():
@@ -480,10 +494,10 @@ def on_campo_chave_alterado():
     if (len(text) == constant.NUM_CHAVE ):
        chave_ok = valida_chave(get_chave())    
        if (chave_ok): 
-         sequencia_adiciona_nota(text)
+         sequencia_adiciona_nota(text, constant.ORIGEM_NOTA_MANUAL)
          limpa_campo_chave() 
        else:
-         emitir_som_erro()
+         emitir_som_erro(constant.ORIGEM_NOTA_MANUAL)
          mostra_mensagem(m.chave_invalida)
          if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
            limpa_campo_chave() 
@@ -498,10 +512,10 @@ def on_campo_chave_alterado_2():
     if (len(text) == constant.NUM_CHAVE ):
        chave_ok = valida_chave(text)    
        if (chave_ok): 
-         sequencia_adiciona_nota(text)
+         sequencia_adiciona_nota(text, constant.ORIGEM_NOTA_DIGITAR)
          limpa_campo_chave() 
        else:
-         emitir_som_erro()
+         emitir_som_erro(constant.ORIGEM_NOTA_DIGITAR)
          mostra_mensagem(m.chave_invalida)
          if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
            limpa_campo_chave() 
@@ -607,9 +621,10 @@ def txt_cnpj_padrao_keyPressEvent(e):
        else: 
          return QtWidgets.QPlainTextEdit.keyPressEvent(dialog_cnpj_padrao.txt_cnpj_padrao, e)     
 
-def emitir_som_erro():
+def emitir_som_erro(origem):
   if (constant.EMITIR_SOM_ERRO):
-   playsound(constant.SOM_ERRO_FILE)
+   if (origem == constant.ORIGEM_NOTA_MANUAL or origem == constant.ORIGEM_NOTA_DIGITAR): 
+      playsound(constant.SOM_ERRO_FILE)
 
 def txtChave_3_keyPressEvent(e):
      if (e.key() == QtCore.Qt.Key_Escape ):
@@ -648,9 +663,9 @@ def txtChave_3_keyPressEvent(e):
        chave_ok = valida_chave(text)    
 
        if (chave_ok): 
-          sequencia_adiciona_nota(text) 
+          sequencia_adiciona_nota(text, constant.ORIGEM_NOTA_DIGITAR) 
        else:
-          emitir_som_erro()
+          emitir_som_erro(constant.ORIGEM_NOTA_DIGITAR)
           mostra_mensagem(m.chave_invalida)
           if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
             limpa_campo_chave()
@@ -722,11 +737,13 @@ def on_abre_postar():
   if (rowCnpj):
      servico_posting = Posting(MainWindow) 
      servico_posting.mostra_posting()
+     atualiza_lista_principal()
   else:
      
      if (mostra_dialogCnpj()):
        servico_posting = Posting(MainWindow) 
        servico_posting.mostra_posting()
+       atualiza_lista_principal()
       
          
 
@@ -770,9 +787,9 @@ def txtChave_keyPressEvent(e):
        chave_ok = valida_chave(text)    
 
        if (chave_ok): 
-          sequencia_adiciona_nota(text) 
+          sequencia_adiciona_nota(text, constant.ORIGEM_NOTA_MANUAL) 
        else:
-          emitir_som_erro()
+          emitir_som_erro(constant.ORIGEM_NOTA_MANUAL)
           mostra_mensagem(m.chave_invalida)
           if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
             limpa_campo_chave()
@@ -829,6 +846,11 @@ def fechar_dialog_cnpj_padrao():
     applyStylesToElement(ui.btn_cnpj, constant.STYLES_FILE_BUTTONS)     
    
    Dialog_Cnpj.reject()
+
+def atualiza_lista_principal():
+   rows = busca_chaves_por_status(constant.DEFAULT_STATUS_CODIGO)
+   carrega_lista_chaves(rows)
+   atualiza_titulo_total()
 
 if __name__ == "__main__":
         import sys    
@@ -921,9 +943,8 @@ if __name__ == "__main__":
         dialog.lista_empresas.keyPressEvent = lista_empresas_keyPressEvent
 
         #carrega lista de notas do banco
-        rows = busca_chaves_por_status(constant.DEFAULT_STATUS_CODIGO)
-        carrega_lista_chaves(rows)
-        atualiza_titulo_total()
+        atualiza_lista_principal()
+       
         
         #lista ufs
         lista_ufs = busca_uf_banco()
@@ -935,6 +956,9 @@ if __name__ == "__main__":
         #carrega cnpjs na memoria
         rows = busca_cnpj_banco()
         carrega_lista_empresas(rows)
+
+
+        ui.btn_limpa_banco.hide()
         
 
         modo_leitor()

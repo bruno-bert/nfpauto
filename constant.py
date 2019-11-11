@@ -15,7 +15,7 @@ QUERY_SELECT_NOTAS_PRINCIPAL_POR_STATUS="select datapostagem, datahora, x.id as 
 QUERY_LISTA_STATUS="select * from status"
 QUERY_LISTA_UF="select * from uf"
 QUERY_DELETA_NOTAS_PROCESSADAS="DELETE FROM notas WHERE status IN (2, 3)"
-QUERY_SAVE="INSERT INTO notas (chave, cnpj, data, uf, numero, codigo, modelo, serie, tipo_emissao, status, message, datahora)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
+QUERY_SAVE="INSERT INTO notas (chave, cnpj, data, uf, numero, codigo, modelo, serie, tipo_emissao, status, message, datahora, origem)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
 QUERY_SAVE_CNPJ="INSERT INTO cnpj (cnpj, uf, modelo, serie)  VALUES (?,?,?,?)"
 QUERY_INSERT_CNPJ_PADRAO="INSERT INTO cnpj_padrao ('cnpj','descricao','palavras') VALUES ('{}','{}','{}')"
 QUERY_UPDATE_CNPJ_PADRAO="UPDATE cnpj_padrao set cnpj='{}', descricao='{}', palavras = '{}'"
@@ -26,7 +26,13 @@ QUERY_SELECT_SCRIPTS="select * from scripts"
 QUERY_SELECT_SCRIPT_PADRAO="select script_id from script_padrao"
 QUERY_UPDATE_STATUS_NOTA="UPDATE notas set status = {} where chave = '{}'"
 QUERY_UPDATE_STATUS_MESSAGE_NOTA="UPDATE notas set status = {}, message = '{}', datapostagem = '{}', cnpj_entidade = '{}' where chave = '{}'"
+DATABASE_FILE="notas.db"
 
+ORIGEM_NOTA_MANUAL=1
+ORIGEM_NOTA_DIGITAR=2
+ORIGEM_NOTA_IMPORTA=3
+ORIGEM_NOTA_XML=4
+ORIGEM_NOTA_PORTAL=5
 
 VALIDA_CHAVE_PELO_DIGITO=True
 SALVA_NOTA_EXPIRADA=False

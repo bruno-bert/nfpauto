@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtWidgets import QTableWidgetItem, QListWidgetItem
+from PyQt5.QtWidgets import QTableWidgetItem, QListWidgetItem, QMessageBox
 from PyQt5.QtGui import QIcon
 import ui_dialog_postar
 import messages
@@ -77,9 +77,7 @@ class Posting(QtWidgets.QWidget):
      self.adiciona_log_lista("Chave {} - Atualizando status na base de dados".format(result.value), 0)
      atualiza_status_message_nota(result.value, status, result.message, self.cnpj_entidade)
      
-     if (status == 2):
-       print('sucesso')
-
+     
      #atualiza lista no ui
      self.atualiza_lista(result.value)
     
@@ -120,10 +118,13 @@ class Posting(QtWidgets.QWidget):
 
  def fechar_dialog(self):
     if (self.modo_atual == 'postando'):
-        self.sig_cancelar.emit(1)
-        self.modo_parado() 
-    self.DialogPostar.reject()
-    
+        buttonReply = QMessageBox.question(self, self.messages.confirmation_title, self.messages.confirmation_question, QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if (buttonReply == QMessageBox.Yes):
+          self.sig_cancelar.emit(1)
+          self.modo_parado() 
+          self.DialogPostar.reject()
+    else:
+      self.DialogPostar.reject()
  
  def limpar_log(self):
     self.model.clear()
@@ -185,7 +186,7 @@ class Posting(QtWidgets.QWidget):
      self.rows = busca_chaves_por_status(1, 'ASC') 
      self.cnpj_entidade = busca_cnpj_padrao_valor()
      self.carrega_lista_chaves(self.rows)
-     self.DialogPostar.exec_()
+     return self.DialogPostar.exec_()
   
 
 

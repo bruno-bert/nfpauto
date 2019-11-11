@@ -21,3 +21,8 @@ class Messages:
    self.gravada_sucesso = "Nota {} gravada com sucesso"
    self.titulo_lista_principal = "Cupons disponíveis ({})"
    self.cnpj_nao_informado = "CNPJ Não informado"
+   self.arquivo_diretorio_nao_existe="Arquivo ou diretório informado não existe"
+   self.arquivo_diretorio_nao_informado="Arquivo ou diretório informado não informado" 
+   self.importacao_sucesso="Importação concluída com sucesso"
+   self.confirmation_title = "Confirmar cancelamento de postagem"
+   self.confirmation_question = "A postagem está em andamento. Se fechar esta janela, o processo de postagem será cancelado. Você pode reiniciar o processo a hora que quiser. Tem certeza que deseja seguir?"
