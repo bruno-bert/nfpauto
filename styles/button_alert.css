@@ -1,0 +1,7 @@
+#btn_cnpj {
+  background-color: #ff6565;
+  color: #fff;
+}
+#btn_cnpj:hover {
+  background-color: #f03131;
+}

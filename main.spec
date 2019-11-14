@@ -1,0 +1,77 @@
+# -*- mode: python ; coding: utf-8 -*-
+
+block_cipher = None
+
+
+a = Analysis(['main.py'],
+             pathex=['C:\\development\\projects\\gacc\\nfpauto'],
+             binaries=[('.\\chromedriver.exe', '.')],
+             datas=[
+                 (HOMEPATH + '\\PyQt5\\Qt\\bin\Qt5Core.dll', 'PyQt5\\Qt\\bin'),
+                 ('.\\assets\\icons\\*', 'assets\\icons' ),
+                 ('.\\assets\\sounds\\*', 'assets\\sounds' ),
+                 ('.\\assets\\entidade.jpg', 'assets\\entidade.jpg' ),
+                 ('.\\styles\\*', 'styles' ),
+                 ('.\\clean_database\\*', '.' ),
+                 ('.\\seleniumdb\\seleniumdb.db', 'seleniumdb' )
+                 ],
+
+             hiddenimports=[],
+             hookspath=[],
+             runtime_hooks=[],
+             excludes=[
+                 '.\\test',
+                 '.\\db',
+                 '.\\files_import',
+                 '.\\build_scripts',
+                 'tkinter',
+                 'lib2to3',
+                 'matplotlib',
+                 'mpl-data',
+                 'numpy',
+                 'pandas',
+                 'PIL',
+                 'pytz',
+                 'scipy',
+                 'win32com',
+                 'PyQt5.QtHelp',
+                 'PyQt5.QtMultimedia',
+                 'PyQt5.QtNetwork',
+                 'PyQt5.QtOpenGL',
+                 'PyQt5.QtPrintSupport',
+                 'PyQt5.QtQml',
+                 'PyQt5.QtQuick',
+                 'PyQt5.QtQuickWidgets',
+                 'PyQt5.QtSensors',
+                 'PyQt5.QtSerialPort',
+                 'PyQt5.QtSql',
+                 'PyQt5.QtSvg',
+                 'PyQt5.QtTest',
+                 'PyQt5.QtXml',
+                 ''
+                 ],
+             win_no_prefer_redirects=False,
+             win_private_assemblies=False,
+             cipher=block_cipher,
+             noarchive=False)
+pyz = PYZ(a.pure, a.zipped_data,
+             cipher=block_cipher)
+exe = EXE(pyz,
+          a.scripts,
+          [],
+          exclude_binaries=True,
+          name='NotaAmiga',
+          debug=False,
+          bootloader_ignore_signals=False,
+          strip=False,
+          upx=True,
+          console=False,
+          icon='.\\assets\\icons\\favicon.ico' )
+coll = COLLECT(exe,
+               a.binaries,
+               a.zipfiles,
+               a.datas,
+               strip=False,
+               upx=True,
+               upx_exclude=[],
+               name='NotaAmiga')

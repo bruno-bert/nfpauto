@@ -22,7 +22,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Nota do Bem - Aplicação do Cliente</string>
+   <string>Nota Amiga - Aplicação do Cliente</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>assets/icons/favicon2.png</normaloff>assets/icons/favicon2.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -261,7 +265,7 @@
       </font>
      </property>
      <property name="text">
-      <string>D - Buscar do Portal Nota do Bem</string>
+      <string>D - Buscar do Portal Amigo</string>
      </property>
     </widget>
     <widget class="QLabel" name="lbl_atalho1_6">
@@ -350,6 +354,12 @@
     </property>
     <property name="currentIndex">
      <number>0</number>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -828,7 +838,7 @@
        </font>
       </property>
       <property name="title">
-       <string>Clique no botão abaixo para buscar chaves de acesso disponíveis no Portal do Bem</string>
+       <string>Clique no botão abaixo para buscar chaves de acesso disponíveis no Portal Amigo</string>
       </property>
       <widget class="QPushButton" name="btn_portal">
        <property name="geometry">
@@ -986,7 +996,7 @@
    <widget class="QPushButton" name="btn_cnpj">
     <property name="geometry">
      <rect>
-      <x>1330</x>
+      <x>1610</x>
       <y>10</y>
       <width>271</width>
       <height>71</height>
@@ -1005,7 +1015,7 @@
      <string>&lt;h2&gt;Clique aqui para atualizar o CNPJ da entidade&lt;/h2&gt;</string>
     </property>
     <property name="text">
-     <string>     Atualizar Entidade</string>
+     <string>Minha Entidade</string>
     </property>
     <property name="icon">
      <iconset>
@@ -1036,7 +1046,7 @@
    <widget class="QPushButton" name="btn_login">
     <property name="geometry">
      <rect>
-      <x>1610</x>
+      <x>1330</x>
       <y>10</y>
       <width>271</width>
       <height>71</height>
@@ -1052,7 +1062,7 @@
      </font>
     </property>
     <property name="text">
-     <string>     Login no Portal do Bem</string>
+     <string>     Login no Portal Amigo</string>
     </property>
     <property name="icon">
      <iconset>

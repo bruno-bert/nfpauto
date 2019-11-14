@@ -1,6 +1,9 @@
-from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtWidgets import QTableWidgetItem, QListWidgetItem, QMessageBox
-from PyQt5.QtGui import QIcon
+
+from PyQt5.QtGui import QColor,QBrush, QStandardItemModel, QStandardItem, QIcon
+from PyQt5.QtWidgets import QWidget, QDialog, QHeaderView, QTableWidgetItem, QListWidgetItem, QMessageBox
+from PyQt5.QtCore import  pyqtSignal, QSize, Qt as QtCoreQt
+from PyQt5.Qt import Qt
+
 import ui_dialog_postar
 import messages
 import constant
@@ -9,10 +12,9 @@ from seleniumdb.observer import Subscriber
 from database import  busca_script_padrao, busca_chaves_por_status, atualiza_status_nota, atualiza_status_message_nota, busca_cnpj_padrao_valor
 from task import Task, Log
 from datetime import datetime
-from PyQt5.QtCore import  pyqtSignal, QSize
-from PyQt5.Qt import Qt, QEvent
 
-class Posting(QtWidgets.QWidget):
+
+class Posting(QWidget):
  
  sig_cancelar = pyqtSignal(int)
   
@@ -34,12 +36,12 @@ class Posting(QtWidgets.QWidget):
 
  def destaca_chave_sendo_processada(self, value):
 
-    items = self.dialog_postar.lista_notas.findItems(value, QtCore.Qt.MatchExactly)
+    items = self.dialog_postar.lista_notas.findItems(value, QtCoreQt.MatchExactly)
     if ( len(items) > 0 ):
       for item in items:
         try:
          index = self.dialog_postar.lista_notas.indexFromItem(item).row()
-         highlighted = QtGui.QColor(192,247,224)
+         highlighted = QColor(192,247,224)
          self.setColortoRow(self.dialog_postar.lista_notas,index,highlighted)
        
         except Exception as err:
@@ -59,7 +61,7 @@ class Posting(QtWidgets.QWidget):
  
  
  def atualiza_lista(self, value):
-    items = self.dialog_postar.lista_notas.findItems(value, QtCore.Qt.MatchExactly)
+    items = self.dialog_postar.lista_notas.findItems(value, QtCoreQt.MatchExactly)
     if ( len(items) > 0 ):
       for item in items:
         #try:
@@ -94,8 +96,8 @@ class Posting(QtWidgets.QWidget):
 
      self.rows = None
       
-     #self.DialogPostar = QtWidgets.QDialog(parent)
-     self.DialogPostar = QtWidgets.QDialog()
+     #self.DialogPostar = QDialog(parent)
+     self.DialogPostar = QDialog()
      self.dialog_postar = ui_dialog_postar.Ui_Dialog()   
      self.dialog_postar.setupUi(self.DialogPostar)
      self.DialogPostar.setWindowFlags(self.DialogPostar.windowFlags() | Qt.WindowMinimizeButtonHint)
@@ -107,7 +109,7 @@ class Posting(QtWidgets.QWidget):
      self.dialog_postar.btn_limpar.clicked.connect(self.limpar_log)
      self.dialog_postar.btn_fechar.clicked.connect(self.fechar_dialog)
      
-     self.model = QtGui.QStandardItemModel()
+     self.model = QStandardItemModel()
      self.dialog_postar.list_log.setModel(self.model)
  
      self.messages = messages.Messages()
@@ -137,12 +139,12 @@ class Posting(QtWidgets.QWidget):
  def adiciona_log_lista(self, message, manual_action):
     if (message):
       message = self.format_log(message)
-      item = QtGui.QStandardItem(message)
+      item = QStandardItem(message)
       
 
       if (manual_action == 1):
-        brush = QtGui.QBrush ()
-        brush.setColor(QtGui.QColor(255,0,0))
+        brush = QBrush ()
+        brush.setColor(QColor(255,0,0))
         item.setForeground(brush)
 
       self.model.insertRow(0, item) 
@@ -172,10 +174,10 @@ class Posting(QtWidgets.QWidget):
     self.dialog_postar.lista_notas.hideColumn(0)
 
     header = self.dialog_postar.lista_notas.horizontalHeader()       
-    header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
-    header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
-    header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
-    header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(0, QHeaderView.Stretch)
+    header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(2, QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(3, QHeaderView.ResizeToContents)
     
 
  def mostra_posting(self):   

@@ -58,7 +58,6 @@ STYLES_FILE_BUTTONS_ALERT="styles/button_alert.css"
 VALIDA_CNPJ=True
 
 #dev constants
-INICIA_DB_INICIO=False
 IMPORTA_PADRAO="TEXT_PADRAO" #id da configuracao do config_arquivo - usado na importacao do arquivo massivo
 
 #chaves de acesso - exemplos

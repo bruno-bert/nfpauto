@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtWidgets import QDialog
 import ui_login
 import messages
 from database import busca_cnpj_padrao_valor
@@ -11,7 +11,7 @@ class Login:
      
      self.dialog_login = ui_login.Ui_Dialog()
      
-     self.DialogLogin = QtWidgets.QDialog()
+     self.DialogLogin = QDialog()
      self.dialog_login = ui_login.Ui_Dialog()
      self.dialog_login.setupUi(self.DialogLogin)
      self.DialogLogin.setModal(True)

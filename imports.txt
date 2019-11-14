@@ -1,0 +1,33 @@
+spec
+excludes:
+'PyQt5.QtHelp','PyQt5.QtMultimedia','PyQt5.QtNetwork','PyQt5.QtOpenGL','PyQt5.QtPrintSupport','PyQt5.QtQml','PyQt5.QtQuick','PyQt5.QtQuickWidgets','PyQt5.QtSensors','PyQt5.QtSerialPort','PyQt5.QtSql','PyQt5.QtSvg','PyQt5.QtTest','PyQt5.QtXml'
+
+
+data
+(HOMEPATH + '\\PyQt5\\Qt\\bin\*', 'PyQt5\\Qt\\bin'),
+
+ui_list.py
+from PyQt5.QtGui import QFont, QIcon, QPixmap, QCursor
+from PyQt5.QtCore import Qt, QRect, QSize, QMetaObject, QCoreApplication
+from PyQt5.QtWidgets import QWidget, QLineEdit, QCheckBox, QTabWidget, QComboBox, QProgressBar, QLabel, QPlainTextEdit, QAbstractItemView, QTableWidget, QGroupBox,  QPushButton, QDialogButtonBox
+
+ui_login.py
+from PyQt5.QtGui import QFont, QIcon, QPixmap
+from PyQt5.QtCore import QRect, QSize, QMetaObject, QCoreApplication
+from PyQt5.QtWidgets import QGroupBox, QLabel, QLineEdit, QPushButton
+
+ui_dialog_postar.py
+from PyQt5.QtGui import QFont, QIcon, QPixmap
+from PyQt5.QtCore import Qt, QRect, QSize, QMetaObject, QCoreApplication
+from PyQt5.QtWidgets import QAbstractItemView, QTableWidget, QLabel,  QPushButton, QListView, QFrame
+
+ui_cnpj_padrao_dialog.py
+from PyQt5.QtGui import QFont, QIcon, QPixmap
+from PyQt5.QtCore import Qt, QRect, QSize, QMetaObject, QCoreApplication
+from PyQt5.QtWidgets import QLabel, QPlainTextEdit,  QGroupBox,  QPushButton
+
+ui_cnpj_dialog.py
+from PyQt5.QtGui import QFont, QIcon, QPixmap
+from PyQt5.QtCore import Qt, QRect, QSize, QMetaObject, QCoreApplication
+from PyQt5.QtWidgets import QLabel, QPlainTextEdit, QAbstractItemView, QTableWidget, QGroupBox,  QPushButton, QDialogButtonBox
+

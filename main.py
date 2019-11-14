@@ -1,9 +1,13 @@
+
 #external libs
-from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtWidgets import QTableWidgetItem, QListWidgetItem
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIntValidator, QColor
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QDialog, QHeaderView, QTableWidget, QTableWidgetItem, QListWidgetItem, QPlainTextEdit
 from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
 from bradocs4py.cnpj import  ValidadorCnpj 
 from playsound import playsound
+
+import feature_flags
 
 
 #native libs
@@ -13,11 +17,10 @@ from datetime import date, datetime, timedelta
 from calendar import monthrange
 import dateutil.relativedelta
 import os.path
-
+from sys import argv, exit
 
 
 #internal modules
-from db.initdb import init_db
 import constant
 from nota import Nota
 from messages import Messages
@@ -72,21 +75,21 @@ def carrega_lista_empresas(rows):
     dialog.lista_empresas.selectRow(0)
 
     header = dialog.lista_empresas.horizontalHeader()       
-    header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
-    header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
-    header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
-    header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
-    header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents)
-    header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(0, QHeaderView.Stretch)
+    header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(2, QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(3, QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(4, QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(5, QHeaderView.ResizeToContents)
    
 
 
 def resizeColumns(table, cols):
    header = table.horizontalHeader()       
-   header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+   header.setSectionResizeMode(0, QHeaderView.Stretch)
    current_col = 1
    while (current_col < cols-1):
-    header.setSectionResizeMode(current_col, QtWidgets.QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(current_col, QHeaderView.ResizeToContents)
     current_col+=1
 
 def carrega_lista_chaves(rows):
@@ -196,8 +199,8 @@ def setColortoRow(table, rowIndex, color):
 
 def adiciona_chave_na_lista(new_nota, expirada):
     
-    white = QtGui.QColor(255,255,255)
-    highlighted = QtGui.QColor(192,247,224)
+    white = QColor(255,255,255)
+    highlighted = QColor(192,247,224)
 
     ui.tableWidget.insertRow(0)
     ui.tableWidget.setItem(0, 0, QTableWidgetItem("") )
@@ -327,11 +330,11 @@ def on_buscar_arquivo():
  
   try:
     if (not ui.check_dir.isChecked()):
-      filename = QtWidgets.QFileDialog.getOpenFileName(ui.centralwidget, constant.TITULO_DIALOG_ARQUIVO, None, "Text files (*.txt);;Csv files (*.csv);;Excel files (*.xlsx)")  
+      filename = QFileDialog.getOpenFileName(ui.centralwidget, constant.TITULO_DIALOG_ARQUIVO, None, "Text files (*.txt);;Csv files (*.csv);;Excel files (*.xlsx)")  
       if filename: 
         ui.txt_arquivo.setPlainText(filename[0])  
     else: 
-      filename = str(QtWidgets.QFileDialog.getExistingDirectory(ui.centralwidget, constant.TITULO_DIALOG_ARQUIVO))
+      filename = str(QFileDialog.getExistingDirectory(ui.centralwidget, constant.TITULO_DIALOG_ARQUIVO))
       if filename: 
         ui.txt_arquivo.setPlainText(filename)  
       
@@ -603,7 +606,7 @@ def confirma_cnpj_padrao():
      salva_cnpj_padrao_banco(cnpj, descricao, palavras)  
     #atualiza botão na tela principal
      applyStylesToElement(ui.btn_cnpj, constant.STYLES_FILE_BUTTONS)
-     ui.btn_cnpj.setText("     " + cnpj )
+     #ui.btn_cnpj.setText("     " + cnpj )
      Dialog_Cnpj.accept()
    else:  
      dialog_cnpj_padrao.lbl_message_cnpj_padrao.setText(m.cnpj_invalido)
@@ -613,13 +616,13 @@ def confirma_cnpj_padrao():
 
 
 def txt_cnpj_padrao_keyPressEvent(e):
-     if (e.key() == QtCore.Qt.Key_Escape ):
+     if (e.key() == Qt.Key_Escape ):
          Dialog_Cnpj.reject()
      else:    
-       if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ): 
+       if (e.key() == Qt.Key_Return or  e.key() == Qt.Key_Enter ): 
          confirma_cnpj_padrao()
        else: 
-         return QtWidgets.QPlainTextEdit.keyPressEvent(dialog_cnpj_padrao.txt_cnpj_padrao, e)     
+         return QPlainTextEdit.keyPressEvent(dialog_cnpj_padrao.txt_cnpj_padrao, e)     
 
 def emitir_som_erro(origem):
   if (constant.EMITIR_SOM_ERRO):
@@ -627,38 +630,38 @@ def emitir_som_erro(origem):
       playsound(constant.SOM_ERRO_FILE)
 
 def txtChave_3_keyPressEvent(e):
-     if (e.key() == QtCore.Qt.Key_Escape ):
+     if (e.key() == Qt.Key_Escape ):
        limpa_campo_chave()
    
-     if (e.key() == QtCore.Qt.Key_A ):
+     if (e.key() == Qt.Key_A ):
        modo_leitor()
        return 
 
-     if (e.key() == QtCore.Qt.Key_B ):
+     if (e.key() == Qt.Key_B ):
        modo_digitacao()   
        return
 
-     if (e.key() == QtCore.Qt.Key_C ):
+     if (e.key() == Qt.Key_C ):
        modoarquivo()   
        return 
 
-     if (e.key() == QtCore.Qt.Key_D ):
+     if (e.key() == Qt.Key_D ):
        modoportal()   
        return 
 
-     if (e.key() == QtCore.Qt.Key_E ):
+     if (e.key() == Qt.Key_E ):
        mostra_dialogCnpj()
        return      
      
-     if (e.key() == QtCore.Qt.Key_L ):
+     if (e.key() == Qt.Key_L ):
       on_abre_login()
       return  
 
-     if (e.key() == QtCore.Qt.Key_P ):
+     if (e.key() == Qt.Key_P ):
       on_abre_postar()
       return 
 
-     if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
+     if (e.key() == Qt.Key_Return or  e.key() == Qt.Key_Enter ):
        text = get_chave_parcial()
        chave_ok = valida_chave(text)    
 
@@ -670,7 +673,7 @@ def txtChave_3_keyPressEvent(e):
           if (constant.LIMPA_CAMPO_QUANDO_INVALIDA):
             limpa_campo_chave()
      else: 
-       return QtWidgets.QPlainTextEdit.keyPressEvent(ui.txtChave_3, e)     
+       return QPlainTextEdit.keyPressEvent(ui.txtChave_3, e)     
 
 def mostra_data_nota():  
    global mes_sel_int       
@@ -717,20 +720,20 @@ def toggle_mes():
     
 
 def lista_empresas_keyPressEvent(e):
-     if (e.key() == QtCore.Qt.Key_Space ):
+     if (e.key() == Qt.Key_Space ):
         toggle_mes()
         mostra_data_nota()
 
-     if (e.key() == QtCore.Qt.Key_Escape ):
+     if (e.key() == Qt.Key_Escape ):
        Dialog.reject()
      else:   
-       if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
+       if (e.key() == Qt.Key_Return or  e.key() == Qt.Key_Enter ):
             if dialog.lista_empresas.selectionModel().hasSelection():
              row = dialog.lista_empresas.currentRow()
              atualiza_campo_parcial_nota(row)
              Dialog.accept()
        else: 
-         return QtWidgets.QTableWidget.keyPressEvent(dialog.lista_empresas, e)
+         return QTableWidget.keyPressEvent(dialog.lista_empresas, e)
 
 def on_abre_postar():
   rowCnpj = busca_cnpj_padrao()
@@ -750,39 +753,39 @@ def on_abre_postar():
   
  
 def txtChave_keyPressEvent(e):
-   if (e.key() == QtCore.Qt.Key_Escape ):
+   if (e.key() == Qt.Key_Escape ):
        limpa_campo_chave()
 
-   if (e.key() == QtCore.Qt.Key_A ):
+   if (e.key() == Qt.Key_A ):
        modo_leitor()
        return 
 
-   if (e.key() == QtCore.Qt.Key_B ):
+   if (e.key() == Qt.Key_B ):
        modo_digitacao()   
        return   
 
-   if (e.key() == QtCore.Qt.Key_C ):
+   if (e.key() == Qt.Key_C ):
        modoarquivo()   
        return 
 
-   if (e.key() == QtCore.Qt.Key_D ):
+   if (e.key() == Qt.Key_D ):
        modoportal()   
        return      
        
-   if (e.key() == QtCore.Qt.Key_E ):
+   if (e.key() == Qt.Key_E ):
        mostra_dialogCnpj()
        return      
 
-   if (e.key() == QtCore.Qt.Key_L ):
+   if (e.key() == Qt.Key_L ):
       on_abre_login()
       return   
 
    
-   if (e.key() == QtCore.Qt.Key_P ):
+   if (e.key() == Qt.Key_P ):
       on_abre_postar()
       return   
 
-   if (e.key() == QtCore.Qt.Key_Return or  e.key() == QtCore.Qt.Key_Enter ):
+   if (e.key() == Qt.Key_Return or  e.key() == Qt.Key_Enter ):
        text = get_chave()
        chave_ok = valida_chave(text)    
 
@@ -795,7 +798,7 @@ def txtChave_keyPressEvent(e):
             limpa_campo_chave()
 
    else: 
-       return QtWidgets.QPlainTextEdit.keyPressEvent(ui.txtChave, e)
+       return QPlainTextEdit.keyPressEvent(ui.txtChave, e)
 
 
 def on_abre_login():
@@ -853,12 +856,12 @@ def atualiza_lista_principal():
    atualiza_titulo_total()
 
 if __name__ == "__main__":
-        import sys    
+        #import sys    
     
-        app = QtWidgets.QApplication(sys.argv)
+        app = QApplication(argv)
         
       
-        MainWindow = QtWidgets.QMainWindow()
+        MainWindow = QMainWindow()
         ui = ui_list.Ui_MainWindow()
         ui.setupUi(MainWindow)
 
@@ -867,16 +870,16 @@ if __name__ == "__main__":
 
         MainWindow.show()
 
-        MainWindow.setWindowState(QtCore.Qt.WindowMaximized)
+        MainWindow.setWindowState(Qt.WindowMaximized)
 
         ui.txtChave.setFocus()
 
-        Dialog = QtWidgets.QDialog()
+        Dialog = QDialog()
         dialog = ui_cnpj_dialog.Ui_Dialog()
         dialog.setupUi(Dialog)
         Dialog.setModal(True)
         
-        Dialog_Cnpj = QtWidgets.QDialog()
+        Dialog_Cnpj = QDialog()
         dialog_cnpj_padrao = ui_cnpj_padrao_dialog.Ui_Dialog()
         dialog_cnpj_padrao.setupUi(Dialog_Cnpj)
         Dialog_Cnpj.setModal(True)
@@ -911,7 +914,7 @@ if __name__ == "__main__":
         dialog_cnpj_padrao.btn_ok.clicked.connect(confirma_cnpj_padrao)
         dialog_cnpj_padrao.btn_cancel.clicked.connect(fechar_dialog_cnpj_padrao)
         
-        ui.txt_num_notas.setValidator(QtGui.QIntValidator(constant.MIN_NOTAS , constant.MAX_NOTAS) )
+        ui.txt_num_notas.setValidator(QIntValidator(constant.MIN_NOTAS , constant.MAX_NOTAS) )
         ui.txt_num_notas.setText(str(constant.DEFAULT_NUMERO_NOTAS))
         
         ui.txt_cnpj_estab.setText(constant.EMPTY_STR)
@@ -933,9 +936,7 @@ if __name__ == "__main__":
         
       
 
-        if constant.INICIA_DB_INICIO:
-            init_db()
-
+        
         #cria lista (notas e empresas)
         cria_tabela_notas()  
         cria_tabela_empresas()      
@@ -959,25 +960,31 @@ if __name__ == "__main__":
 
 
         ui.btn_limpa_banco.hide()
-        
+
 
         modo_leitor()
+
+        if (not feature_flags.PORTAL):
+          ui.btn_login.hide()
+          ui.tab_opcao.setTabEnabled(3, False)
+        
+
 
         rowCnpj = busca_cnpj_padrao()
         if (rowCnpj):
            cnpj = dict(rowCnpj)['cnpj']
-           ui.btn_cnpj.setText("     " + cnpj )
+           #ui.btn_cnpj.setText("     " + cnpj )
            applyStylesToElement(ui.btn_cnpj, constant.STYLES_FILE_BUTTONS)
         else:
-           ui.btn_cnpj.setText(m.cnpj_nao_informado)
+           #ui.btn_cnpj.setText(m.cnpj_nao_informado)
            applyStylesToElement(ui.btn_cnpj, constant.STYLES_FILE_BUTTONS_ALERT)
            mostra_dialogCnpj()
             
             
-
+        
         
 
-        sys.exit(app.exec_())
+        exit(app.exec_())
 
         
     
