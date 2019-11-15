@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QDialog, QHe
 from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
 from bradocs4py.cnpj import  ValidadorCnpj 
 from playsound import playsound
+from update_checker import Update_Handler
 
 import feature_flags
 
@@ -17,6 +18,7 @@ from datetime import date, datetime, timedelta
 from calendar import monthrange
 import dateutil.relativedelta
 import os.path
+import subprocess
 from sys import argv, exit
 
 
@@ -855,22 +857,64 @@ def atualiza_lista_principal():
    carrega_lista_chaves(rows)
    atualiza_titulo_total()
 
+
+def chama_rotina_update():
+
+        handler = Update_Handler() 
+        #se não tem versão nova, sai da rotina, e segue o programa
+        if ( not handler.verifica_updates() ) :       
+          return
+        else:
+            
+            #se tem versão nova, faz o download do instalador
+            versao_nova = handler.get_versao_nova()
+            result = handler.download_update(versao_nova)
+              
+            if (result.success):
+
+                  #salva arquivo no diretorio de patches
+                  directory = './/patches'
+                  if not os.path.exists(directory):
+                    os.makedirs(directory)
+
+                  filename = directory + '//' + result.filename
+                  with open(filename, "wb") as file:
+                    file.write(result.data)
+
+                  #executa o instalador 
+                  print('Iniciando atualizador...')
+                  subprocess.Popen([filename], shell=False,
+                  stdin=None, stdout=None, stderr=None, close_fds=True)
+                  print('Finalizando verificador de atualizações...')
+
+                  #sai do programa principal
+                  exit()
+
+            else: 
+              print('Erro ao tentar verificar atualizações...' + result.err)    
+              
+            
+           
+
+
+
 if __name__ == "__main__":
-        #import sys    
-    
-        app = QApplication(argv)
         
-      
+        m = Messages()
+
+        app = QApplication(argv)
         MainWindow = QMainWindow()
         ui = ui_list.Ui_MainWindow()
         ui.setupUi(MainWindow)
 
-        applyStyles()
-        
+        chama_rotina_update()
 
+        applyStyles()
         MainWindow.show()
 
         MainWindow.setWindowState(Qt.WindowMaximized)
+
+       
 
         ui.txtChave.setFocus()
 
@@ -925,7 +969,7 @@ if __name__ == "__main__":
 
         ui.btn_postar.clicked.connect(on_abre_postar)    
         
-        m = Messages()
+       
 
         lista_notas = []
         lista_cnpj = []
@@ -980,10 +1024,6 @@ if __name__ == "__main__":
            applyStylesToElement(ui.btn_cnpj, constant.STYLES_FILE_BUTTONS_ALERT)
            mostra_dialogCnpj()
             
-            
-        
-        
-
         exit(app.exec_())
 
         

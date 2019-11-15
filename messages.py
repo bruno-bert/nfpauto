@@ -26,3 +26,4 @@ class Messages:
    self.importacao_sucesso="Importação concluída com sucesso"
    self.confirmation_title = "Confirmar cancelamento de postagem"
    self.confirmation_question = "A postagem está em andamento. Se fechar esta janela, o processo de postagem será cancelado. Você pode reiniciar o processo a hora que quiser. Tem certeza que deseja seguir?"
+   self.repo_update_indisponivel = "Repositório de checagem de updates está indisponível" 

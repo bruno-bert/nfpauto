@@ -5,3 +5,7 @@ API_ROUTE_REGISTER="/register"
 API_ROUTE_FILTER_CNPJ="cnpj={cnpj}"
 API_ROUTE_FILTER_ESTAB="estab={estab}"
 API_ROUTE_FILTER_LIMIT="_limit={limit}"
+
+API_UPDATE="https://notaamiga.netlify.com/files"
+VERSION_FILE="version.json"
+UPDATE_FILE="setup_{}.exe"

@@ -21,7 +21,20 @@ files =  ['..//dist//' + APP_NAME + '//Qt5Bluetooth.dll' ,
     './/dist//' + APP_NAME + '//Qt5WebSockets.dll' ,
     './/dist//' + APP_NAME + '//Qt5WinExtras.dll' ,
     './/dist//' + APP_NAME + '//Qt5Xml.dll' ,
-    './/dist//' + APP_NAME + '//Qt5XmlPatterns.dll' ]
+    './/dist//' + APP_NAME + '//Qt5XmlPatterns.dll',
+    './/dist//' + APP_NAME + '//PyQt5//QtBluetooth.pyd',
+    './/dist//' + APP_NAME + '//PyQt5//QtDBus.pyd',
+    './/dist//' + APP_NAME + '//PyQt5//QtDesigner.pyd',
+    './/dist//' + APP_NAME + '//PyQt5//QtLocation.pyd',
+    './/dist//' + APP_NAME + '//PyQt5//QtMultimediaWidgets.pyd',
+    './/dist//' + APP_NAME + '//PyQt5//QtNetworkAuth.pyd',
+    './/dist//' + APP_NAME + '//PyQt5//QtNfc.pyd',
+    './/dist//' + APP_NAME + '//PyQt5//QtPositioning.pyd',
+    './/dist//' + APP_NAME + '//PyQt5//QtRemoteObjects.pyd',
+    './/dist//' + APP_NAME + '//PyQt5//QtWebChannel.pyd',
+    './/dist//' + APP_NAME + '//PyQt5//QtWebSockets.pyd',
+    './/dist//' + APP_NAME + '//PyQt5//QtWinExtras.pyd',
+    './/dist//' + APP_NAME + '//PyQt5//QtXmlPatterns.pyd' ]
 
 for f in files:
     try:
