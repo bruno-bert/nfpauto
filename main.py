@@ -7,6 +7,8 @@ from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe
 from bradocs4py.cnpj import  ValidadorCnpj 
 from playsound import playsound
 from update_checker import Update_Handler
+import app_version
+import dbutil
 
 import feature_flags
 
@@ -143,7 +145,7 @@ def cria_tabela_notas():
                                        'Data', 'Status', 
                                        'UF', 'Numero', 
                                        'Codigo', 'Modelo', 
-                                       'Serie', 'Tipo Emissao', 'Mensagem','Data-Hora','Data-Postagem'])                                       
+                                       'Serie', 'Tipo Emissao', 'Mensagem','Data Inclusão','Data Postagem'])                                       
 
 def cria_tabela_empresas():
     dialog.lista_empresas.setColumnCount(6)
@@ -873,7 +875,7 @@ def chama_rotina_update():
             if (result.success):
 
                   #salva arquivo no diretorio de patches
-                  directory = './/patches'
+                  directory = 'c://temp/notaamiga-patches'
                   if not os.path.exists(directory):
                     os.makedirs(directory)
 
@@ -896,7 +898,13 @@ def chama_rotina_update():
             
            
 
-
+def aplica_scripts_inicio():
+  
+  script_file = './/patches//' + app_version.VERSION + '//script.sql' 
+  if ( os.path.exists(script_file) ) :
+    qry = open(script_file, 'r').read()
+    dbutil.execute_sql(qry)
+    os.rename(script_file, str(script_file).replace('.sql','.old' ))
 
 if __name__ == "__main__":
         
@@ -908,6 +916,7 @@ if __name__ == "__main__":
         ui.setupUi(MainWindow)
 
         chama_rotina_update()
+        aplica_scripts_inicio()
 
         applyStyles()
         MainWindow.show()

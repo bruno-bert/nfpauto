@@ -13,8 +13,8 @@ a = Analysis(['main.py'],
                  ('.\\assets\\entidade.jpg', 'assets\\entidade.jpg' ),
                  ('.\\styles\\*', 'styles' ),
                  ('.\\clean_database\\*', '.' ),
-                 ('.\\seleniumdb\\seleniumdb.db', 'seleniumdb'),
-                 ('.\\patches\\*', '.' )
+                 ('.\\seleniumdb\\seleniumdb.db', 'seleniumdb'),   
+                 ('.\\patches\\*', 'patches'),                 
                  ],
 
              hiddenimports=[],

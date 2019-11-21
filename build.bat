@@ -1,1 +1,1 @@
-pyinstaller main.spec && python build_scripts/remove.py
+pyinstaller main.spec && python build_scripts/remove_files.py
