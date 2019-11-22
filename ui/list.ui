@@ -314,9 +314,9 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>310</y>
+       <y>340</y>
        <width>591</width>
-       <height>41</height>
+       <height>71</height>
       </rect>
      </property>
      <property name="font">
@@ -331,14 +331,35 @@
       <string>P - Postar no ambiente do governo</string>
      </property>
     </widget>
+    <widget class="QLabel" name="lbl_atalho1_9">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>310</y>
+       <width>411</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Montserrat Alternates SemiBold</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>V - Captura por Vídeo</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QTabWidget" name="tab_opcao">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>500</y>
+      <y>450</y>
       <width>951</width>
-      <height>281</height>
+      <height>471</height>
      </rect>
     </property>
     <property name="font">
@@ -361,15 +382,68 @@
       <height>64</height>
      </size>
     </property>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="title">
+      <string>Captura por Câmera</string>
+     </attribute>
+     <widget class="QLabel" name="label_video">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>60</y>
+        <width>640</width>
+        <height>360</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_video">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>10</y>
+        <width>201</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Montserrat Alternates SemiBold</family>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>false</underline>
+        <strikeout>false</strikeout>
+       </font>
+      </property>
+      <property name="text">
+       <string>    Iniciar Captura</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>assets/icons/shop.png</normaloff>assets/icons/shop.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>24</width>
+        <height>24</height>
+       </size>
+      </property>
+     </widget>
+    </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>&amp;Leitor de código de Barras</string>
+      <string>&amp;Usar Leitor de Código de Barras</string>
      </attribute>
      <widget class="QGroupBox" name="grupo_chave_completa">
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>70</y>
+        <y>130</y>
         <width>821</width>
         <height>121</height>
        </rect>
@@ -479,7 +553,7 @@
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>60</y>
+        <y>130</y>
         <width>891</width>
         <height>171</height>
        </rect>
@@ -654,7 +728,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>50</y>
+        <y>120</y>
         <width>871</width>
         <height>151</height>
        </rect>
@@ -798,7 +872,7 @@
       <property name="geometry">
        <rect>
         <x>650</x>
-        <y>30</y>
+        <y>100</y>
         <width>241</width>
         <height>20</height>
        </rect>
@@ -824,7 +898,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>20</y>
+        <y>90</y>
         <width>871</width>
         <height>201</height>
        </rect>
@@ -1119,9 +1193,9 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>400</y>
+      <y>380</y>
       <width>391</width>
-      <height>71</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -1183,7 +1257,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>920</y>
+      <y>930</y>
       <width>261</width>
       <height>16</height>
      </rect>
@@ -1226,10 +1300,10 @@
    <widget class="QLabel" name="lbl_info">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>790</y>
+      <x>520</x>
+      <y>390</y>
       <width>921</width>
-      <height>81</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">

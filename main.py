@@ -1,7 +1,7 @@
 
 #external libs
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIntValidator, QColor
+from PyQt5.QtGui import QIntValidator, QColor, QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QDialog, QHeaderView, QTableWidget, QTableWidgetItem, QListWidgetItem, QPlainTextEdit
 from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
 from bradocs4py.cnpj import  ValidadorCnpj 
@@ -11,6 +11,7 @@ import app_version
 import dbutil
 
 import feature_flags
+from task_video import TaskVideo
 
 
 #native libs
@@ -546,19 +547,22 @@ def define_mes_anterior():
 
 
 def modo_digitacao():
-    ui.tab_opcao.setCurrentIndex (1)
+    ui.tab_opcao.setCurrentIndex (2)
    
 
 def modo_leitor():
-    ui.tab_opcao.setCurrentIndex (0)
+    ui.tab_opcao.setCurrentIndex (1)
     ui.txtChave.setFocus()
 
+def modo_video():
+    ui.tab_opcao.setCurrentIndex (0)
+   
 def modoarquivo():
-    ui.tab_opcao.setCurrentIndex (2)
+    ui.tab_opcao.setCurrentIndex (3)
     ui.btn_arquivo.setFocus()
 
 def modoportal():
-    ui.tab_opcao.setCurrentIndex (3)
+    ui.tab_opcao.setCurrentIndex (4)
     ui.btn_portal.setFocus()
     ui.txt_num_notas.text = str(constant.DEFAULT_NUMERO_NOTAS)
 
@@ -639,6 +643,10 @@ def txtChave_3_keyPressEvent(e):
    
      if (e.key() == Qt.Key_A ):
        modo_leitor()
+       return 
+
+     if (e.key() == Qt.Key_V ):
+       modo_video()
        return 
 
      if (e.key() == Qt.Key_B ):
@@ -763,6 +771,10 @@ def txtChave_keyPressEvent(e):
    if (e.key() == Qt.Key_A ):
        modo_leitor()
        return 
+   
+   if (e.key() == Qt.Key_V ):
+       modo_video()
+       return 
 
    if (e.key() == Qt.Key_B ):
        modo_digitacao()   
@@ -839,7 +851,7 @@ def mostra_tela_estab():
 
 
 def tab_changed(index):
-  if (index == 1):
+  if (index == 2):
     ui.txtChave_3.setFocus()
     ui.txtChave_2.setPlainText(constant.EMPTY_STR)
     ui.txtChave_3.setPlainText(constant.EMPTY_STR)
@@ -899,12 +911,28 @@ def chama_rotina_update():
            
 
 def aplica_scripts_inicio():
-  
   script_file = './/patches//' + app_version.VERSION + '//script.sql' 
   if ( os.path.exists(script_file) ) :
     qry = open(script_file, 'r').read()
     dbutil.execute_sql(qry)
     os.rename(script_file, str(script_file).replace('.sql','.old' ))
+
+
+
+
+
+
+
+
+
+
+def setImage(image):
+  ui.label_video.setPixmap(QPixmap.fromImage(image))
+
+def on_video():
+  task = TaskVideo()
+  task.sig_image.connect(setImage)
+  task.start()
 
 if __name__ == "__main__":
         
@@ -952,9 +980,13 @@ if __name__ == "__main__":
         ui.btn_arquivo.clicked.connect(on_buscar_arquivo)    
         ui.btn_importar.clicked.connect(on_importar_arquivo)    
         ui.btn_portal.clicked.connect(on_baixar_portal) 
+
+        ui.btn_video.clicked.connect(on_video) 
+        
         
         limpa_mensagem()
         limpa_mensagem_sucesso()
+
         
            
         dialog_cnpj_padrao.txt_cnpj_padrao.textChanged.connect(on_cnpj_padrao_alterado )
@@ -1015,7 +1047,7 @@ if __name__ == "__main__":
         ui.btn_limpa_banco.hide()
 
 
-        modo_leitor()
+        modo_video()
 
         if (not feature_flags.PORTAL):
           ui.btn_login.hide()
