@@ -119,10 +119,10 @@
    <widget class="QLabel" name="lbl_message">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>790</y>
+      <x>470</x>
+      <y>370</y>
       <width>921</width>
-      <height>81</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
@@ -1300,10 +1300,10 @@
    <widget class="QLabel" name="lbl_info">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>390</y>
+      <x>470</x>
+      <y>370</y>
       <width>921</width>
-      <height>51</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">

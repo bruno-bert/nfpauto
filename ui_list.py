@@ -12,9 +12,9 @@ from PyQt5.QtCore import pyqtSignal, QObject
 
 
 class Ui_MainWindow(QObject):
-
-    sig_cancelar_video = pyqtSignal(int)
     
+    sig_cancelar_video = pyqtSignal(int)
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1920, 949)
@@ -61,7 +61,7 @@ class Ui_MainWindow(QObject):
         self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.verticalHeader().setSortIndicatorShown(False)
         self.lbl_message = QtWidgets.QLabel(self.centralwidget)
-        self.lbl_message.setGeometry(QtCore.QRect(30, 790, 921, 81))
+        self.lbl_message.setGeometry(QtCore.QRect(470, 370, 921, 61))
         font = QtGui.QFont()
         font.setFamily("Montserrat Alternates SemiBold")
         font.setPointSize(16)
@@ -555,7 +555,7 @@ class Ui_MainWindow(QObject):
         self.lbl_qtde_notas_2.setFont(font)
         self.lbl_qtde_notas_2.setObjectName("lbl_qtde_notas_2")
         self.lbl_info = QtWidgets.QLabel(self.centralwidget)
-        self.lbl_info.setGeometry(QtCore.QRect(520, 390, 921, 51))
+        self.lbl_info.setGeometry(QtCore.QRect(470, 370, 921, 61))
         font = QtGui.QFont()
         font.setFamily("Montserrat Alternates SemiBold")
         font.setPointSize(16)

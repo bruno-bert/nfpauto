@@ -104,7 +104,10 @@ def resizeColumns(table, cols):
 
 def carrega_lista_chaves(rows):
 
-    ui.tableWidget.setRowCount(0) 
+    ui.tableWidget.setRowCount(0)
+    lista_notas.clear()
+    atualiza_titulo_total()
+    
 
     if (rows):
         for row_num, row_data in enumerate(rows):
@@ -279,9 +282,10 @@ def limpa_mensagem():
     ui.lbl_message.hide()
 
 def mostra_mensagem_sucesso(text):
+    limpa_mensagem()
     ui.lbl_info.setText(text)
     ui.lbl_info.show()
-    limpa_mensagem()
+    
 def limpa_mensagem_sucesso():
     ui.lbl_info.setText("")
     ui.lbl_info.hide()
@@ -488,10 +492,14 @@ def sequencia_adiciona_nota(chave, origem):
         mostra_mensagem(m.data_expirada)      
         emitir_som_erro(origem)
   else:
-   mostra_mensagem(m.chave_existe)
-   emitir_som_erro(origem)
-   #print("Chave {} já existe".format(chave))     
 
+   #se for captura por vídeo, não mostra que chave já existe, 
+   # pois o video le varias vezes
+   # caso contrário a mensagem sempre aparecerá que a chave já existe
+   if (origem != 6):
+     mostra_mensagem(m.chave_existe)
+     emitir_som_erro(origem)
+   
 def on_cnpj_padrao_alterado():
     print('cnpj padrao alterado')
     text = dialog_cnpj_padrao.txt_cnpj_padrao.toPlainText()
