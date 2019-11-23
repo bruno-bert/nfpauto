@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QDialog, QHe
 #other external libs
 from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
 from bradocs4py.cnpj import  ValidadorCnpj 
+from bradocs4py.cpf import  ValidadorCpf 
 from playsound import playsound
 
 
@@ -607,6 +608,9 @@ def mostra_dialogCnpj():
    else:
      return False  
 
+def valida_cpf(cpf):
+    return ValidadorCpf.validar(cpf)
+
 def valida_cnpj(cnpj):
     return ValidadorCnpj.validar(cnpj)
 
@@ -944,9 +948,17 @@ def muda_status_tela(status):
    ui.tableWidget.setEnabled(status)
 
 def video_read(content):
-    chave_ok = valida_chave(content)    
+    chave = str(content).split("|")[0].replace("CFe","")
+     
+    #verifica se nota tem cof, se tiver, invalida
+    cpf_cnpj = str(content).split("|")[3]
+    if (len(cpf_cnpj) > 0):
+      if ( (valida_cnpj(cpf_cnpj)) or (valida_cpf(cpf_cnpj))  ):
+        mostra_mensagem(m.chave_com_cpf_cnpj)
+    
+    chave_ok = valida_chave(chave)    
     if (chave_ok): 
-         sequencia_adiciona_nota(content, constant.ORIGEM_NOTA_VIDEO)        
+         sequencia_adiciona_nota(chave, constant.ORIGEM_NOTA_VIDEO)        
     else:
          emitir_som_erro(constant.ORIGEM_NOTA_VIDEO)
          mostra_mensagem(m.chave_invalida)

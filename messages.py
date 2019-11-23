@@ -27,3 +27,4 @@ class Messages:
    self.confirmation_title = "Confirmar cancelamento de postagem"
    self.confirmation_question = "A postagem está em andamento. Se fechar esta janela, o processo de postagem será cancelado. Você pode reiniciar o processo a hora que quiser. Tem certeza que deseja seguir?"
    self.repo_update_indisponivel = "Repositório de checagem de updates está indisponível" 
+   self.chave_com_cpf_cnpj = "Chave inválida para recebimento de crédito, pois possui CPF / CNPJ relacionado"

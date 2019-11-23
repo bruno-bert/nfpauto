@@ -80,9 +80,10 @@ class TaskVideo(QtSubscriber):
                         #continue
                     
                     try:
-                        barcodeData = barcode.data.decode("utf-8")		            
+                        barcodeData = barcode.data.decode("utf-8")
+                        print('barcode Data', barcodeData)		            
                         chave = str(barcodeData).split("|")[0].replace("CFe","")
-                        self.sig_read.emit(chave)
+                        self.sig_read.emit(barcodeData)
 
                         #desenha retangulo na tela
                         try:  
