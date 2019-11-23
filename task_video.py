@@ -16,10 +16,12 @@ class Log:
 class TaskVideo(QtSubscriber):
 
     sig_image = pyqtSignal(QImage)
+    sig_read = pyqtSignal(str)
+    sig_start = pyqtSignal(int)
+    sig_stop = pyqtSignal(int)
    
     def __init__(self, parent=None):
         QThread.__init__(self, parent)
-        self.service = None
         self.cancelar = 0
     
     #listener
@@ -34,27 +36,27 @@ class TaskVideo(QtSubscriber):
 
     def cancel_video(self, cancelar):
         self.cancelar = cancelar
-        if (cancelar == 1):
-          self.sig_log.emit(Log('Leitura por Vídeo Concluída'))
   
 
     def run(self):
         vs = VideoStream(src=0).start()
-        time.sleep(2.0)
+        #time.sleep(2.0)
+        
+        self.sig_start.emit(1)
 
         while True:
 
             try:
-
+           
                 frame = vs.read()
-                frame = imutils.resize(frame, width=640, height=360)
+                frame = imutils.resize(frame, width=640, height=300)
                 barcodes = pyzbar.decode(frame)
                 
                 rgbImage = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 height, width, channel = rgbImage.shape
                 bytesPerLine = channel * width
                 convertToQtFormat = QImage(rgbImage.data, width, height, bytesPerLine, QImage.Format_RGB888)
-                image = convertToQtFormat.scaled(640, 360, Qt.KeepAspectRatio)
+                image = convertToQtFormat.scaled(640, 360, Qt.KeepAspectRatioByExpanding)
                 self.update_image(image)
 
                 for barcode in barcodes:
@@ -62,25 +64,24 @@ class TaskVideo(QtSubscriber):
 
                     try:
                         barcodeData = barcode.data.decode("utf-8")		            
-                        #print('Informação no Code: ' + str(barcodeData) )
-                        #print('Extraindo chave de acesso...') 
                         chave = str(barcodeData).split("|")[0].replace("CFe","")
+                        self.sig_read.emit(chave)
 
                         #desenha retangulo na tela
                         try:  
 
 
                             (x, y, w, h) = barcode.rect
-                            cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+                            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
                             cv2.putText(frame, chave, (x, y - 10),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
                             #atualiza tela novamente
                             rgbImage = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                             height, width, channel = rgbImage.shape
                             bytesPerLine = channel * width
                             convertToQtFormat = QImage(rgbImage.data, width, height, bytesPerLine, QImage.Format_RGB888)
-                            image = convertToQtFormat.scaled(640, 360, Qt.KeepAspectRatio)
+                            image = convertToQtFormat.scaled(640, 360, Qt.KeepAspectRatioByExpanding)
                             self.update_image(image)
 
                         except Exception as err2:
@@ -92,10 +93,14 @@ class TaskVideo(QtSubscriber):
 
                 if (self.cancelar):
                     print("Finalizando captura de vídeo...")
-                    cv2.close()
-                    cv2.destroyAllWindows()
-                    vs.stop()	 
+                    #cv2.close()
+                    #cv2.destroyAllWindows()
+                    vs.stop()
+                    #self.terminate()
+                    self.sig_stop.emit(1)	
+                    self.quit()
+                    
                     break
-                
+                                    
             except Exception as errMain:
-                 print('ERROR: ' + repr(err))
+                 print('ERROR: ' + repr(errMain))

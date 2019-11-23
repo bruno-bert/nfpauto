@@ -1,15 +1,18 @@
 
-#external libs
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIntValidator, QColor, QPixmap
+#external libs - PyQt5 - UI Libs
+from PyQt5.QtCore import Qt, QSize, pyqtSignal
+from PyQt5.QtGui import QIntValidator, QColor, QPixmap, QIcon, QCursor
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QDialog, QHeaderView, QTableWidget, QTableWidgetItem, QListWidgetItem, QPlainTextEdit
+
+#other external libs
 from bradocs4py.chaveacessonfe import ValidadorChaveAcessoNFe  
 from bradocs4py.cnpj import  ValidadorCnpj 
 from playsound import playsound
+
+
 from update_checker import Update_Handler
 import app_version
 import dbutil
-
 import feature_flags
 from task_video import TaskVideo
 
@@ -33,7 +36,7 @@ from login import Login
 from posting import Posting
 from database import *
 from auth import Auth 
-from util import Util
+from util import Util, VideoStatus
 
 #ui - internal modules
 import ui_list
@@ -41,6 +44,8 @@ import ui_cnpj_dialog
 import ui_cnpj_padrao_dialog
 
 from api import ApiPortal, ApiResult
+
+
 
 def combo_status_changed(index):
    status = int(ui.combo_status.currentText().split(' - ')[0])
@@ -556,7 +561,7 @@ def modo_leitor():
 
 def modo_video():
     ui.tab_opcao.setCurrentIndex (0)
-   
+    
 def modoarquivo():
     ui.tab_opcao.setCurrentIndex (3)
     ui.btn_arquivo.setFocus()
@@ -923,17 +928,95 @@ def aplica_scripts_inicio():
 
 
 
+def muda_status_tela(status):
+   ui.btn_postar.setEnabled(status)
+   ui.btn_cnpj.setEnabled(status)
+   ui.tab_opcao.setEnabled(status)
+   ui.combo_status.setEnabled(status)
+   ui.tableWidget.setEnabled(status)
 
+def video_read(content):
+    chave_ok = valida_chave(content)    
+    if (chave_ok): 
+         sequencia_adiciona_nota(content, constant.ORIGEM_NOTA_VIDEO)        
+    else:
+         emitir_som_erro(constant.ORIGEM_NOTA_VIDEO)
+         mostra_mensagem(m.chave_invalida)
+        
+
+def video_stopped(status):
+   global video_status
+   ui.btn_video.setText("    Iniciar Captura")
+   ui.btn_video.setEnabled(True)
+   icon = QIcon("assets/icons/qrcode2.png")
+   ui.btn_video.setIcon(icon)
+   ui.btn_video.setIconSize(QSize(24,24))
+   QApplication.restoreOverrideCursor()
+   ui.label_video.setPixmap(QPixmap('assets/video_image.png'))
+   video_status = VideoStatus.IDLE
+
+   #retorna outros elementos da tela
+   muda_status_tela(True)
+
+def video_started(status):
+  global video_status
+
+  if (status == 1):
+    status = 0
+    video_status = VideoStatus.IN_PROGRESS
+    ui.btn_video.setText("    Parar Captura")
+    ui.btn_video.setEnabled(True)
+    icon = QIcon("assets/icons/stop_small.png")
+    ui.btn_video.setIcon(icon)
+    ui.btn_video.setIconSize(QSize(24,24))
+    QApplication.restoreOverrideCursor()
+
+    #retorna outros elementos da tela
+    muda_status_tela(True)
+   
+
+
+   
 
 
 def setImage(image):
   ui.label_video.setPixmap(QPixmap.fromImage(image))
 
 def on_video():
-  task = TaskVideo()
-  task.sig_image.connect(setImage)
-  task.start()
 
+  global video_status
+
+  if (video_status == VideoStatus.IDLE):
+    video_status = VideoStatus.WARMING
+    ui.btn_video.setText("    Iniciando captura por vídeo...")
+    ui.label_video.setPixmap(QPixmap('assets/video_image_warming.png'))
+    ui.btn_video.setEnabled(False)
+    icon = QIcon("assets/icons/progress.png")
+    ui.btn_video.setIcon(icon)
+    ui.btn_video.setIconSize(QSize(24,24))
+    QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
+    
+    #bloqueia outros elementos da tela
+    muda_status_tela(False)
+
+    task = TaskVideo(MainWindow)
+    task.sig_image.connect(setImage)
+    task.sig_start.connect(video_started)
+    task.sig_stop.connect(video_stopped)
+    task.sig_read.connect(video_read)
+    ui.sig_cancelar_video.connect(task.cancel_video)
+    task.start()
+
+    
+
+  elif (video_status == VideoStatus.IN_PROGRESS):
+    ui.sig_cancelar_video.emit(1)
+    
+   
+
+ 
+  
+  
 if __name__ == "__main__":
         
         m = Messages()
@@ -943,6 +1026,8 @@ if __name__ == "__main__":
         ui = ui_list.Ui_MainWindow()
         ui.setupUi(MainWindow)
 
+        
+
         chama_rotina_update()
         aplica_scripts_inicio()
 
@@ -951,7 +1036,7 @@ if __name__ == "__main__":
 
         MainWindow.setWindowState(Qt.WindowMaximized)
 
-       
+        
 
         ui.txtChave.setFocus()
 
@@ -994,8 +1079,7 @@ if __name__ == "__main__":
         
         ui.btn_cnpj.clicked.connect(mostra_dialogCnpj)
         cnpj = busca_cnpj_padrao_valor()
-        #ui.btn_cnpj.setText(cnpj)
-
+        
         dialog_cnpj_padrao.btn_ok.clicked.connect(confirma_cnpj_padrao)
         dialog_cnpj_padrao.btn_cancel.clicked.connect(fechar_dialog_cnpj_padrao)
         
@@ -1045,13 +1129,16 @@ if __name__ == "__main__":
 
 
         ui.btn_limpa_banco.hide()
+        
 
 
+        ui.label_video.setPixmap(QPixmap('assets/video_image.png'))
+        video_status = VideoStatus.IDLE 
         modo_video()
 
         if (not feature_flags.PORTAL):
           ui.btn_login.hide()
-          ui.tab_opcao.setTabEnabled(3, False)
+          ui.tab_opcao.setTabEnabled(4, False)
         
 
 
