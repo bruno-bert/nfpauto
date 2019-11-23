@@ -4,7 +4,9 @@ from PyQt5.Qt import Qt
 from subscriberqt import QtSubscriber
 from imutils.video import VideoStream
 from pyzbar import pyzbar
-import imutils
+from pyzbar.pyzbar import ZBarSymbol
+from datetime import datetime
+#import imutils
 import time
 import cv2
 
@@ -39,7 +41,10 @@ class TaskVideo(QtSubscriber):
   
 
     def run(self):
-        vs = VideoStream(src=0).start()
+        print('iniciando...' + str(datetime.now()))
+        #vs = VideoStream(src=0).start()
+        vs = cv2.VideoCapture(0)
+        print('iniciado...' + str(datetime.now()))
         #time.sleep(2.0)
         
         self.sig_start.emit(1)
@@ -48,9 +53,17 @@ class TaskVideo(QtSubscriber):
 
             try:
            
-                frame = vs.read()
-                frame = imutils.resize(frame, width=640, height=300)
-                barcodes = pyzbar.decode(frame)
+                rect, frame = vs.read()
+
+                if (not rect):
+                    print('not react')
+                    vs.release()
+                    self.sig_stop.emit(1)	
+                    self.quit()
+                    break
+
+                #frame = imutils.resize(frame, width=640, height=300)
+                barcodes = pyzbar.decode(frame, symbols=[ZBarSymbol.QRCODE])
                 
                 rgbImage = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 height, width, channel = rgbImage.shape
@@ -61,7 +74,11 @@ class TaskVideo(QtSubscriber):
 
                 for barcode in barcodes:
                     
-
+                    #despreza leitura do código de 
+                    #if (str(barcode.type) != 'QRCODE'):
+                        #print('nao qrcode')
+                        #continue
+                    
                     try:
                         barcodeData = barcode.data.decode("utf-8")		            
                         chave = str(barcodeData).split("|")[0].replace("CFe","")
@@ -87,15 +104,17 @@ class TaskVideo(QtSubscriber):
                         except Exception as err2:
                             print('ERROR on trying to draw rectangle: ' + repr(err2))
                         
-                        print('Chave de Acesso: ' + str(barcode.type) + " - " + chave)
+                        #print('Chave de Acesso: ' + str(barcode.type) + " - " + chave)
                     except Exception as err  : 
                         print('ERROR: ' + repr(err))
+                        break
 
                 if (self.cancelar):
                     print("Finalizando captura de vídeo...")
                     #cv2.close()
                     #cv2.destroyAllWindows()
-                    vs.stop()
+                    #vs.stop()
+                    vs.release()
                     #self.terminate()
                     self.sig_stop.emit(1)	
                     self.quit()
