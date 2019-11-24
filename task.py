@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QThread, pyqtSignal
 from service_posting import NFPPosting
-from database import  busca_script_padrao, busca_chaves_por_status, busca_cnpj_padrao_valor, busca_cnpj_padrao
+from database import  busca_script_padrao, busca_cnpj_padrao_valor, busca_cnpj_padrao
 from subscriberqt import QtSubscriber
 from seleniumdb.cycle_result import CycleResult 
 
@@ -48,8 +48,6 @@ class Task(QtSubscriber):
 
     def run(self):
         script_id = self.get_script_id() 
-        chaves = self.seleciona_chaves()
-
         
         row = busca_cnpj_padrao()
         
@@ -58,7 +56,7 @@ class Task(QtSubscriber):
         descricao_entidade = row['descricao']    
         palavras = row['palavras']   
 
-        self.service = NFPPosting(script_id, cnpj, descricao_entidade, palavras, chaves)
+        self.service = NFPPosting(script_id, cnpj, descricao_entidade, palavras)
         self.service.register(self)
         self.service.iniciar_postagem()
 
@@ -67,10 +65,6 @@ class Task(QtSubscriber):
       result = busca_script_padrao()
       return int(result['script_id'])
 
-    def seleciona_chaves(self):
-      rows = busca_chaves_por_status(1)
-      return [col['chave'] for col in rows]
-            
-
+   
  
        

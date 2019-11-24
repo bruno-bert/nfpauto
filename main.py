@@ -34,7 +34,6 @@ import constant
 from nota import Nota
 from messages import Messages
 from login import Login
-from posting import Posting
 from database import *
 from auth import Auth 
 from util import Util, VideoStatus
@@ -45,6 +44,8 @@ import ui_cnpj_dialog
 import ui_cnpj_padrao_dialog
 
 from api import ApiPortal, ApiResult
+
+from page_posting import *
 
 
 
@@ -106,7 +107,7 @@ def resizeColumns(table, cols):
 def carrega_lista_chaves(rows):
 
     ui.tableWidget.setRowCount(0)
-    lista_notas.clear()
+    lista_chaves.clear()
     atualiza_titulo_total()
     
 
@@ -136,7 +137,7 @@ def carrega_lista_chaves(rows):
               ui.tableWidget.setItem(row_num, 13, QTableWidgetItem(datetime_object.strftime('%d-%m-%Y %H:%M:%S')))
 
         
-            lista_notas.append(row['chave'])
+            lista_chaves.append(row['chave'])
 
     resizeColumns(ui.tableWidget, ui.tableWidget.columnCount())
         
@@ -239,7 +240,7 @@ def adiciona_chave_na_lista(new_nota, expirada):
     
 
 
-    lista_notas.append(new_nota.chave)
+    lista_chaves.append(new_nota.chave)
 
 def valida_chave_pelo_digito(chave):
   has_chars = re.search('[a-zA-Z]', chave)
@@ -296,12 +297,12 @@ def atualiza_contagem_digitos(text):
 
 def on_limpa_banco_clickado():
     limpa_notas_db()
-    lista_notas.clear()
+    lista_chaves.clear()
     combo_status_changed(1)
     
     
 def chave_ja_existe(chave):
- return chave in lista_notas
+ return chave in lista_chaves
 
 def cnpj_ja_existe(cnpj):
  return cnpj in lista_cnpj
@@ -764,19 +765,46 @@ def lista_empresas_keyPressEvent(e):
        else: 
          return QTableWidget.keyPressEvent(dialog.lista_empresas, e)
 
+def page_changed(index):
+  if (index == 0):
+    atualiza_lista_principal()
+  if (index == 1): 
+    on_abre_postar()
+
+
+def trigger_postagem():
+  
+  if (seleciona_modo_atual() == 'parado') :
+    task_postagem = Task(MainWindow)
+    
+    try:
+      ui.sig_cancelar.connect(task_postagem.cancel_posting)
+      ui.sig_cancelar.emit(0)
+    except Exception as e:
+      print(repr(e))
+
+    task_postagem.sig_log.connect(show_log)
+    task_postagem.sig_result.connect(save_result) 
+    task_postagem.sig_chave.connect(init_value) 
+    modo_postagem()
+    task_postagem.start()
+
+  else:
+    if (seleciona_modo_atual() == 'postando'):
+        ui.sig_cancelar.emit(1)
+        modo_parado()
+
+
 def on_abre_postar():
   rowCnpj = busca_cnpj_padrao()
   if (rowCnpj):
-     servico_posting = Posting(MainWindow) 
-     servico_posting.mostra_posting()
-     atualiza_lista_principal()
+     mostra_posting(ui)
   else:
      
      if (mostra_dialogCnpj()):
-       servico_posting = Posting(MainWindow) 
-       servico_posting.mostra_posting()
-       atualiza_lista_principal()
-      
+       mostra_posting(ui)   
+     else:
+       ui.toolBox.setCurrentIndex(0)
          
 
   
@@ -868,6 +896,12 @@ def mostra_tela_estab():
 
 
 def tab_changed(index):
+  if (index == 0):
+    ui.btn_video.setFocus()
+    
+  if (index == 1):
+    ui.txtChave.setFocus()
+    
   if (index == 2):
     ui.txtChave_3.setFocus()
     ui.txtChave_2.setPlainText(constant.EMPTY_STR)
@@ -1118,11 +1152,16 @@ if __name__ == "__main__":
         ui.btn_estab.clicked.connect(mostra_tela_estab)
         
 
-        ui.btn_postar.clicked.connect(on_abre_postar)    
-        
-       
+        ui.btn_postar.hide()
+        ui.toolBox.currentChanged.connect(page_changed)
 
-        lista_notas = []
+        ui.btn_iniciar_postagem.clicked.connect(trigger_postagem)        
+        ui.btn_limpar.clicked.connect(limpar_log)
+        ui.btn_fechar.hide()
+        
+        
+        
+        lista_chaves = []
         lista_cnpj = []
         
         mes_tipo = 1 #mes atual

@@ -1,18 +1,22 @@
 from seleniumdb.core import SeleniumDB
 from seleniumdb.models import Step
-
+from database import   busca_chaves_por_status
+import time
 
 class NFPPosting(SeleniumDB):
+     
+    def seleciona_chaves(self):
+      rows = busca_chaves_por_status(1)
+      return [col['chave'] for col in rows]
+            
 
-    def __init__(self, script_id, cnpj, descricao_entidade, palavras, chaves):      
+    def __init__(self, script_id, cnpj, descricao_entidade, palavras):      
       super().__init__(script_id)
 
       self.cnpj = cnpj
       self.descricao_entidade = descricao_entidade
       self.palavras = palavras
-      self.chaves = chaves
-      
-
+    
     def log(self, message, manual_action = 0):
       #print(message + ' - ' + str(manual_action))
       self.show_log(message, manual_action)
@@ -41,31 +45,36 @@ class NFPPosting(SeleniumDB):
       self.flag_cancelar = 0 
       values_on_expression =  { "descricao_entidade": self.descricao_entidade }    
       
-      for chave in self.chaves:        
+      while True:
         
-        try:
+        chaves = self.seleciona_chaves()
 
-          if (self.flag_cancelar == 1):           
-            break
+        if (self.flag_cancelar == 1):           
+              break
+        
+        for chave in chaves:        
           
-          #trigger for external listeners  
-          print('iniciando chave : {}'.format(chave))
-          self.init_value(chave)
+          try:
 
-          values = { "chave": chave, "cnpj": self.cnpj}      
-          run_result = self.run_steps(values, values_on_expression, step_id, steps_to_skip_on_next_run)
+            if (self.flag_cancelar == 1):           
+              break
+            
+            #trigger for external listeners  
+            print('iniciando chave : {}'.format(chave))
+            self.init_value(chave)
+
+            values = { "chave": chave, "cnpj": self.cnpj}      
+            run_result = self.run_steps(values, values_on_expression, step_id, steps_to_skip_on_next_run)
 
 
-          # com base no retorno do ciclo anterior, 
-          # determina o step inicial e se precisa pular algum step no ciclo seguinte
-          step_id = run_result['step_id']
-          steps_to_skip_on_next_run = run_result['steps_to_skip_on_next_run']
-        except Exception as err:
-          print(err)
+            # com base no retorno do ciclo anterior, 
+            # determina o step inicial e se precisa pular algum step no ciclo seguinte
+            step_id = run_result['step_id']
+            steps_to_skip_on_next_run = run_result['steps_to_skip_on_next_run']
+          except Exception as err:
+            print(err)
      
-      #self.quit_browser()
-
-
+        time.sleep(5) 
 
 
 
