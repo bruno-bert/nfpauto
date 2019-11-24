@@ -950,18 +950,24 @@ def muda_status_tela(status):
 def video_read(content):
     chave = str(content).split("|")[0].replace("CFe","")
      
-    #verifica se nota tem cof, se tiver, invalida
-    cpf_cnpj = str(content).split("|")[3]
-    if (len(cpf_cnpj) > 0):
-      if ( (valida_cnpj(cpf_cnpj)) or (valida_cpf(cpf_cnpj))  ):
-        mostra_mensagem(m.chave_com_cpf_cnpj)
-    
+    #verifica se nota tem cpf/cnpj, se tiver, invalida  a nota pois não pode receber creditos
+    #essa validacao só é possivel na leitura por vídeo
+    try:
+      cpf_cnpj = str(content).split("|")[3]
+      if (len(cpf_cnpj) > 0):
+        if ( (valida_cnpj(cpf_cnpj)) or (valida_cpf(cpf_cnpj))  ):
+          mostra_mensagem(m.chave_com_cpf_cnpj)
+          return 
+    except Exception as err:
+      print('ERRO ao tentar validar se existe cpf/cnpj na nota: ' + repr(err)) 
+                
+
     chave_ok = valida_chave(chave)    
     if (chave_ok): 
-         sequencia_adiciona_nota(chave, constant.ORIGEM_NOTA_VIDEO)        
+        sequencia_adiciona_nota(chave, constant.ORIGEM_NOTA_VIDEO)        
     else:
-         emitir_som_erro(constant.ORIGEM_NOTA_VIDEO)
-         mostra_mensagem(m.chave_invalida)
+        emitir_som_erro(constant.ORIGEM_NOTA_VIDEO)
+        mostra_mensagem(m.chave_invalida)
         
 
 def video_stopped(status):
