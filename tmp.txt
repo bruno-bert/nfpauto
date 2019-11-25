@@ -31,7 +31,10 @@ from PyQt5.QtGui import QFont, QIcon, QPixmap
 from PyQt5.QtCore import Qt, QRect, QSize, QMetaObject, QCoreApplication
 from PyQt5.QtWidgets import QLabel, QPlainTextEdit, QAbstractItemView, QTableWidget, QGroupBox,  QPushButton, QDialogButtonBox
 
-
+ui_stats.py
+from PyQt5.QtGui import QFont, QIcon, QPixmap
+from PyQt5.QtCore import QRect, QSize, QMetaObject, QCoreApplication
+from PyQt5.QtWidgets import QPlainTextEdit, QGroupBox, QLabel, QLineEdit, QPushButton
 
 01.146.603/0001-69
 GACC GRUPO DE ASSISTENCIA A CRIANCA COM CANCER
