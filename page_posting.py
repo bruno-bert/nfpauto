@@ -74,6 +74,17 @@ def atualiza_lista( value):
       index = dialog_postar.lista_notas.indexFromItem(item).row()
       dialog_postar.lista_notas.removeRow(index)
 
+def atualiza_lista_tela_principal( value):
+  global dialog_postar
+
+  #atualiza tela principal apenas se esta estiver com selecao de filtro igual a "pendentes" 
+  if (dialog_postar.combo_status.currentIndex() == 1):
+    items = dialog_postar.tableWidget.findItems(value, QtCoreQt.MatchExactly)
+    if ( len(items) > 0 ):
+      for item in items:
+        index = dialog_postar.tableWidget.indexFromItem(item).row()
+        dialog_postar.tableWidget.removeRow(index)
+
 def atualiza_status_nota_processada( result):
     global cnpj_entidade
     #atualiza status da nota no banco
@@ -84,6 +95,7 @@ def atualiza_status_nota_processada( result):
     
     #atualiza lista no ui
     atualiza_lista(result.value)
+    atualiza_lista_tela_principal(result.value)
   
 
 
@@ -118,8 +130,12 @@ def format_log( message):
   timestamp = '{:%d/%m/%Y %H:%M:%S}'.format(dt)
   return '{} - {}'.format(timestamp, message)
 
+def applyStylesToElement(component, cssFile):
+  with open(cssFile,"r") as fh:
+    component.setStyleSheet(fh.read())   
+
 def adiciona_log_lista( message, manual_action):
-  global logs
+  global logs, dialog_postar
 
   if (message):
     message = format_log(message)
@@ -130,7 +146,13 @@ def adiciona_log_lista( message, manual_action):
       brush = QBrush ()
       brush.setColor(QColor(255,0,0))
       item.setForeground(brush)
-
+      applyStylesToElement(dialog_postar.toolBox, constant.STYLES_FILE_TAB_ALERT)
+      dialog_postar.toolBox.setItemText(dialog_postar.toolBox.indexOf(dialog_postar.page_2), "      Postagem de Notas ( " + str(message).split(" - ")[1] + " )")
+      
+    else:
+      dialog_postar.toolBox.setItemText(dialog_postar.toolBox.indexOf(dialog_postar.page_2), "      Postagem de Notas ( Em Andamento )")
+      applyStylesToElement(dialog_postar.toolBox, constant.STYLES_FILE_TAB_PROGRESS)   
+       
     logs.insertRow(0, item) 
   
   
@@ -174,6 +196,8 @@ def modo_postagem():
   dialog_postar.btn_iniciar_postagem.setIcon(icon)
   dialog_postar.btn_iniciar_postagem.setIconSize(QSize(32,32))
   modo_atual = 'postando'
+  dialog_postar.toolBox.setItemText(dialog_postar.toolBox.indexOf(dialog_postar.page_2), "      Postagem de Notas ( Em Andamento )")
+  applyStylesToElement(dialog_postar.toolBox, constant.STYLES_FILE_TAB_PROGRESS)   
   
 
 def modo_parado():
@@ -183,6 +207,8 @@ def modo_parado():
   dialog_postar.btn_iniciar_postagem.setIcon(icon)
   dialog_postar.btn_iniciar_postagem.setIconSize(QSize(32,32))
   modo_atual = 'parado'  
+  dialog_postar.toolBox.setItemText(dialog_postar.toolBox.indexOf(dialog_postar.page_2), "      Postagem de Notas ( Parado )")
+  applyStylesToElement(dialog_postar.toolBox, constant.STYLES_FILE_TAB_STOPPED)   
 
 
         

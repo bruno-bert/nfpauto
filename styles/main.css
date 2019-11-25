@@ -33,7 +33,7 @@ QPushButton:active {
   padding: 6px 24px;
   text-decoration: none;
   font-size: 16px;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
 }
 #btn_postar:hover {
   background: linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
@@ -53,7 +53,7 @@ QLineEdit {
   border: 1px solid #ccc;
   padding: 8%;
   color: #555;
-  font: 95% Montserrat Semi Bold;
+  font: 95%;
 }
 
 QPlainTextEdit:focus,
@@ -75,20 +75,20 @@ QTableView::item {
 }
 QHeaderView::section {
   font-size: 12pt;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   padding: 5px;
   border: 0px;
 }
 
 /*dialog_postar*/
 #btn_iniciar_postagem {
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 16px;
   color: #fffafa;
 }
 
 #grupo_login {
-  font: 95% Montserrat Semi Bold;
+  font: 95%;
 }
 
 QComboBox {
@@ -120,4 +120,18 @@ QComboBox {
   font-size: 12pt;
   vertical-align: middle;
   border-style: dashed;
+}
+
+QToolBox::tab {
+  font: normal;
+  background: #e5e5e5;
+  font-weight: 200;
+  font-family: "Montserrat", sans-serif;
+}
+
+QToolBox::tab:selected {
+  font: italic;
+  background: #80b5ea;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
 }

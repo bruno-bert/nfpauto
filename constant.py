@@ -56,6 +56,10 @@ STYLES_FILE="styles/main.css"
 STYLES_FILE_BUTTONS="styles/button.css"
 STYLES_FILE_BUTTONS_ALERT="styles/button_alert.css"
 
+STYLES_FILE_TAB_STOPPED="styles/tab_stopped.css"
+STYLES_FILE_TAB_PROGRESS="styles/tab_progress.css"
+STYLES_FILE_TAB_ALERT="styles/tab_alert.css"
+
 #FEATURE_FLAGS
 VALIDA_CNPJ=True
 

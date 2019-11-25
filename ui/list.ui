@@ -49,12 +49,16 @@
     </property>
     <property name="font">
      <font>
+      <family>Montserrat Alternates Medium</family>
       <pointsize>14</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <weight>50</weight>
+      <bold>false</bold>
       <strikeout>false</strikeout>
       <kerning>false</kerning>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="frameShape">
      <enum>QFrame::Panel</enum>
@@ -80,7 +84,7 @@
        <x>0</x>
        <y>0</y>
        <width>1899</width>
-       <height>921</height>
+       <height>941</height>
       </rect>
      </property>
      <attribute name="icon">
@@ -93,7 +97,7 @@
      <widget class="QPushButton" name="btn_login">
       <property name="geometry">
        <rect>
-        <x>1350</x>
+        <x>1330</x>
         <y>20</y>
         <width>271</width>
         <height>41</height>
@@ -102,12 +106,12 @@
       <property name="font">
        <font>
         <family>Arial</family>
-        <pointsize>14</pointsize>
+        <pointsize>8</pointsize>
         <weight>75</weight>
         <bold>true</bold>
         <underline>false</underline>
         <strikeout>false</strikeout>
-        <kerning>false</kerning>
+        <kerning>true</kerning>
        </font>
       </property>
       <property name="text">
@@ -140,7 +144,7 @@
         <weight>75</weight>
         <bold>true</bold>
         <strikeout>false</strikeout>
-        <kerning>false</kerning>
+        <kerning>true</kerning>
        </font>
       </property>
       <property name="title">
@@ -162,7 +166,7 @@
          <weight>75</weight>
          <bold>true</bold>
          <strikeout>false</strikeout>
-         <kerning>false</kerning>
+         <kerning>true</kerning>
         </font>
        </property>
        <property name="text">
@@ -185,7 +189,7 @@
          <weight>75</weight>
          <bold>true</bold>
          <strikeout>false</strikeout>
-         <kerning>false</kerning>
+         <kerning>true</kerning>
         </font>
        </property>
        <property name="text">
@@ -208,7 +212,7 @@
          <weight>75</weight>
          <bold>true</bold>
          <strikeout>false</strikeout>
-         <kerning>false</kerning>
+         <kerning>true</kerning>
         </font>
        </property>
        <property name="text">
@@ -231,7 +235,7 @@
          <weight>75</weight>
          <bold>true</bold>
          <strikeout>false</strikeout>
-         <kerning>false</kerning>
+         <kerning>true</kerning>
         </font>
        </property>
        <property name="text">
@@ -254,7 +258,7 @@
          <weight>75</weight>
          <bold>true</bold>
          <strikeout>false</strikeout>
-         <kerning>false</kerning>
+         <kerning>true</kerning>
         </font>
        </property>
        <property name="text">
@@ -277,7 +281,7 @@
          <weight>75</weight>
          <bold>true</bold>
          <strikeout>false</strikeout>
-         <kerning>false</kerning>
+         <kerning>true</kerning>
         </font>
        </property>
        <property name="text">
@@ -300,7 +304,7 @@
          <weight>75</weight>
          <bold>true</bold>
          <strikeout>false</strikeout>
-         <kerning>false</kerning>
+         <kerning>true</kerning>
         </font>
        </property>
        <property name="text">
@@ -323,7 +327,7 @@
          <weight>75</weight>
          <bold>true</bold>
          <strikeout>false</strikeout>
-         <kerning>false</kerning>
+         <kerning>true</kerning>
         </font>
        </property>
        <property name="text">
@@ -346,7 +350,7 @@
          <weight>75</weight>
          <bold>true</bold>
          <strikeout>false</strikeout>
-         <kerning>false</kerning>
+         <kerning>true</kerning>
         </font>
        </property>
        <property name="text">
@@ -436,7 +440,7 @@
         <weight>75</weight>
         <bold>true</bold>
         <strikeout>false</strikeout>
-        <kerning>false</kerning>
+        <kerning>true</kerning>
        </font>
       </property>
       <property name="text">
@@ -488,7 +492,7 @@
        <rect>
         <x>20</x>
         <y>70</y>
-        <width>1881</width>
+        <width>1861</width>
         <height>271</height>
        </rect>
       </property>
@@ -499,7 +503,7 @@
         <weight>75</weight>
         <bold>true</bold>
         <strikeout>false</strikeout>
-        <kerning>false</kerning>
+        <kerning>true</kerning>
        </font>
       </property>
       <property name="styleSheet">
@@ -558,7 +562,7 @@
         <weight>75</weight>
         <bold>true</bold>
         <strikeout>false</strikeout>
-        <kerning>false</kerning>
+        <kerning>true</kerning>
        </font>
       </property>
       <property name="autoFillBackground">
@@ -587,7 +591,7 @@
         <weight>75</weight>
         <bold>true</bold>
         <strikeout>false</strikeout>
-        <kerning>false</kerning>
+        <kerning>true</kerning>
        </font>
       </property>
       <property name="text">
@@ -607,7 +611,7 @@
      <widget class="QPushButton" name="btn_cnpj">
       <property name="geometry">
        <rect>
-        <x>1630</x>
+        <x>1610</x>
         <y>20</y>
         <width>271</width>
         <height>41</height>
@@ -616,12 +620,12 @@
       <property name="font">
        <font>
         <family>Arial</family>
-        <pointsize>14</pointsize>
+        <pointsize>8</pointsize>
         <weight>75</weight>
         <bold>true</bold>
         <underline>false</underline>
         <strikeout>false</strikeout>
-        <kerning>false</kerning>
+        <kerning>true</kerning>
        </font>
       </property>
       <property name="toolTip">
@@ -672,14 +676,14 @@
         <weight>75</weight>
         <bold>true</bold>
         <strikeout>false</strikeout>
-        <kerning>false</kerning>
+        <kerning>true</kerning>
        </font>
       </property>
       <property name="styleSheet">
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>4</number>
       </property>
       <property name="iconSize">
        <size>
@@ -719,12 +723,12 @@
         <property name="font">
          <font>
           <family>Montserrat Alternates SemiBold</family>
-          <pointsize>12</pointsize>
+          <pointsize>8</pointsize>
           <weight>75</weight>
           <bold>true</bold>
           <underline>false</underline>
           <strikeout>false</strikeout>
-          <kerning>false</kerning>
+          <kerning>true</kerning>
          </font>
         </property>
         <property name="text">
@@ -762,7 +766,7 @@
           <weight>75</weight>
           <bold>true</bold>
           <strikeout>false</strikeout>
-          <kerning>false</kerning>
+          <kerning>true</kerning>
          </font>
         </property>
         <property name="title">
@@ -780,12 +784,12 @@
          <property name="font">
           <font>
            <family>Montserrat Alternates SemiBold</family>
-           <pointsize>12</pointsize>
+           <pointsize>8</pointsize>
            <weight>50</weight>
            <italic>false</italic>
            <bold>false</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="toolTip">
@@ -829,7 +833,7 @@
            <weight>75</weight>
            <bold>true</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="text">
@@ -852,7 +856,7 @@
            <weight>50</weight>
            <bold>false</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="text">
@@ -881,7 +885,7 @@
           <weight>75</weight>
           <bold>true</bold>
           <strikeout>false</strikeout>
-          <kerning>false</kerning>
+          <kerning>true</kerning>
          </font>
         </property>
         <property name="title">
@@ -902,12 +906,12 @@
          <property name="font">
           <font>
            <family>Montserrat Alternates SemiBold</family>
-           <pointsize>12</pointsize>
+           <pointsize>8</pointsize>
            <weight>50</weight>
            <italic>false</italic>
            <bold>false</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="toolTip">
@@ -945,7 +949,7 @@
            <weight>75</weight>
            <bold>true</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="text">
@@ -968,7 +972,7 @@
            <weight>50</weight>
            <bold>false</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="text">
@@ -987,12 +991,12 @@
          <property name="font">
           <font>
            <family>Montserrat SemiBold</family>
-           <pointsize>12</pointsize>
+           <pointsize>8</pointsize>
            <weight>50</weight>
            <italic>false</italic>
            <bold>false</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="toolTip">
@@ -1026,12 +1030,12 @@
          <property name="font">
           <font>
            <family>Montserrat Alternates SemiBold</family>
-           <pointsize>12</pointsize>
+           <pointsize>8</pointsize>
            <weight>75</weight>
            <bold>true</bold>
            <underline>false</underline>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="text">
@@ -1070,7 +1074,7 @@
           <weight>75</weight>
           <bold>true</bold>
           <strikeout>false</strikeout>
-          <kerning>false</kerning>
+          <kerning>true</kerning>
          </font>
         </property>
         <property name="title">
@@ -1091,11 +1095,11 @@
          <property name="font">
           <font>
            <family>Montserrat Alternates SemiBold</family>
-           <pointsize>10</pointsize>
+           <pointsize>8</pointsize>
            <weight>75</weight>
            <bold>true</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="toolTip">
@@ -1133,7 +1137,7 @@
            <weight>75</weight>
            <bold>true</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="text">
@@ -1152,12 +1156,12 @@
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>10</pointsize>
+           <pointsize>8</pointsize>
            <weight>75</weight>
            <bold>true</bold>
            <underline>false</underline>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="text">
@@ -1186,12 +1190,12 @@
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>10</pointsize>
+           <pointsize>8</pointsize>
            <weight>75</weight>
            <bold>true</bold>
            <underline>false</underline>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="text">
@@ -1225,7 +1229,7 @@
           <weight>75</weight>
           <bold>true</bold>
           <strikeout>false</strikeout>
-          <kerning>false</kerning>
+          <kerning>true</kerning>
          </font>
         </property>
         <property name="text">
@@ -1253,7 +1257,7 @@
           <weight>75</weight>
           <bold>true</bold>
           <strikeout>false</strikeout>
-          <kerning>false</kerning>
+          <kerning>true</kerning>
          </font>
         </property>
         <property name="title">
@@ -1271,12 +1275,12 @@
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>14</pointsize>
+           <pointsize>8</pointsize>
            <weight>75</weight>
            <bold>true</bold>
            <underline>false</underline>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="text">
@@ -1305,11 +1309,11 @@
          <property name="font">
           <font>
            <family>Montserrat Alternates SemiBold</family>
-           <pointsize>14</pointsize>
+           <pointsize>8</pointsize>
            <weight>75</weight>
            <bold>true</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="value">
@@ -1338,7 +1342,7 @@
            <weight>75</weight>
            <bold>true</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="text">
@@ -1361,7 +1365,7 @@
            <weight>75</weight>
            <bold>true</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="text">
@@ -1385,7 +1389,7 @@
            <italic>false</italic>
            <bold>false</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
         </widget>
@@ -1406,7 +1410,7 @@
            <italic>false</italic>
            <bold>false</bold>
            <strikeout>false</strikeout>
-           <kerning>false</kerning>
+           <kerning>true</kerning>
           </font>
          </property>
          <property name="text">
@@ -1441,7 +1445,7 @@
         <weight>75</weight>
         <bold>true</bold>
         <strikeout>false</strikeout>
-        <kerning>false</kerning>
+        <kerning>true</kerning>
        </font>
       </property>
       <property name="autoFillBackground">
@@ -1465,6 +1469,7 @@
       </property>
       <property name="font">
        <font>
+        <family>MS Shell Dlg 2</family>
         <pointsize>8</pointsize>
         <weight>50</weight>
         <bold>false</bold>

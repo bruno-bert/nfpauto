@@ -142,6 +142,14 @@ def carrega_lista_chaves(rows):
     resizeColumns(ui.tableWidget, ui.tableWidget.columnCount())
         
 
+def carrega_lista_chaves_total(rows):
+
+    if (rows):
+        for row_num, row_data in enumerate(rows):
+            row = dict(row_data)
+            lista_chaves.append(row['chave'])
+
+
 
 def cria_tabela_notas():
     ui.tableWidget.setColumnCount(14)
@@ -1179,6 +1187,10 @@ if __name__ == "__main__":
 
         #carrega lista de notas do banco
         atualiza_lista_principal()
+
+        #busca lista total de chaves
+        rows_total = busca_chaves_banco() 
+        carrega_lista_chaves_total(rows_total)
        
         
         #lista ufs
