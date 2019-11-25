@@ -42,6 +42,7 @@ from util import Util, VideoStatus
 import ui_list
 import ui_cnpj_dialog
 import ui_cnpj_padrao_dialog
+import ui_stats
 
 from api import ApiPortal, ApiResult
 
@@ -589,6 +590,51 @@ def modoportal():
     ui.btn_portal.setFocus()
     ui.txt_num_notas.text = str(constant.DEFAULT_NUMERO_NOTAS)
 
+def limpa_stats():
+  dialog_stats.lbl_hoje.setText("0")
+  dialog_stats.lbl_pendentes.setText("0")
+  dialog_stats.lbl_postadas.setText("0")
+  dialog_stats.lbl_erro.setText("0")
+
+def mostra_dialogStats():
+   
+   try:
+
+    #aplica tema no dialog de cnpj padrão
+    sshFile = constant.STYLES_FILE
+    with open(sshFile,"r") as fh:
+      Dialog_Cnpj.setStyleSheet(fh.read()) 
+
+    rows = busca_chaves_stats_hoje() 
+    soma = 0
+    limpa_stats()
+
+    if (rows):
+      for row_data in rows:
+          row = dict(row_data)
+          soma+= int(row['contador']) 
+          
+          if(str(row['status']) == '1') :
+            dialog_stats.lbl_pendentes.setText(str(row['contador']))
+            
+          if(str(row['status']) == '2') :
+            dialog_stats.lbl_postadas.setText(str(row['contador']))
+
+          if(str(row['status']) == '3') :
+            dialog_stats.lbl_erro.setText(str(row['contador']))
+
+    dialog_stats.lbl_hoje.setText(str(soma))   
+
+    if  (Dialog_Stats.exec_()):
+     return True
+    else:
+     return False      
+
+   except Exception as err:
+     limpa_stats()
+     print(repr(err))  
+
+
 def mostra_dialogCnpj():
 
    #aplica tema no dialog de cnpj padrão
@@ -916,6 +962,9 @@ def tab_changed(index):
     ui.txtChave_3.setPlainText(constant.EMPTY_STR)
     mostra_tela_estab()
 
+def fechar_stats():
+  Dialog_Stats.accept()
+
 def fechar_dialog_cnpj_padrao():
    row = busca_cnpj_padrao()
    if (not row):
@@ -978,11 +1027,8 @@ def aplica_scripts_inicio():
 
 
 
-
-
-
-
 def muda_status_tela(status):
+   ui.btn_stat.setEnabled(status)
    ui.btn_postar.setEnabled(status)
    ui.btn_cnpj.setEnabled(status)
    ui.tab_opcao.setEnabled(status)
@@ -1117,6 +1163,12 @@ if __name__ == "__main__":
         dialog_cnpj_padrao = ui_cnpj_padrao_dialog.Ui_Dialog()
         dialog_cnpj_padrao.setupUi(Dialog_Cnpj)
         Dialog_Cnpj.setModal(True)
+
+        Dialog_Stats = QDialog()
+        dialog_stats = ui_stats.Ui_Dialog()
+        dialog_stats.setupUi(Dialog_Stats)
+        Dialog_Stats.setModal(True)
+
         
         servico_login = Login()
         ui.btn_login.clicked.connect(on_abre_login)    
@@ -1150,6 +1202,9 @@ if __name__ == "__main__":
         
         dialog_cnpj_padrao.btn_ok.clicked.connect(confirma_cnpj_padrao)
         dialog_cnpj_padrao.btn_cancel.clicked.connect(fechar_dialog_cnpj_padrao)
+
+        ui.btn_stat.clicked.connect(mostra_dialogStats)  
+        dialog_stats.btn_ok.clicked.connect(fechar_stats)
         
         ui.txt_num_notas.setValidator(QIntValidator(constant.MIN_NOTAS , constant.MAX_NOTAS) )
         ui.txt_num_notas.setText(str(constant.DEFAULT_NUMERO_NOTAS))
