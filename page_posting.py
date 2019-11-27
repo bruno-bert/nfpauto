@@ -164,6 +164,7 @@ def carrega_lista_chaves(notas):
     for row_num, row_data in enumerate(notas):
         row = dict(row_data)
         dialog_postar.lista_notas.insertRow(row_num)
+        dialog_postar.lista_notas.setRowHeight(row_num, 50)
         dialog_postar.lista_notas.setItem(row_num, 0, QTableWidgetItem(str(row['id']))) 
         dialog_postar.lista_notas.setItem(row_num, 1, QTableWidgetItem(row['chave']))
         dialog_postar.lista_notas.setItem(row_num, 2, QTableWidgetItem(row['status']))

@@ -9,7 +9,7 @@ QPushButton {
   border: 1px solid #84bbf3;
   color: #555;
   font-family: Arial;
-  font-size: 15px;
+  font-size: 10px;
   font-weight: bold;
   padding: 6px 24px;
   text-decoration: none;
@@ -19,27 +19,6 @@ QPushButton:hover {
   background-color: #80b5ea;
 }
 QPushButton:active {
-  position: relative;
-  top: 1px;
-}
-
-#btn_postar {
-  background: linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
-  background-color: #33bdef;
-  border-radius: 6px;
-  border: 1px solid #057fd0;
-  color: #ffffff;
-  font-weight: bold;
-  padding: 6px 24px;
-  text-decoration: none;
-  font-size: 16px;
-  font-family: "Montserrat", sans-serif;
-}
-#btn_postar:hover {
-  background: linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
-  background-color: #019ad2;
-}
-#btn_postar:active {
   position: relative;
   top: 1px;
 }
@@ -67,57 +46,49 @@ QLineEdit:focus {
   border: 2px solid #84bbf3;
 }
 
-QTableView {
-  font-size: 10pt;
-}
-QTableView::item {
-  padding: 20px;
-}
 QHeaderView::section {
-  font-size: 12pt;
-  font-family: "Montserrat", sans-serif;
-  padding: 5px;
+  font-size: 8pt;
   border: 0px;
+  font-weight: normal;
+  font-family: "Montserrat", sans-serif;
+  background-color: rgba(246, 235, 235, 0.719);
+}
+
+QTableView {
+  font-size: 12pt;
+  font-weight: normal;
+}
+
+QTableView#tableWidget {
+  font-size: 10pt;
+  font-weight: normal;
 }
 
 /*dialog_postar*/
-#btn_iniciar_postagem {
-  font-family: "Montserrat", sans-serif;
-  font-size: 16px;
-  color: #fffafa;
-}
 
 #grupo_login {
   font: 95%;
 }
 
 QComboBox {
-  font-size: 14px;
+  font-size: 10px;
   font-weight: bold;
 }
 
 #lbl_info {
-  margin: 10px 0px;
-  padding: 12px;
-}
-#lbl_info {
   color: #4f8a10;
   background-color: #dff2bf;
   margin: 10px 22px;
-  font-size: 11pt;
+  font-size: 8pt;
   vertical-align: middle;
   border-style: dashed;
 }
 
 #lbl_message {
-  margin: 10px 0px;
-  padding: 12px;
-}
-#lbl_message {
   color: #9f6000;
   background-color: #ffffcc;
   margin: 10px 22px;
-  font-size: 12pt;
+  font-size: 8pt;
   vertical-align: middle;
   border-style: dashed;
 }

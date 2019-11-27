@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1920</width>
-    <height>1019</height>
+    <width>1368</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1920</width>
-    <height>1080</height>
+    <width>1368</width>
+    <height>700</height>
    </size>
   </property>
   <property name="font">
@@ -43,14 +43,14 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>1901</width>
-      <height>1001</height>
+      <width>1350</width>
+      <height>680</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Montserrat Alternates Medium</family>
-      <pointsize>14</pointsize>
+      <pointsize>12</pointsize>
       <weight>50</weight>
       <bold>false</bold>
       <strikeout>false</strikeout>
@@ -83,8 +83,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>1899</width>
-       <height>921</height>
+       <width>1348</width>
+       <height>608</height>
       </rect>
      </property>
      <attribute name="icon">
@@ -97,7 +97,7 @@
      <widget class="QPushButton" name="btn_login">
       <property name="geometry">
        <rect>
-        <x>1330</x>
+        <x>1020</x>
         <y>10</y>
         <width>271</width>
         <height>51</height>
@@ -128,316 +128,21 @@
        </size>
       </property>
      </widget>
-     <widget class="QGroupBox" name="grupo_atalhos">
-      <property name="geometry">
-       <rect>
-        <x>1130</x>
-        <y>450</y>
-        <width>631</width>
-        <height>351</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Montserrat Alternates SemiBold</family>
-        <pointsize>10</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-        <strikeout>false</strikeout>
-        <kerning>true</kerning>
-       </font>
-      </property>
-      <property name="title">
-       <string>Teclas de Atalhos</string>
-      </property>
-      <widget class="QLabel" name="lbl_atalho1">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>30</y>
-         <width>291</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Montserrat Alternates SemiBold</family>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <strikeout>false</strikeout>
-         <kerning>true</kerning>
-        </font>
-       </property>
-       <property name="text">
-        <string>ESC - limpa campo de chave</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="lbl_atalho1_2">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>70</y>
-         <width>411</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Montserrat Alternates SemiBold</family>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <strikeout>false</strikeout>
-         <kerning>true</kerning>
-        </font>
-       </property>
-       <property name="text">
-        <string>A - Captura por Leitor de Código de Barras</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="lbl_atalho1_3">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>110</y>
-         <width>591</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Montserrat Alternates SemiBold</family>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <strikeout>false</strikeout>
-         <kerning>true</kerning>
-        </font>
-       </property>
-       <property name="text">
-        <string>B - Captura por Digitação da Chave (5 últimos grupos)</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="lbl_atalho1_4">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>150</y>
-         <width>591</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Montserrat Alternates SemiBold</family>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <strikeout>false</strikeout>
-         <kerning>true</kerning>
-        </font>
-       </property>
-       <property name="text">
-        <string>C - Importar Arquivo</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="lbl_atalho1_5">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>190</y>
-         <width>591</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Montserrat Alternates SemiBold</family>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <strikeout>false</strikeout>
-         <kerning>true</kerning>
-        </font>
-       </property>
-       <property name="text">
-        <string>D - Buscar do Portal Amigo</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="lbl_atalho1_6">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>230</y>
-         <width>591</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Montserrat Alternates SemiBold</family>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <strikeout>false</strikeout>
-         <kerning>true</kerning>
-        </font>
-       </property>
-       <property name="text">
-        <string>E - Atualizar CNPJ da instituição</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="lbl_atalho1_7">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>270</y>
-         <width>591</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Montserrat Alternates SemiBold</family>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <strikeout>false</strikeout>
-         <kerning>true</kerning>
-        </font>
-       </property>
-       <property name="text">
-        <string>L - Fazer Login no Portal</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="lbl_atalho1_8">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>340</y>
-         <width>591</width>
-         <height>71</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Montserrat Alternates SemiBold</family>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <strikeout>false</strikeout>
-         <kerning>true</kerning>
-        </font>
-       </property>
-       <property name="text">
-        <string>P - Postar no ambiente do governo</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="lbl_atalho1_9">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>310</y>
-         <width>411</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Montserrat Alternates SemiBold</family>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <strikeout>false</strikeout>
-         <kerning>true</kerning>
-        </font>
-       </property>
-       <property name="text">
-        <string>V - Captura por Vídeo</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btn_postar">
-       <property name="geometry">
-        <rect>
-         <x>550</x>
-         <y>40</y>
-         <width>211</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Montserrat</family>
-         <pointsize>10</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <underline>false</underline>
-         <strikeout>false</strikeout>
-         <kerning>false</kerning>
-        </font>
-       </property>
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-       <property name="toolTip">
-        <string>&lt;H2&gt;
-  Clique aqui para iniciar a postagem automática no site da Nota Fiscal Paulista
-&lt;/H2&gt;</string>
-       </property>
-       <property name="toolTipDuration">
-        <number>3</number>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>      Iniciar Postagem de Notas</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>assets/icons/ai.png</normaloff>assets/icons/ai.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>40</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="checkable">
-        <bool>false</bool>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-       <property name="autoExclusive">
-        <bool>false</bool>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-       <property name="default">
-        <bool>false</bool>
-       </property>
-       <property name="flat">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </widget>
      <widget class="QLabel" name="lbTitulo">
       <property name="geometry">
        <rect>
-        <x>720</x>
-        <y>20</y>
-        <width>441</width>
+        <x>20</x>
+        <y>10</y>
+        <width>190</width>
         <height>41</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Montserrat Alternates SemiBold</family>
-        <pointsize>20</pointsize>
+        <pointsize>12</pointsize>
         <weight>75</weight>
+        <italic>true</italic>
         <bold>true</bold>
         <strikeout>false</strikeout>
         <kerning>true</kerning>
@@ -491,9 +196,9 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>70</y>
-        <width>1861</width>
-        <height>271</height>
+        <y>50</y>
+        <width>601</width>
+        <height>521</height>
        </rect>
       </property>
       <property name="font">
@@ -509,8 +214,14 @@
       <property name="styleSheet">
        <string notr="true"/>
       </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
       <property name="selectionMode">
        <enum>QAbstractItemView::NoSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
       </property>
       <property name="gridStyle">
        <enum>Qt::DotLine</enum>
@@ -522,7 +233,7 @@
        <number>0</number>
       </property>
       <attribute name="horizontalHeaderVisible">
-       <bool>true</bool>
+       <bool>false</bool>
       </attribute>
       <attribute name="horizontalHeaderCascadingSectionResizes">
        <bool>false</bool>
@@ -531,13 +242,13 @@
        <number>152</number>
       </attribute>
       <attribute name="horizontalHeaderHighlightSections">
-       <bool>true</bool>
+       <bool>false</bool>
       </attribute>
       <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
        <bool>false</bool>
       </attribute>
       <attribute name="horizontalHeaderStretchLastSection">
-       <bool>false</bool>
+       <bool>true</bool>
       </attribute>
       <attribute name="verticalHeaderVisible">
        <bool>false</bool>
@@ -549,16 +260,16 @@
      <widget class="QLabel" name="lbl_info">
       <property name="geometry">
        <rect>
-        <x>1020</x>
-        <y>340</y>
-        <width>861</width>
-        <height>61</height>
+        <x>20</x>
+        <y>565</y>
+        <width>591</width>
+        <height>45</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Montserrat Alternates SemiBold</family>
-        <pointsize>16</pointsize>
+        <pointsize>8</pointsize>
         <weight>75</weight>
         <bold>true</bold>
         <strikeout>false</strikeout>
@@ -578,16 +289,16 @@
      <widget class="QLabel" name="lbl_qtde_notas_2">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>181</width>
+        <x>320</x>
+        <y>10</y>
+        <width>111</width>
         <height>41</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Montserrat Alternates SemiBold</family>
-        <pointsize>12</pointsize>
+        <pointsize>8</pointsize>
         <weight>75</weight>
         <bold>true</bold>
         <strikeout>false</strikeout>
@@ -601,19 +312,24 @@
      <widget class="QComboBox" name="combo_status">
       <property name="geometry">
        <rect>
-        <x>170</x>
-        <y>30</y>
-        <width>381</width>
+        <x>430</x>
+        <y>10</y>
+        <width>191</width>
         <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
       </property>
      </widget>
      <widget class="QPushButton" name="btn_cnpj">
       <property name="geometry">
        <rect>
-        <x>1610</x>
-        <y>10</y>
-        <width>271</width>
+        <x>1130</x>
+        <y>0</y>
+        <width>191</width>
         <height>51</height>
        </rect>
       </property>
@@ -663,16 +379,16 @@
      <widget class="QTabWidget" name="tab_opcao">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>390</y>
-        <width>951</width>
-        <height>501</height>
+        <x>640</x>
+        <y>70</y>
+        <width>711</width>
+        <height>461</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Montserrat Alternates SemiBold</family>
-        <pointsize>12</pointsize>
+        <pointsize>10</pointsize>
         <weight>75</weight>
         <bold>true</bold>
         <strikeout>false</strikeout>
@@ -698,10 +414,10 @@
        <widget class="QLabel" name="label_video">
         <property name="geometry">
          <rect>
-          <x>140</x>
-          <y>70</y>
-          <width>640</width>
-          <height>360</height>
+          <x>50</x>
+          <y>60</y>
+          <width>591</width>
+          <height>361</height>
          </rect>
         </property>
         <property name="frameShape">
@@ -714,10 +430,10 @@
        <widget class="QPushButton" name="btn_video">
         <property name="geometry">
          <rect>
-          <x>140</x>
+          <x>50</x>
           <y>10</y>
-          <width>641</width>
-          <height>51</height>
+          <width>591</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="font">
@@ -753,16 +469,16 @@
        <widget class="QGroupBox" name="grupo_chave_completa">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>130</y>
-          <width>821</width>
-          <height>121</height>
+          <x>20</x>
+          <y>90</y>
+          <width>661</width>
+          <height>201</height>
          </rect>
         </property>
         <property name="font">
          <font>
           <family>Montserrat Alternates SemiBold</family>
-          <pointsize>12</pointsize>
+          <pointsize>10</pointsize>
           <weight>75</weight>
           <bold>true</bold>
           <strikeout>false</strikeout>
@@ -775,8 +491,8 @@
         <widget class="QPlainTextEdit" name="txtChave">
          <property name="geometry">
           <rect>
-           <x>190</x>
-           <y>30</y>
+           <x>30</x>
+           <y>70</y>
            <width>591</width>
            <height>51</height>
           </rect>
@@ -822,14 +538,14 @@
           <rect>
            <x>30</x>
            <y>30</y>
-           <width>171</width>
+           <width>151</width>
            <height>41</height>
           </rect>
          </property>
          <property name="font">
           <font>
            <family>Montserrat Alternates SemiBold</family>
-           <pointsize>12</pointsize>
+           <pointsize>10</pointsize>
            <weight>75</weight>
            <bold>true</bold>
            <strikeout>false</strikeout>
@@ -844,7 +560,7 @@
          <property name="geometry">
           <rect>
            <x>200</x>
-           <y>90</y>
+           <y>160</y>
            <width>311</width>
            <height>20</height>
           </rect>
@@ -872,16 +588,16 @@
        <widget class="QGroupBox" name="grupo_chave_completa_2">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>130</y>
-          <width>891</width>
-          <height>171</height>
+          <x>20</x>
+          <y>60</y>
+          <width>661</width>
+          <height>311</height>
          </rect>
         </property>
         <property name="font">
          <font>
           <family>Montserrat Alternates SemiBold</family>
-          <pointsize>12</pointsize>
+          <pointsize>10</pointsize>
           <weight>75</weight>
           <bold>true</bold>
           <strikeout>false</strikeout>
@@ -897,8 +613,8 @@
          </property>
          <property name="geometry">
           <rect>
-           <x>280</x>
-           <y>30</y>
+           <x>30</x>
+           <y>100</y>
            <width>321</width>
            <height>51</height>
           </rect>
@@ -937,7 +653,7 @@
          <property name="geometry">
           <rect>
            <x>30</x>
-           <y>30</y>
+           <y>60</y>
            <width>241</width>
            <height>41</height>
           </rect>
@@ -945,7 +661,7 @@
          <property name="font">
           <font>
            <family>Montserrat Alternates SemiBold</family>
-           <pointsize>12</pointsize>
+           <pointsize>10</pointsize>
            <weight>75</weight>
            <bold>true</bold>
            <strikeout>false</strikeout>
@@ -959,8 +675,8 @@
         <widget class="QLabel" name="lblDigitos_2">
          <property name="geometry">
           <rect>
-           <x>280</x>
-           <y>90</y>
+           <x>30</x>
+           <y>160</y>
            <width>311</width>
            <height>20</height>
           </rect>
@@ -982,9 +698,9 @@
         <widget class="QPlainTextEdit" name="txtChave_3">
          <property name="geometry">
           <rect>
-           <x>620</x>
-           <y>30</y>
-           <width>251</width>
+           <x>370</x>
+           <y>100</y>
+           <width>231</width>
            <height>51</height>
           </rect>
          </property>
@@ -1022,7 +738,7 @@
          <property name="geometry">
           <rect>
            <x>30</x>
-           <y>120</y>
+           <y>200</y>
            <width>311</width>
            <height>41</height>
           </rect>
@@ -1061,10 +777,10 @@
        <widget class="QGroupBox" name="grupo_chave_completa_3">
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>120</y>
-          <width>871</width>
-          <height>151</height>
+          <x>40</x>
+          <y>110</y>
+          <width>621</width>
+          <height>201</height>
          </rect>
         </property>
         <property name="font">
@@ -1087,8 +803,8 @@
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>30</y>
-           <width>601</width>
+           <y>50</y>
+           <width>371</width>
            <height>51</height>
           </rect>
          </property>
@@ -1124,9 +840,9 @@
         <widget class="QLabel" name="lblDigitos_3">
          <property name="geometry">
           <rect>
-           <x>200</x>
-           <y>70</y>
-           <width>311</width>
+           <x>10</x>
+           <y>170</y>
+           <width>581</width>
            <height>20</height>
           </rect>
          </property>
@@ -1147,9 +863,9 @@
         <widget class="QPushButton" name="btn_arquivo">
          <property name="geometry">
           <rect>
-           <x>620</x>
-           <y>30</y>
-           <width>221</width>
+           <x>400</x>
+           <y>50</y>
+           <width>191</width>
            <height>41</height>
           </rect>
          </property>
@@ -1182,8 +898,8 @@
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>90</y>
-           <width>851</width>
+           <y>110</y>
+           <width>581</width>
            <height>51</height>
           </rect>
          </property>
@@ -1212,29 +928,29 @@
           </size>
          </property>
         </widget>
-       </widget>
-       <widget class="QCheckBox" name="check_dir">
-        <property name="geometry">
-         <rect>
-          <x>650</x>
-          <y>100</y>
-          <width>241</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Montserrat Alternates SemiBold</family>
-          <pointsize>14</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-          <strikeout>false</strikeout>
-          <kerning>true</kerning>
-         </font>
-        </property>
-        <property name="text">
-         <string>Modo Diretório XMLs</string>
-        </property>
+        <widget class="QCheckBox" name="check_dir">
+         <property name="geometry">
+          <rect>
+           <x>420</x>
+           <y>20</y>
+           <width>181</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Montserrat Alternates SemiBold</family>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+           <strikeout>false</strikeout>
+           <kerning>true</kerning>
+          </font>
+         </property>
+         <property name="text">
+          <string>Modo Diretório XMLs</string>
+         </property>
+        </widget>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_4">
@@ -1245,15 +961,15 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>90</y>
-          <width>871</width>
-          <height>201</height>
+          <y>50</y>
+          <width>671</width>
+          <height>311</height>
          </rect>
         </property>
         <property name="font">
          <font>
           <family>Montserrat Alternates SemiBold</family>
-          <pointsize>14</pointsize>
+          <pointsize>10</pointsize>
           <weight>75</weight>
           <bold>true</bold>
           <strikeout>false</strikeout>
@@ -1266,9 +982,9 @@
         <widget class="QPushButton" name="btn_portal">
          <property name="geometry">
           <rect>
-           <x>20</x>
-           <y>110</y>
-           <width>821</width>
+           <x>30</x>
+           <y>200</y>
+           <width>601</width>
            <height>41</height>
           </rect>
          </property>
@@ -1300,9 +1016,9 @@
         <widget class="QProgressBar" name="barra_progresso_portal">
          <property name="geometry">
           <rect>
-           <x>20</x>
-           <y>160</y>
-           <width>821</width>
+           <x>30</x>
+           <y>250</y>
+           <width>601</width>
            <height>23</height>
           </rect>
          </property>
@@ -1352,8 +1068,8 @@
         <widget class="QLabel" name="lbl_qtde_notas">
          <property name="geometry">
           <rect>
-           <x>580</x>
-           <y>40</y>
+           <x>50</x>
+           <y>110</y>
            <width>181</width>
            <height>41</height>
           </rect>
@@ -1396,8 +1112,8 @@
         <widget class="QLineEdit" name="txt_num_notas">
          <property name="geometry">
           <rect>
-           <x>780</x>
-           <y>40</y>
+           <x>240</x>
+           <y>110</y>
            <width>61</width>
            <height>51</height>
           </rect>
@@ -1432,16 +1148,16 @@
      <widget class="QLabel" name="lbl_message">
       <property name="geometry">
        <rect>
-        <x>1020</x>
-        <y>340</y>
-        <width>851</width>
-        <height>61</height>
+        <x>20</x>
+        <y>565</y>
+        <width>591</width>
+        <height>45</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Montserrat Alternates SemiBold</family>
-        <pointsize>16</pointsize>
+        <pointsize>8</pointsize>
         <weight>75</weight>
         <bold>true</bold>
         <strikeout>false</strikeout>
@@ -1484,9 +1200,9 @@
      <widget class="QPushButton" name="btn_stat">
       <property name="geometry">
        <rect>
-        <x>1330</x>
-        <y>10</y>
-        <width>271</width>
+        <x>930</x>
+        <y>0</y>
+        <width>191</width>
         <height>51</height>
        </rect>
       </property>
@@ -1515,14 +1231,310 @@
        </size>
       </property>
      </widget>
+     <widget class="QGroupBox" name="grupo_atalhos">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>530</y>
+        <width>701</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Montserrat</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+        <strikeout>false</strikeout>
+        <kerning>true</kerning>
+       </font>
+      </property>
+      <property name="title">
+       <string>Teclas de Atalhos</string>
+      </property>
+      <widget class="QLabel" name="lbl_atalho1">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>0</y>
+         <width>291</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Montserrat</family>
+         <pointsize>8</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>ESC - limpa campo de chave</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_atalho1_2">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>0</y>
+         <width>231</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Montserrat</family>
+         <pointsize>8</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>A - Captura por Leitor de Código de Barras</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_atalho1_3">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>301</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Montserrat</family>
+         <pointsize>8</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>B - Captura por Digitação da Chave (5 últimos grupos)</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_atalho1_4">
+       <property name="geometry">
+        <rect>
+         <x>340</x>
+         <y>20</y>
+         <width>111</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Montserrat</family>
+         <pointsize>8</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>C - Importar Arquivo</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_atalho1_5">
+       <property name="geometry">
+        <rect>
+         <x>480</x>
+         <y>20</y>
+         <width>161</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Montserrat</family>
+         <pointsize>8</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>D - Buscar do Portal Amigo</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_atalho1_6">
+       <property name="geometry">
+        <rect>
+         <x>480</x>
+         <y>0</y>
+         <width>181</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Montserrat</family>
+         <pointsize>8</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>E - Atualizar CNPJ da instituição</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_atalho1_7">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>141</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Montserrat</family>
+         <pointsize>8</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>L - Fazer Login no Portal</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_atalho1_8">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>340</y>
+         <width>591</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Montserrat Alternates SemiBold</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>P - Postar no ambiente do governo</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_atalho1_9">
+       <property name="geometry">
+        <rect>
+         <x>480</x>
+         <y>40</y>
+         <width>121</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Montserrat</family>
+         <pointsize>8</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>V - Captura por Vídeo</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="btn_postar">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>0</y>
+        <width>191</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>false</underline>
+        <strikeout>false</strikeout>
+        <kerning>false</kerning>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>&lt;H2&gt;
+  Clique aqui para iniciar a postagem automática no site da Nota Fiscal Paulista
+&lt;/H2&gt;</string>
+      </property>
+      <property name="toolTipDuration">
+       <number>3</number>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>     Iniciar Postagem</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>assets/icons/ai.png</normaloff>assets/icons/ai.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <property name="default">
+       <bool>false</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_2">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>1899</width>
-       <height>921</height>
+       <width>1348</width>
+       <height>608</height>
       </rect>
      </property>
      <attribute name="icon">
@@ -1535,16 +1547,16 @@
      <widget class="QListView" name="list_log">
       <property name="geometry">
        <rect>
-        <x>970</x>
-        <y>40</y>
-        <width>911</width>
-        <height>811</height>
+        <x>20</x>
+        <y>490</y>
+        <width>1311</width>
+        <height>91</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Montserrat</family>
-        <pointsize>12</pointsize>
+        <pointsize>8</pointsize>
        </font>
       </property>
       <property name="styleSheet">
@@ -1575,18 +1587,19 @@
      <widget class="QLabel" name="label_log_2">
       <property name="geometry">
        <rect>
-        <x>260</x>
-        <y>0</y>
-        <width>391</width>
+        <x>20</x>
+        <y>10</y>
+        <width>301</width>
         <height>31</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Montserrat</family>
-        <pointsize>16</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
        </font>
       </property>
       <property name="styleSheet">
@@ -1604,16 +1617,16 @@
        <rect>
         <x>20</x>
         <y>40</y>
-        <width>851</width>
-        <height>811</height>
+        <width>1311</width>
+        <height>331</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Montserrat</family>
-        <pointsize>12</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
+        <pointsize>16</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
        </font>
       </property>
       <property name="styleSheet">
@@ -1623,13 +1636,16 @@
        <set>QAbstractItemView::NoEditTriggers</set>
       </property>
       <property name="selectionMode">
-       <enum>QAbstractItemView::ExtendedSelection</enum>
+       <enum>QAbstractItemView::MultiSelection</enum>
       </property>
       <property name="selectionBehavior">
        <enum>QAbstractItemView::SelectRows</enum>
       </property>
       <property name="gridStyle">
-       <enum>Qt::DotLine</enum>
+       <enum>Qt::SolidLine</enum>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
       </property>
       <attribute name="horizontalHeaderStretchLastSection">
        <bool>false</bool>
@@ -1669,17 +1685,18 @@
      <widget class="QPushButton" name="btn_limpar">
       <property name="geometry">
        <rect>
-        <x>1680</x>
-        <y>860</y>
+        <x>1130</x>
+        <y>450</y>
         <width>201</width>
-        <height>51</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Arial</family>
-        <weight>75</weight>
-        <bold>true</bold>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
         <underline>false</underline>
         <strikeout>false</strikeout>
        </font>
@@ -1694,18 +1711,19 @@
      <widget class="QLabel" name="label_log">
       <property name="geometry">
        <rect>
-        <x>1330</x>
-        <y>10</y>
-        <width>211</width>
+        <x>20</x>
+        <y>460</y>
+        <width>161</width>
         <height>31</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Montserrat</family>
-        <pointsize>16</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
        </font>
       </property>
       <property name="styleSheet">
@@ -1719,16 +1737,17 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>860</y>
-        <width>851</width>
-        <height>51</height>
+        <y>380</y>
+        <width>1311</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
        <font>
         <family>Arial</family>
-        <weight>75</weight>
-        <bold>true</bold>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
         <underline>false</underline>
         <strikeout>false</strikeout>
        </font>

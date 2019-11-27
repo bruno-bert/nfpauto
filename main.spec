@@ -2,22 +2,26 @@
 
 block_cipher = None
 
+# ('.\\patches\\*', 'patches'),  
 
 a = Analysis(['main.py'],
              pathex=['C:\\development\\projects\\gacc\\nfpauto'],
              binaries=[('.\\chromedriver.exe', '.')],
              datas=[
                  (HOMEPATH + '\\PyQt5\\Qt\\bin\Qt5Core.dll', 'PyQt5\\Qt\\bin'),
+                 (HOMEPATH + '\\pyzbar\libiconv.dll', '.'),
+                 (HOMEPATH + '\\pyzbar\libzbar-64.dll', '.'),
                  ('.\\assets\\icons\\*', 'assets\\icons' ),
                  ('.\\assets\\sounds\\*', 'assets\\sounds' ),
-                 ('.\\assets\\entidade.jpg', 'assets\\entidade.jpg' ),
+                 ('.\\assets\\entidade.jpg', 'assets' ),
+                 ('.\\assets\\video_image.png', 'assets' ),
+                 ('.\\assets\\video_image_warming.png', 'assets' ),
                  ('.\\styles\\*', 'styles' ),
                  ('.\\clean_database\\*', '.' ),
-                 ('.\\seleniumdb\\seleniumdb.db', 'seleniumdb'),   
-                 ('.\\patches\\*', 'patches'),                 
+                 ('.\\seleniumdb\\seleniumdb.db', 'seleniumdb'),                                  
                  ],
 
-             hiddenimports=[],
+             hiddenimports=['numpy.random.common', 'numpy.random.bounded_integers', 'numpy.random.entropy'],
              hookspath=[],
              runtime_hooks=[],
              excludes=[
@@ -29,8 +33,7 @@ a = Analysis(['main.py'],
                  'tkinter',
                  'lib2to3',
                  'matplotlib',
-                 'mpl-data',
-                 'numpy',
+                 'mpl-data',                 
                  'pandas',
                  'PIL',
                  'pytz',

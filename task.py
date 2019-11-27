@@ -30,7 +30,7 @@ class Task(QtSubscriber):
 
     #listener
     def save_result(self, result):
-        print('emitindo chave' + result.value)
+        #print('emitindo chave' + result.value)
         self.sig_result.emit(result)
 
     

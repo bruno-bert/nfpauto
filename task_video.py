@@ -2,7 +2,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtGui import QImage
 from PyQt5.Qt import Qt
 from subscriberqt import QtSubscriber
-from imutils.video import VideoStream
+#from imutils.video import VideoStream
 from pyzbar import pyzbar
 from pyzbar.pyzbar import ZBarSymbol
 from datetime import datetime
@@ -41,10 +41,10 @@ class TaskVideo(QtSubscriber):
   
 
     def run(self):
-        print('iniciando...' + str(datetime.now()))
+        print('iniciando captura de vídeo as ' + str(datetime.now()))
         #vs = VideoStream(src=0).start()
         vs = cv2.VideoCapture(0)
-        print('iniciado...' + str(datetime.now()))
+        print('captura de vídeo iniciada as ' + str(datetime.now()))
         #time.sleep(2.0)
         
         self.sig_start.emit(1)
@@ -56,7 +56,7 @@ class TaskVideo(QtSubscriber):
                 rect, frame = vs.read()
 
                 if (not rect):
-                    print('not react')
+                    print('Verifique se sua webcam está conectada...')
                     vs.release()
                     self.sig_stop.emit(1)	
                     self.quit()
@@ -81,7 +81,7 @@ class TaskVideo(QtSubscriber):
                     
                     try:
                         barcodeData = barcode.data.decode("utf-8")
-                        print('barcode Data', barcodeData)		            
+                        #print('barcode Data', barcodeData)		            
                         chave = str(barcodeData).split("|")[0].replace("CFe","")
                         self.sig_read.emit(barcodeData)
 

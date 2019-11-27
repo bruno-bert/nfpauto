@@ -1,0 +1,9 @@
+#btn_cnpj {
+  background-color: #fa966e;
+  color: #fff;
+}
+#btn_cnpj:hover {
+  background-color: rgb(253, 127, 77);
+}
+
+

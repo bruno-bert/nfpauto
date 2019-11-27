@@ -62,6 +62,7 @@ class SeleniumDB(Publisher):
      #orderna lista pelo sort_number
      self.lista_steps.sort(key=lambda x: x.sort_number)
 
+     
 
  def is_dinamic(self, attr):
     index = str(attr).find("{")
@@ -119,21 +120,21 @@ class SeleniumDB(Publisher):
     
     if (step.must_wait_element == "1"):
       if (step.find_method == "name"):  
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.NAME, expression)) )
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.NAME, expression)) )
       elif (step.find_method == "id"):
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.ID, expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.ID, expression)) )  
       elif (step.find_method == "xpath"):
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.XPATH, expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.XPATH, expression)) )  
       elif (step.find_method == "class_name"):
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CLASS_NAME, expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.CLASS_NAME, expression)) )  
       elif (step.find_method == "css_selector"):
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.CSS_SELECTOR, expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.CSS_SELECTOR, expression)) )  
       elif (step.find_method == "link_text"):              
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.LINK_TEXT, expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.LINK_TEXT, expression)) )  
       elif (step.find_method == "tag_name"):      
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.TAG_NAME, expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.TAG_NAME, expression)) )  
       elif (step.find_method == "partial_link_text"):      
-        element = WebDriverWait(driver, step.timeout_to_element ).until(EC.presence_of_element_located( (By.PARTIAL_LINK_TEXT, expression)) )   
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.PARTIAL_LINK_TEXT, expression)) )   
     else:
 
       if (step.base_element != 'other_step'):
@@ -177,6 +178,8 @@ class SeleniumDB(Publisher):
     else:
       self.driver = self.attach_to_browser(start_config, True)
     
+    self.driver = self.attach_to_browser(start_config, True)
+
     if (not  self.driver):
       self.open_browser(start_config)
       self.driver = self.attach_to_browser(start_config, False)
@@ -206,12 +209,14 @@ class SeleniumDB(Publisher):
 
          #print('flag cancelar no while principal do run_steps: ' + str(self.flag_cancelar)    )
          if (self.flag_cancelar == 1) :
+            driver.maximize_window()
+            driver.set_window_position(0,0)
             return
       
          #pega step pelo step id
          step = next((x for x in lista_steps if x.step_id == step_id), None)
-        
-
+         
+       
          try:
             
             if (not self.must_skip(step, steps_to_skip)):
@@ -232,6 +237,8 @@ class SeleniumDB(Publisher):
                   
                  
                   if (self.flag_cancelar == 1):
+                      driver.maximize_window()
+                      driver.set_window_position(0,0)
                       return
 
                   #show waiting message
@@ -257,7 +264,7 @@ class SeleniumDB(Publisher):
                elif (step.action == "show"):   
                   
                   message = str(element.text).partition('\n')[0]
-                  print('exibindo mensagem ' + message)
+                  #print('exibindo mensagem ' + message)
 
                   if (step.error_message_finder == "1"):
                     step.resulted_error_message = message
@@ -276,7 +283,7 @@ class SeleniumDB(Publisher):
                #se deve salvar resultado do ciclo, grava o resultado
                save_result = (step.save_result == '1' )
                if (save_result):     
-                  print('id da step: ' + str(step.step_id))            
+                  #print('id da step: ' + str(step.step_id))            
                   result = CycleResult()  
                   #result.value = self.get_id(values)
                   #TODO - testando bug de salvar status
@@ -300,18 +307,23 @@ class SeleniumDB(Publisher):
          finally:
             
             if (self.flag_cancelar == 1):
+              driver.maximize_window()
+              driver.set_window_position(0,0) 
               return
 
             
             self.log('Step {} Completed'.format(step.id_tela))
             
             if (step.minimize_after_step == "1"):
-              driver.minimize_window()
+              #driver.minimize_window()
+              #driver.maximize_window()
+              driver.set_window_position(-2000,0)
               if (script_config.minimize_message):
                 self.log(script_config.minimize_message)
 
             if (step.maximize_after_step == "1"):
-              driver.maximize_window()
+              #driver.maximize_window()
+              driver.set_window_position(0,0)
             
 
             chegou_fim = (step.is_end_step == '1' and success )
@@ -352,7 +364,7 @@ class SeleniumDB(Publisher):
               self.log(script_config.wait_message_between_steps.format(str(step.wait_next)))
               time.sleep(step.wait_next)
 
-     return { "step_id": step_id, "steps_to_skip_on_next_run" : steps_to_skip }       
+     return { "step_id": step_id, "steps_to_skip_on_next_run" : steps_to_skip, "driver": driver }       
 
 
  def get_steps(self):
@@ -403,7 +415,11 @@ class SeleniumDB(Publisher):
     try:
      chrome_options =  Options()
      chrome_options.add_experimental_option("debuggerAddress", start_config.debugger_host + ':' + start_config.debugger_port)
+     chrome_options.add_argument("--disable-extensions")
      driver = webdriver.Chrome(start_config.driver_name, options=chrome_options)
+     driver.set_window_position(0,0)
+     #driver = webdriver.Chrome(start_config.driver_name)
+     #driver.get(start_config.initial_url)
    
      found = True
      

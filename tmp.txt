@@ -36,5 +36,10 @@ from PyQt5.QtGui import QFont, QIcon, QPixmap
 from PyQt5.QtCore import QRect, QSize, QMetaObject, QCoreApplication
 from PyQt5.QtWidgets import QPlainTextEdit, QGroupBox, QLabel, QLineEdit, QPushButton
 
+GACC
 01.146.603/0001-69
 GACC GRUPO DE ASSISTENCIA A CRIANCA COM CANCER
+
+APAE
+72.286.040/0001-52
+ASSOC PAIS E AMIGOS EXECPCIONAIS TAUBATE

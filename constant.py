@@ -8,7 +8,9 @@ DEFAULT_STATUS_CODIGO=1
 EMPTY_STR=""
 
 EMITIR_SOM_ERRO=True
+EMITIR_SOM_SUCESSO=True
 SOM_ERRO_FILE="assets/sounds/error.mp3"
+SOM_SUCESSO_FILE="assets/sounds/success.mp3"
 
 QUERY_SELECT_NOTAS_STATS_HOJE="select status, count(chave) as contador from notas where date(datahora) = date('now') group by status"
 

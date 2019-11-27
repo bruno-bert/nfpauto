@@ -55,7 +55,7 @@ def combo_status_changed(index):
    if (status == 0):
     rows = busca_chaves_banco() 
    else: 
-    rows = busca_chaves_por_status(status)
+    rows = busca_chaves_por_status(status, 'DESC')
    carrega_lista_chaves(rows)
 
 def carrega_lista_status(rows):
@@ -116,6 +116,7 @@ def carrega_lista_chaves(rows):
         for row_num, row_data in enumerate(rows):
             row = dict(row_data)
             ui.tableWidget.insertRow(row_num)
+            ui.tableWidget.setRowHeight(row_num, 50)
             ui.tableWidget.setItem(row_num, 0, QTableWidgetItem(str(row['id']))) 
             ui.tableWidget.setItem(row_num, 1, QTableWidgetItem(row['chave']))
             ui.tableWidget.setItem(row_num, 2, QTableWidgetItem(row['cnpj']))
@@ -156,8 +157,15 @@ def cria_tabela_notas():
     ui.tableWidget.setColumnCount(14)
     ui.tableWidget.setRowCount(1)
     ui.tableWidget.hideColumn(0) #esconde coluna de id
+    ui.tableWidget.hideColumn(2)
+    ui.tableWidget.hideColumn(3)
+    ui.tableWidget.hideColumn(5)
+    ui.tableWidget.hideColumn(6)
+    ui.tableWidget.hideColumn(7)
+    ui.tableWidget.hideColumn(8)
+    ui.tableWidget.hideColumn(9)
     ui.tableWidget.hideColumn(10) #esconde coluna de tipo_emissao
-
+    ui.tableWidget.hideColumn(11)
     
     ui.tableWidget.setHorizontalHeaderLabels(
                                       ['ID', 'Chave', 
@@ -477,11 +485,14 @@ def atualiza_titulo_total():
   ui.lbTitulo.setText(m.titulo_lista_principal.format(ui.tableWidget.rowCount()))
 
 def sequencia_adiciona_nota(chave, origem):
+  
+  
   if (not chave_ja_existe(chave)):
-
+   
     nota_separada = separa_campos_pela_chave(chave)     
     nota_expirou = verifica_data_expirada(nota_separada.data)
-  
+
+    
     if (not valida_uf(nota_separada.uf)):    
        mostra_mensagem(m.uf_invalida)       
        emitir_som_erro(origem) 
@@ -491,6 +502,7 @@ def sequencia_adiciona_nota(chave, origem):
         adiciona_chave_na_lista(nota_separada, nota_expirou)
         mostra_mensagem_sucesso(messages.Messages().gravada_sucesso.format(chave))
         atualiza_titulo_total()
+        emitir_som_sucesso(origem)
         
 
         #salva cnpj na base   
@@ -704,10 +716,15 @@ def txt_cnpj_padrao_keyPressEvent(e):
        else: 
          return QPlainTextEdit.keyPressEvent(dialog_cnpj_padrao.txt_cnpj_padrao, e)     
 
+def emitir_som_sucesso(origem):
+  if (constant.EMITIR_SOM_SUCESSO):
+   if (origem == constant.ORIGEM_NOTA_VIDEO): 
+      playsound(constant.SOM_SUCESSO_FILE, False)
+
 def emitir_som_erro(origem):
   if (constant.EMITIR_SOM_ERRO):
    if (origem == constant.ORIGEM_NOTA_MANUAL or origem == constant.ORIGEM_NOTA_DIGITAR): 
-      playsound(constant.SOM_ERRO_FILE)
+      playsound(constant.SOM_ERRO_FILE, False)
 
 def txtChave_3_keyPressEvent(e):
      if (e.key() == Qt.Key_Escape ):
@@ -975,7 +992,7 @@ def fechar_dialog_cnpj_padrao():
    Dialog_Cnpj.reject()
 
 def atualiza_lista_principal():
-   rows = busca_chaves_por_status(constant.DEFAULT_STATUS_CODIGO)
+   rows = busca_chaves_por_status(constant.DEFAULT_STATUS_CODIGO, 'DESC')
    carrega_lista_chaves(rows)
    atualiza_titulo_total()
 
@@ -1040,14 +1057,14 @@ def video_read(content):
      
     #verifica se nota tem cpf/cnpj, se tiver, invalida  a nota pois não pode receber creditos
     #essa validacao só é possivel na leitura por vídeo
-    try:
-      cpf_cnpj = str(content).split("|")[3]
-      if (len(cpf_cnpj) > 0):
-        if ( (valida_cnpj(cpf_cnpj)) or (valida_cpf(cpf_cnpj))  ):
-          mostra_mensagem(m.chave_com_cpf_cnpj)
-          return 
-    except Exception as err:
-      print('ERRO ao tentar validar se existe cpf/cnpj na nota: ' + repr(err)) 
+    #try:
+    #  cpf_cnpj = str(content).split("|")[3]
+    #  if (len(cpf_cnpj) > 0):
+    #    if ( (valida_cnpj(cpf_cnpj)) or (valida_cpf(cpf_cnpj))  ):
+    #      mostra_mensagem(m.chave_com_cpf_cnpj)
+    #      return 
+    #except Exception as err:
+    #  print('ERRO ao tentar validar se existe cpf/cnpj na nota: ' + repr(err)) 
                 
 
     chave_ok = valida_chave(chave)    
@@ -1129,7 +1146,8 @@ def on_video():
    
 
  
-  
+def mostra_tela_post():
+  ui.toolBox.setCurrentIndex(1)  
   
 if __name__ == "__main__":
         
@@ -1148,7 +1166,7 @@ if __name__ == "__main__":
         applyStyles()
         MainWindow.show()
 
-        MainWindow.setWindowState(Qt.WindowMaximized)
+        #MainWindow.setWindowState(Qt.WindowMaximized)
 
         
 
@@ -1214,8 +1232,8 @@ if __name__ == "__main__":
         ui.tab_opcao.currentChanged.connect(tab_changed)
         ui.btn_estab.clicked.connect(mostra_tela_estab)
         
-
-        ui.btn_postar.hide()
+        ui.btn_postar.clicked.connect(mostra_tela_post)
+        #ui.btn_postar.hide()
         ui.toolBox.currentChanged.connect(page_changed)
 
         ui.btn_iniciar_postagem.clicked.connect(trigger_postagem)        
