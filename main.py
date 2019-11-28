@@ -1072,12 +1072,14 @@ def chama_rotina_update():
            
 
 def aplica_scripts_inicio():
-  script_file = './/patches//' + app_version.VERSION + '//script.sql' 
-  if ( os.path.exists(script_file) ) :
-    qry = open(script_file, 'r').read()
-    dbutil.execute_sql(qry)
-    os.rename(script_file, str(script_file).replace('.sql','.old' ))
-
+  try:
+    script_file = './/patches//' + app_version.VERSION + '//script.sql' 
+    if ( os.path.exists(script_file) ) :
+      qry = open(script_file, 'r').read()
+      dbutil.execute_sql(qry)
+      os.rename(script_file, str(script_file).replace('.sql','.old' ))
+  except Exception as err:
+    print('Erro ao tentar executar script na inicialização: ' + repr(err))
 
 
 def muda_status_tela(status):
@@ -1088,19 +1090,36 @@ def muda_status_tela(status):
    ui.combo_status.setEnabled(status)
    ui.tableWidget.setEnabled(status)
 
+def qrcode_to_chave(content):
+
+  chave = str(content).split("|")[0].replace("CFe","")
+
+  try:
+    # este trecho trata qrcodes que tem o formato:
+    #https://www.nfce.fazenda.sp.gov.br/qrcode?p=35191079379491011703650030000210951001171273| | | |....
+    result = re.search("[0-9]{44}", chave)
+    if (result):
+      chave = result.group(0)
+      print('funcionou:' + chave)
+
+  except Exception as err:
+    print(repr(err))  
+  finally:
+    return chave
+
 def video_read(content):
-    chave = str(content).split("|")[0].replace("CFe","")
+    chave = qrcode_to_chave(content)
      
     #verifica se nota tem cpf/cnpj, se tiver, invalida  a nota pois não pode receber creditos
     #essa validacao só é possivel na leitura por vídeo
-    #try:
-    #  cpf_cnpj = str(content).split("|")[3]
-    #  if (len(cpf_cnpj) > 0):
-    #    if ( (valida_cnpj(cpf_cnpj)) or (valida_cpf(cpf_cnpj))  ):
-    #      mostra_mensagem(m.chave_com_cpf_cnpj)
-    #      return 
-    #except Exception as err:
-    #  print('ERRO ao tentar validar se existe cpf/cnpj na nota: ' + repr(err)) 
+    try:
+      cpf_cnpj = str(content).split("|")[3]
+      if (len(cpf_cnpj) > 0):
+        if ( (valida_cnpj(cpf_cnpj)) or (valida_cpf(cpf_cnpj))  ):
+          mostra_mensagem(m.chave_com_cpf_cnpj)
+          return 
+    except Exception as err:
+      print('ERRO ao tentar validar se existe cpf/cnpj na nota: ' + repr(err)) 
                 
 
     chave_ok = valida_chave(chave)    
