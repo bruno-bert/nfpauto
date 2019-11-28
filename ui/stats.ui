@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>644</width>
-    <height>228</height>
+    <height>388</height>
    </rect>
   </property>
   <property name="font">
@@ -109,13 +109,13 @@ QPushButton:active {
      <string>Postagens Pendentes:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lbl_desc_postadas">
+   <widget class="QLabel" name="lbl_desc_postadas_hoje">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>100</x>
       <y>120</y>
-      <width>151</width>
-      <height>16</height>
+      <width>201</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="font">
@@ -127,16 +127,16 @@ QPushButton:active {
      </font>
     </property>
     <property name="text">
-     <string>Postadas no site:</string>
+     <string>Postadas com sucesso:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lbl_desc_erro">
+   <widget class="QLabel" name="lbl_desc_erro_hoje">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>150</y>
       <width>291</width>
-      <height>16</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="font">
@@ -199,7 +199,7 @@ QPushButton:active {
      <string>[lbl_pendentes]</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lbl_postadas">
+   <widget class="QLabel" name="lbl_postadas_hoje">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -223,13 +223,13 @@ QPushButton:active {
      <string>[lbl_postadas]</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lbl_erro">
+   <widget class="QLabel" name="lbl_erro_hoje">
     <property name="geometry">
      <rect>
       <x>300</x>
       <y>150</y>
       <width>81</width>
-      <height>16</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="font">
@@ -320,10 +320,122 @@ QPushButton:active {
     <string>Palavras-Chave</string>
    </property>
   </widget>
+  <widget class="QGroupBox" name="grupo_atalhos_3">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>240</y>
+     <width>451</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Montserrat Alternates SemiBold</family>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="title">
+    <string>Estatísticas de Postagem (Total)</string>
+   </property>
+   <widget class="QLabel" name="lbl_desc_postadas_hoje_2">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>50</y>
+      <width>201</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Montserrat SemiBold</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Postadas com sucesso:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_desc_erro_hoje_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>291</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Montserrat SemiBold</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Tentativas de postagem com erro:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_postadas_total">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>50</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Montserrat SemiBold</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: red;</string>
+    </property>
+    <property name="text">
+     <string>[lbl_postadas]</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_erro_total">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>80</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Montserrat SemiBold</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: red;</string>
+    </property>
+    <property name="text">
+     <string>[lbl_erro]</string>
+    </property>
+   </widget>
+  </widget>
   <zorder>btn_ok</zorder>
   <zorder>grupo_atalhos_2</zorder>
   <zorder>txt_palavras_chave</zorder>
   <zorder>lbl_palavras_chave</zorder>
+  <zorder>grupo_atalhos_3</zorder>
  </widget>
  <resources/>
  <connections/>

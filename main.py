@@ -606,8 +606,10 @@ def modoportal():
 def limpa_stats():
   dialog_stats.lbl_hoje.setText("0")
   dialog_stats.lbl_pendentes.setText("0")
-  dialog_stats.lbl_postadas.setText("0")
-  dialog_stats.lbl_erro.setText("0")
+  dialog_stats.lbl_postadas_hoje.setText("0")
+  dialog_stats.lbl_erro_hoje.setText("0")
+  dialog_stats.lbl_postadas_total.setText("0")
+  dialog_stats.lbl_erro_total.setText("0")
 
 def mostra_dialogStats():
    
@@ -618,25 +620,44 @@ def mostra_dialogStats():
     with open(sshFile,"r") as fh:
       Dialog_Cnpj.setStyleSheet(fh.read()) 
 
-    rows = busca_chaves_stats_hoje() 
+    rows_coletadas_hoje = busca_chaves_stats_coletadas_hoje() 
     soma = 0
     limpa_stats()
 
-    if (rows):
-      for row_data in rows:
+    if (rows_coletadas_hoje):
+      for row_data in rows_coletadas_hoje:
           row = dict(row_data)
           soma+= int(row['contador']) 
-          
-          if(str(row['status']) == '1') :
-            dialog_stats.lbl_pendentes.setText(str(row['contador']))
-            
-          if(str(row['status']) == '2') :
-            dialog_stats.lbl_postadas.setText(str(row['contador']))
-
-          if(str(row['status']) == '3') :
-            dialog_stats.lbl_erro.setText(str(row['contador']))
 
     dialog_stats.lbl_hoje.setText(str(soma))   
+
+    #notas postadas hoje, com sucesso ou erro 
+    rows_postadas_hoje = busca_chaves_stats_postadas_hoje() 
+    if (rows_postadas_hoje):
+        
+        for row_data in rows_postadas_hoje:
+          
+          row = dict(row_data)
+          
+          if(str(row['status']) == '2') :
+                  dialog_stats.lbl_postadas_hoje.setText(str(row['contador']))
+
+          if(str(row['status']) == '3') :
+                  dialog_stats.lbl_erro_hoje.setText(str(row['contador']))
+    
+    #notas postadas hoje, com sucesso ou erro 
+    rows_postadas_total = busca_chaves_stats_postadas_total() 
+    if (rows_postadas_total):
+        
+        for row_data in rows_postadas_total:
+          
+          row = dict(row_data)
+          
+          if(str(row['status']) == '2') :
+                  dialog_stats.lbl_postadas_total.setText(str(row['contador']))
+
+          if(str(row['status']) == '3') :
+                  dialog_stats.lbl_erro_total.setText(str(row['contador']))
 
     if  (Dialog_Stats.exec_()):
      return True

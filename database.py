@@ -112,15 +112,37 @@ def busca_messages_retry():
  conn.close()
  return rows
 
-def busca_chaves_stats_hoje():
+def busca_chaves_stats_coletadas_hoje():
  conn = sqlite3.connect(constant.DATABASE_FILE)
- query = constant.QUERY_SELECT_NOTAS_STATS_HOJE
+ query = constant.QUERY_SELECT_NOTAS_STATS_COLETADAS_HOJE
  conn.row_factory = sqlite3.Row
  cur = conn.cursor()
  cur.execute(query)
  rows = cur.fetchall()
  conn.close()
  return rows
+
+
+def busca_chaves_stats_postadas_hoje():
+ conn = sqlite3.connect(constant.DATABASE_FILE)
+ query = constant.QUERY_SELECT_NOTAS_STATS_POSTADAS_HOJE
+ conn.row_factory = sqlite3.Row
+ cur = conn.cursor()
+ cur.execute(query)
+ rows = cur.fetchall()
+ conn.close()
+ return rows 
+
+def busca_chaves_stats_postadas_total():
+ conn = sqlite3.connect(constant.DATABASE_FILE)
+ query = constant.QUERY_SELECT_NOTAS_STATS_POSTADAS_TOTAL
+ conn.row_factory = sqlite3.Row
+ cur = conn.cursor()
+ cur.execute(query)
+ rows = cur.fetchall()
+ conn.close()
+ return rows 
+
 
 def busca_status_banco():
  conn = sqlite3.connect(constant.DATABASE_FILE)
