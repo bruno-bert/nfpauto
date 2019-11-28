@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "NotaAmiga"
-#define MyAppVersion "1.0.2"
+#define MyAppVersion "1.0.5"
 #define MyAppPublisher "Nota Amiga Ltda."
 #define MyAppURL "https://notaamiga.netlify.com"
 #define MyAppExeName "NotaAmiga.exe"
@@ -21,7 +21,7 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName=C:\NotaAmiga\{#MyAppName}
 DefaultGroupName={#MyAppName}
-OutputBaseFilename=setup_1.0.2
+OutputBaseFilename=setup_1.0.5
 Compression=lzma
 SolidCompression=yes
 
@@ -32,9 +32,9 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\development\projects\gacc\nfpauto\patches\1.0.2\NotaAmiga.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\development\projects\gacc\nfpauto\patches\1.0.2\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-; Source: "C:\development\projects\gacc\nfpauto\patches\1.0.2\script.sql"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\development\projects\gacc\nfpauto\patches\1.0.5\NotaAmiga.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\development\projects\gacc\nfpauto\patches\1.0.5\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+; Source: "C:\development\projects\gacc\nfpauto\patches\1.0.5\script.sql"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

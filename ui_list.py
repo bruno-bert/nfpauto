@@ -66,7 +66,7 @@ class Ui_MainWindow(QObject):
         self.btn_login.setIconSize(QSize(32, 32))
         self.btn_login.setObjectName("btn_login")
         self.lbTitulo = QLabel(self.page)
-        self.lbTitulo.setGeometry(QRect(20, 10, 190, 41))
+        self.lbTitulo.setGeometry(QRect(20, 10, 210, 41))
         font = QFont()
         font.setFamily("Montserrat Alternates SemiBold")
         font.setPointSize(12)

@@ -8,7 +8,7 @@ import messages
 import constant
 from database import busca_chaves_banco
 from seleniumdb.observer import Subscriber
-from database import  busca_script_padrao, busca_chaves_por_status, atualiza_status_nota, atualiza_status_message_nota, busca_cnpj_padrao_valor
+from database import  busca_script_padrao, busca_messages_retry, busca_chaves_por_status, atualiza_status_nota, atualiza_status_message_nota, busca_cnpj_padrao_valor
 from task import Task, Log
 from datetime import datetime
 
@@ -57,13 +57,27 @@ def destaca_chave_sendo_processada( value):
   
   
 def define_status( result):
+ 
+    if (result.success):      
+      status = 2
+    else:
 
-  if (result.success):
-    status = 2
-  else:
-    status = 3
+      #dependendo da mensagem (se permitir re-tentativa), mantem o status em 1
+      retry = False
+      rows = busca_messages_retry()
+      for row in rows:
+        row = dict(row)
+        #print('mensagem que permite tentativa: ' + str(row['message']))
+        #print('mensagem retornada: ' + result.message)
+        if (str(row['message']) == str(result.message)):
+          status = 1
+          retry = True
+          break
 
-  return status   
+      if (not retry):
+        status = 3
+
+    return status   
 
 
 def atualiza_lista( value):
@@ -76,14 +90,17 @@ def atualiza_lista( value):
 
 def atualiza_lista_tela_principal( value):
   global dialog_postar
-
+  
   #atualiza tela principal apenas se esta estiver com selecao de filtro igual a "pendentes" 
   if (dialog_postar.combo_status.currentIndex() == 1):
     items = dialog_postar.tableWidget.findItems(value, QtCoreQt.MatchExactly)
     if ( len(items) > 0 ):
+      
       for item in items:
         index = dialog_postar.tableWidget.indexFromItem(item).row()
         dialog_postar.tableWidget.removeRow(index)
+
+      dialog_postar.lbTitulo.setText("Cupons disponíveis ({})".format(dialog_postar.tableWidget.rowCount()))
 
 def atualiza_status_nota_processada( result):
     global cnpj_entidade

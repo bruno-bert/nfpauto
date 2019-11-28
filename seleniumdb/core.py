@@ -5,7 +5,8 @@ import time
 import re
 
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import *
@@ -28,6 +29,7 @@ class SeleniumDB(Publisher):
  
  
  def log(self, message, manual_action = 0):
+    print(message)
     raise Exception('log must be implemented by super class')
  def get_id(self, values):
     raise Exception('get_id must be implemented by super class')
@@ -118,23 +120,24 @@ class SeleniumDB(Publisher):
     
     expression = self.get_expression(step.expression, values_on_expression)
     
+    
     if (step.must_wait_element == "1"):
       if (step.find_method == "name"):  
-        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.NAME, expression)) )
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.presence_of_element_located( (By.NAME, expression)) )
       elif (step.find_method == "id"):
-        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.ID, expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.presence_of_element_located( (By.ID, expression)) )  
       elif (step.find_method == "xpath"):
-        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.XPATH, expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.presence_of_element_located( (By.XPATH, expression)) )  
       elif (step.find_method == "class_name"):
-        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.CLASS_NAME, expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.presence_of_element_located( (By.CLASS_NAME, expression)) )  
       elif (step.find_method == "css_selector"):
-        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.CSS_SELECTOR, expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.presence_of_element_located( (By.CSS_SELECTOR, expression)) )  
       elif (step.find_method == "link_text"):              
-        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.LINK_TEXT, expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.presence_of_element_located( (By.LINK_TEXT, expression)) )  
       elif (step.find_method == "tag_name"):      
-        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.TAG_NAME, expression)) )  
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.presence_of_element_located( (By.TAG_NAME, expression)) )  
       elif (step.find_method == "partial_link_text"):      
-        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.visibility_of_element_located( (By.PARTIAL_LINK_TEXT, expression)) )   
+        element = WebDriverWait(driver, step.timeout_to_element, 3 ).until(EC.presence_of_element_located( (By.PARTIAL_LINK_TEXT, expression)) )   
     else:
 
       if (step.base_element != 'other_step'):
@@ -178,7 +181,8 @@ class SeleniumDB(Publisher):
     else:
       self.driver = self.attach_to_browser(start_config, True)
     
-    self.driver = self.attach_to_browser(start_config, True)
+    #modo direto
+    #self.driver = self.attach_to_browser(start_config, True)
 
     if (not  self.driver):
       self.open_browser(start_config)
@@ -250,9 +254,20 @@ class SeleniumDB(Publisher):
                #salva elemento resultante
                step.resulted_element = element
                
+               
+
                #action
-               if (step.action == "click"):                  
-                  element.click()  
+               if (step.action == "goto"):  
+                 driver.get(step.goto_url)
+
+               elif (step.action == "script"): 
+                 expression_other = self.get_expression(step.expression_other, values_on_expression)
+                 print(expression_other)
+                 driver.execute_script(expression_other)
+
+               elif (step.action == "click"):   
+                 element.click()  
+                
 
                elif (step.action == "type"):
                   element.clear()
@@ -264,8 +279,7 @@ class SeleniumDB(Publisher):
                elif (step.action == "show"):   
                   
                   message = str(element.text).partition('\n')[0]
-                  #print('exibindo mensagem ' + message)
-
+             
                   if (step.error_message_finder == "1"):
                     step.resulted_error_message = message
                     step.success = False
@@ -283,9 +297,7 @@ class SeleniumDB(Publisher):
                #se deve salvar resultado do ciclo, grava o resultado
                save_result = (step.save_result == '1' )
                if (save_result):     
-                  #print('id da step: ' + str(step.step_id))            
                   result = CycleResult()  
-                  #result.value = self.get_id(values)
                   #TODO - testando bug de salvar status
                   result.value = values['chave']
                   result.success = step.success
@@ -315,14 +327,13 @@ class SeleniumDB(Publisher):
             self.log('Step {} Completed'.format(step.id_tela))
             
             if (step.minimize_after_step == "1"):
-              #driver.minimize_window()
-              #driver.maximize_window()
-              driver.set_window_position(-2000,0)
+              driver.minimize_window()
+              #driver.set_window_position(-2000,0)
               if (script_config.minimize_message):
                 self.log(script_config.minimize_message)
 
             if (step.maximize_after_step == "1"):
-              #driver.maximize_window()
+              driver.maximize_window()
               driver.set_window_position(0,0)
             
 
@@ -413,14 +424,25 @@ class SeleniumDB(Publisher):
     self.log(str(cont) + '...' + start_config.attempt_attach_message)
     
     try:
-     chrome_options =  Options()
-     chrome_options.add_experimental_option("debuggerAddress", start_config.debugger_host + ':' + start_config.debugger_port)
-     chrome_options.add_argument("--disable-extensions")
-     driver = webdriver.Chrome(start_config.driver_name, options=chrome_options)
-     driver.set_window_position(0,0)
+     
+     #Chrome
+     options =  ChromeOptions()
+     
+     #modo attach
+     options.add_experimental_option("debuggerAddress", start_config.debugger_host + ':' + start_config.debugger_port)
+     driver = webdriver.Chrome(start_config.driver_name, options=options)
+     
+     #Chrome
+     #modo direto
      #driver = webdriver.Chrome(start_config.driver_name)
      #driver.get(start_config.initial_url)
-   
+
+     #Firefox
+     #options =  FirefoxOptions()
+     #driver = webdriver.Firefox()
+     #driver.get(start_config.initial_url)
+  
+     driver.set_window_position(0,0)
      found = True
      
     except Exception as err:

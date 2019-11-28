@@ -71,6 +71,9 @@ class Step:
         self.minimize_after_step = None
         self.maximize_after_step = None
         self.save_result = None
+        self.expression_other = None
+        self.click_method = None
+        self.goto_url = None
 
         #estas colunas não são do banco de dados
         self.resulted_element = None

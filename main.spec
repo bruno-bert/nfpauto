@@ -6,11 +6,12 @@ block_cipher = None
 
 a = Analysis(['main.py'],
              pathex=['C:\\development\\projects\\gacc\\nfpauto'],
-             binaries=[('.\\chromedriver.exe', '.')],
+             binaries=[('.\\chromedriver.exe', '.'), ('.\\geckodriver.exe', '.') ],
              datas=[
                  (HOMEPATH + '\\PyQt5\\Qt\\bin\Qt5Core.dll', 'PyQt5\\Qt\\bin'),
                  (HOMEPATH + '\\pyzbar\libiconv.dll', '.'),
                  (HOMEPATH + '\\pyzbar\libzbar-64.dll', '.'),
+                 ('.\\windows_dlls\\*', '.'),
                  ('.\\assets\\icons\\*', 'assets\\icons' ),
                  ('.\\assets\\sounds\\*', 'assets\\sounds' ),
                  ('.\\assets\\entidade.jpg', 'assets' ),

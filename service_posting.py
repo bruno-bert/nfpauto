@@ -43,6 +43,7 @@ class NFPPosting(SeleniumDB):
       steps_to_skip_on_next_run = None
       self.flag_cancelar = 0 
       values_on_expression =  { "descricao_entidade": self.descricao_entidade }    
+      driver = None
       
       while True:
         

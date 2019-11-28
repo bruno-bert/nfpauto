@@ -57,6 +57,7 @@ def combo_status_changed(index):
    else: 
     rows = busca_chaves_por_status(status, 'DESC')
    carrega_lista_chaves(rows)
+   atualiza_titulo_total()
 
 def carrega_lista_status(rows):
    ui.combo_status.clear()
@@ -858,7 +859,21 @@ def trigger_postagem():
     task_postagem.sig_result.connect(save_result) 
     task_postagem.sig_chave.connect(init_value) 
     modo_postagem()
+    
+    #chama thread separada
     task_postagem.start()
+
+    #para debugar, chama dentro da mesma thread  (para usar: comentar a linha acima e descomentar as de baixo)
+    #from service_posting import NFPPosting
+    #script_id = 2
+    #row = busca_cnpj_padrao()
+    #row = dict(row)
+    #cnpj = row['cnpj']    
+    #descricao_entidade = row['descricao']    
+    #palavras = row['palavras']   
+    #service = NFPPosting(script_id, cnpj, descricao_entidade, palavras)
+    #service.iniciar_postagem()
+
 
   else:
     if (seleciona_modo_atual() == 'postando'):

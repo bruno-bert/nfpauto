@@ -102,6 +102,16 @@ def busca_chaves_banco():
  conn.close()
  return rows
 
+def busca_messages_retry():
+ conn = sqlite3.connect(constant.DATABASE_FILE)
+ query = constant.QUERY_SELECT_MESSAGES_RETRY
+ conn.row_factory = sqlite3.Row
+ cur = conn.cursor()
+ cur.execute(query)
+ rows = cur.fetchall()
+ conn.close()
+ return rows
+
 def busca_chaves_stats_hoje():
  conn = sqlite3.connect(constant.DATABASE_FILE)
  query = constant.QUERY_SELECT_NOTAS_STATS_HOJE

@@ -45,8 +45,7 @@ class Task(QtSubscriber):
           self.sig_log.emit(Log('Postagem Cancelada'))
 
   
-
-    def run(self):
+    def iniciar_postagem(self):
         script_id = self.get_script_id() 
         
         row = busca_cnpj_padrao()
@@ -59,6 +58,9 @@ class Task(QtSubscriber):
         self.service = NFPPosting(script_id, cnpj, descricao_entidade, palavras)
         self.service.register(self)
         self.service.iniciar_postagem()
+
+    def run(self):
+       self.iniciar_postagem()
 
 
     def get_script_id(self):      

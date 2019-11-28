@@ -13,7 +13,7 @@ SOM_ERRO_FILE="assets/sounds/error.mp3"
 SOM_SUCESSO_FILE="assets/sounds/success.mp3"
 
 QUERY_SELECT_NOTAS_STATS_HOJE="select status, count(chave) as contador from notas where date(datahora) = date('now') group by status"
-
+QUERY_SELECT_MESSAGES_RETRY="select * from messages_retry"
 QUERY_SELECT_NOTAS_PRINCIPAL="select datapostagem, datahora, x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message, cnpj_entidade from notas x, status y where x.status = y.codigo ORDER BY datahora DESC"
 QUERY_SELECT_NOTAS_PRINCIPAL_POR_STATUS="select datapostagem, datahora, x.id as id, chave, cnpj, data, uf, numero, modelo, serie, x.codigo as codigo, tipo_emissao,descricao as status, valor, message, cnpj_entidade from notas x, status y where x.status = y.codigo and x.status = {}  ORDER BY datahora {}"
 QUERY_LISTA_STATUS="select * from status"
